@@ -74,24 +74,24 @@ public class WallController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!isAfterStonesSettled)
-        {
-            if (other.GetComponent<MeshRenderer>().material.name == "Black Stone (Instance)")
-            {
-                gameController.GetComponent<GameController>().PlusOneToScore(GameController.StoneColor.white);
-            }
-            if (other.GetComponent<MeshRenderer>().material.name == "White Stone (Instance)")
-            {
-                gameController.GetComponent<GameController>().PlusOneToScore(GameController.StoneColor.black);
-            }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (!isAfterStonesSettled)
+    //    {
+    //        if (other.GetComponent<MeshRenderer>().material.name == "Black Stone (Instance)")
+    //        {
+    //            gameController.GetComponent<GameController>().PlusOneToScore(GameController.StoneColor.white);
+    //        }
+    //        if (other.GetComponent<MeshRenderer>().material.name == "White Stone (Instance)")
+    //        {
+    //            gameController.GetComponent<GameController>().PlusOneToScore(GameController.StoneColor.black);
+    //        }
 
-            string[] xy = other.gameObject.name.Split('x');
+    //        string[] xy = other.gameObject.name.Split('x');
 
-            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone { x= Convert.ToInt32(xy[0]), y= Convert.ToInt32(xy[1]), gameObject = other.gameObject }, 0f);
-            //here.
-            //gameController.GetComponent<GameController>().KillStoneWithDelay(other.gameObject, new GameController.GoStone { x= Convert.ToInt32(xy[0]), y= Convert.ToInt32(xy[1]) }, 0f);
-        }
-    }
+    //        gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone { x = Convert.ToInt32(xy[0]), y = Convert.ToInt32(xy[1]), gameObject = other.gameObject }, 0f);
+    //        //here.
+    //        //gameController.GetComponent<GameController>().KillStoneWithDelay(other.gameObject, new GameController.GoStone { x= Convert.ToInt32(xy[0]), y= Convert.ToInt32(xy[1]) }, 0f);
+    //    }
+    //}
 }

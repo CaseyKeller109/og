@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     //todo more functions should return value?
     //todo reduce number of parameters in functions
     //todo reduce function size
+    //todo have camera follow stone after throwing
 
 
 
