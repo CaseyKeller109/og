@@ -12,16 +12,11 @@ public class GameController : MonoBehaviour
     //todo make buttons unclickable during play
     //todo have separate GoStone List for new board layout. last in stonePosHistory should always be current layout.
     //todo more functions should return value?
+    //todo make unit tests
     //todo reduce number of parameters in functions
     //todo reduce function size
     //todo have camera follow stone after throwing
-
-
-
-
-    //groupStonesToKill, groupStones are same? todo
-
-
+    //todo groupStonesToKill, groupStones are same? 
     //todo get rid of magic numbers everywhere
 
     //Stone position coordinates are 19x19 and are used as follows. x is left to right, y is top to bottom
@@ -66,8 +61,10 @@ public class GameController : MonoBehaviour
     Transform sensorStoneTrans;
     public GameObject explosionObjectParent;
     public GameObject explosion;
+
     //todo add these to GoStone class
     private GameObject[,] boardExploderGameObjects = new GameObject[20, 20];
+
     public GameObject whiteTextObject;
     public GameObject blackTextObject;
 
@@ -268,12 +265,10 @@ public class GameController : MonoBehaviour
                 )
             {
                 sensorStone.GetComponent<Renderer>().enabled = false;
-                //SensorStoneRenderEnabled(false);
             }
 
             else
             {
-                //todo remove many instances of isValidPlay?
                 ValidPlayData validPlayData = new ValidPlayData();
                 validPlayData = ValidPlayCheck(possibleStoneCoordinates);
                 if (!SameStoneCoordinates(previousMouseCoordinates, possibleStoneCoordinates))
@@ -291,12 +286,10 @@ public class GameController : MonoBehaviour
                 if (isValidPlay == true)
                 {
                     sensorStone.GetComponent<Renderer>().enabled = true;
-                    //SensorStoneRenderEnabled(true);
                 }
                 else if (isValidPlay == false)
                 {
                     sensorStone.GetComponent<Renderer>().enabled = false;
-                    //SensorStoneRenderEnabled(false);
                 }
 
                 CopyStoneCoordinates(possibleStoneCoordinates, previousMouseCoordinates);
@@ -306,10 +299,8 @@ public class GameController : MonoBehaviour
                                                                               -stoneZValue);
                 sensorStoneTrans.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
-                //todo fix Input things
                 //todo make background more transparent
                 if (Input.GetMouseButtonUp(0) && isValidPlay == true)
-                //if (Input.GetMouseButtonUp(0) && isValidPlay == true)
                 {
                     PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill);
                 }
@@ -320,15 +311,8 @@ public class GameController : MonoBehaviour
         else if (currentGameState == GameState.ThrowStone)
         {
             sensorStone.GetComponent<Renderer>().enabled = true;
-            //SensorStoneRenderEnabled(true);
-
             sensorStoneTrans.position = mainCamera.GetComponent<Transform>().position + 1 * mainCamera.GetComponent<Transform>().forward;
-
             sensorStoneTrans.rotation = mainCamera.transform.rotation * curentGoStoneRotation;
-            //sensorStoneTrans.Rotate( curentGoStoneRotation);
-
-
-            //sensorStoneTrans.rotation = mainCamera.transform.rotation;
 
             mainCamera.orthographic = false;
 
@@ -402,30 +386,6 @@ public class GameController : MonoBehaviour
             if (Time.time - timer > 2 && ogFiredStage == 1)
             {
                 GetNewBoardLayout();
-                //StonePosHistoryEntry stonePosHistoryEntry = GetNewBoardLayout();
-
-
-
-                //stonePosHistory.Add(new List<GoStone>());
-                //for (int i = 0; i < stonePosHistoryEntry.stones.Count; i++)
-                //{
-                //    stonePosHistory.Last().Add(stonePosHistoryEntry.stones[i]);
-                //}
-                ////stonePosHistory.Add(stonePosHistoryEntry.stones);
-                //stonePosHistoryGameObjects = stonePosHistoryEntry.gameObjects;
-
-
-                    //stonePosHistory.Last().Add(new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor });
-                    //stonePosHistoryGameObjects[CoordinateX, CoordinateY] = stoneToSort.gameObject;
-
-
-                //stonePosHistory.Add(new List<GoStone>());
-                //stonePosHistoryGameObjects = new GameObject[19, 19];
-
-
-
-
-
 
                 if (currentPlayerColor == StoneColor.black)
                 { currentPlayerColor = StoneColor.white; }
@@ -451,7 +411,6 @@ public class GameController : MonoBehaviour
                     mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
 
                     sensorStone.GetComponent<Renderer>().enabled = true;
-                    //SensorStoneRenderEnabled(true);
                     isOnFirstOgPlay = false;
                 }
 
@@ -495,14 +454,11 @@ public class GameController : MonoBehaviour
 
         if (groupStonesToKill != null)
         {
-            //print(groupStonesToKill.Count);
             //todo move this further down?
             KillGroupStones(groupStonesToKill);
         }
 
-
         sensorStone.GetComponent<Renderer>().enabled = false;
-        //SensorStoneRenderEnabled(false);
 
         GameObject newStoneObject = Instantiate(genericStoneObject,
                                           new Vector3(stoneCoordinates.x * boardCoordinateSeparationX,
@@ -512,12 +468,7 @@ public class GameController : MonoBehaviour
 
         newStoneObject.name = $"{stoneCoordinates.x}x{stoneCoordinates.y}xStone";
         newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
-        //print(stoneCoordinates.x + " " + stoneCoordinates.y);
 
-
-
-
-        //stonePosHistoryGameObjects[stoneCoordinates.x, stoneCoordinates.y] = newStoneObject;
 
         stonePosHistory.Last().Add(new GoStone
         {
@@ -527,20 +478,6 @@ public class GameController : MonoBehaviour
             gameObject = newStoneObject
             
         });
-
-        //here.
-        //stonePosHistoryGameObjects[stoneCoordinates.x, stoneCoordinates.y] = newStoneObject;
-
-        //stonePosHistory.Last().Add(new GoStone
-        //{
-        //    x = stoneCoordinates.x,
-        //    y = stoneCoordinates.y,
-        //    stoneColor = currentPlayerColor
-        //});
-
-
-
-
 
         if (currentPlayerColor == StoneColor.black)
         {
@@ -580,32 +517,26 @@ public class GameController : MonoBehaviour
     {
         GameObject newStone = Instantiate(genericStoneObject, sensorStoneTrans.position, Quaternion.identity);
         newStone.name = $"19x19xStone";
-        //newStone.GetComponent<Transform>().rotation *= curentGoStoneRotation;
         newStone.GetComponent<Transform>().rotation = mainCamera.transform.rotation * curentGoStoneRotation;
-        //newStone.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
         sensorStone.GetComponent<Renderer>().enabled = false;
-        //SensorStoneRenderEnabled(false);
 
         if (currentPlayerColor == StoneColor.black)
-        //if (isBlackTurn)
         {
             newStone.GetComponent<MeshRenderer>().material = blackMaterial;
             sensorStone.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.50f);
-            //currentPlayerColor = StoneColor.white;
-            //isBlackTurn = false;
         }
         else if (currentPlayerColor == StoneColor.white)
         {
             newStone.GetComponent<MeshRenderer>().material = whiteMaterial;
             sensorStone.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
-            //currentPlayerColor = StoneColor.black;
-            //isBlackTurn = true;
         }
 
         newStone.GetComponent<Rigidbody>().velocity = ogVelocity * mainCamera.transform.forward;
 
+        //todo implement this
+        //currentGameState = GameState.ProcessingThrow;
+
         currentGameState = GameState.PlaceStone;
-        //isOgPlay = false;
         isOgFired = true;
         timer = Time.time;
     }
@@ -618,7 +549,6 @@ public class GameController : MonoBehaviour
                                              (s.y == centerStone.y)) != null)
         {
             return new ValidPlayData() { isValidPlay = false };
-            //return false;
         }
 
         List<GoStone> boardIfStoneIsPlayed = new List<GoStone>();
@@ -674,7 +604,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        // Ko rule
+        //Simple Ko rule
         bool sameBoard = false;
         if (stonePosHistory.Count > 3
             && boardIfStoneIsPlayed.Count == stonePosHistory[stonePosHistory.Count - 2].Count
@@ -694,13 +624,10 @@ public class GameController : MonoBehaviour
         }
 
         if (sameBoard) { return new ValidPlayData() { isValidPlay = false }; }
-        //if (sameBoard) { return false; }
 
         if (openSides.Length > 0)
         { return new ValidPlayData() { isValidPlay = true, groupStonesToKill = groupStonesToKill }; }
         else { return new ValidPlayData() { isValidPlay = false }; }
-        // { return true; }
-        //else { return false; }
     }
 
     private bool LibertiesFromSideExists(GoStone centerStone,
@@ -709,11 +636,6 @@ public class GameController : MonoBehaviour
                                          List<GoStone> groupStonesToKill)
     {
         GoStoneGroup stoneGroup = new GoStoneGroup();
-        //groupLiberties = new List<GoStone>();
-
-        //groupStones = new List<GoStone>();
-        //groupLiberties = new List<GoStone>();
-        //List<GoStone> groupLiberties = new List<GoStone>();
 
         GoStone sideStone = new GoStone();
 
@@ -732,32 +654,26 @@ public class GameController : MonoBehaviour
         }
 
         FindGroupAndLibertyCoordinates(sideStone, boardIfStoneIsPlayed, ref stoneGroup);
-        //groupLiberties = FindGroupAndLibertyCoordinates(sideStone, boardIfStoneIsPlayed);
 
         if (sideStone.stoneColor == StoneColor.none)
         {
             return true;
         }
         else if (stoneGroup.libertyCoordinates.Count > 0 && sideStone.stoneColor == centerStone.stoneColor)
-        //else if (groupLiberties.Count > 0 && sideStone.stoneColor == centerStone.stoneColor)
         {
             return true;
         }
         else if (stoneGroup.libertyCoordinates.Count > 0 && sideStone.stoneColor != centerStone.stoneColor)
-        //else if (groupLiberties.Count > 0 && sideStone.stoneColor != centerStone.stoneColor)
         {
             return false;
         }
         else if (stoneGroup.libertyCoordinates.Count == 0 && sideStone.stoneColor == centerStone.stoneColor)
-        //else if (groupLiberties.Count == 0 && sideStone.stoneColor == centerStone.stoneColor)
         {
             return false;
         }
         else if (stoneGroup.libertyCoordinates.Count == 0 && sideStone.stoneColor != centerStone.stoneColor)
-        //else if (groupLiberties.Count == 0 && sideStone.stoneColor != centerStone.stoneColor)
         {
             foreach (GoStone stone in stoneGroup.stones)
-            //foreach (GoStone arr in groupStones)
             {
                 groupStonesToKill.Add(stone);
             }
@@ -776,7 +692,6 @@ public class GameController : MonoBehaviour
     //starts searching at centerStoneCoordinates
     private void FindGroupAndLibertyCoordinates(GoStone startStone, List<GoStone> boardIfStoneIsPlayed, ref GoStoneGroup stoneGroup)
     {
-
         if (stoneGroup.stones.Find(s => SameStoneCoordinates(s, startStone)) == null)
         {
             stoneGroup.stones.Add(new GoStone
@@ -791,7 +706,6 @@ public class GameController : MonoBehaviour
         FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.x < 18), StoneOffset.right, ref stoneGroup);
         FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y < 18), StoneOffset.up, ref stoneGroup);
         FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y > 0), StoneOffset.down, ref stoneGroup);
-        //print(stoneGroup.libertyCoordinates.Count);
     }
 
 
@@ -825,8 +739,6 @@ public class GameController : MonoBehaviour
                                             (p.y == sideStone.y + offset.y)) == null
                 )
             {
-               // print("1");
-                //return
                 FindGroupAndLibertyCoordinates(new GoStone
                 {
                     x = sideStone.x + offset.x,
@@ -841,53 +753,34 @@ public class GameController : MonoBehaviour
                                                               (p.y == sideStone.y + offset.y))) == null)
 
             {
-                //print("2");
 
                 stoneGroup.libertyCoordinates.Add(new GoStone
                 {
                     x = sideStone.x + offset.x,
                     y = sideStone.y + offset.y
                 });
-                //return 1;
             }
-            //else { return 0; }
         }
-        //else { return 0; }
-        //print(stoneGroup.libertyCoordinates.Count);
     }
 
     private void GetNewBoardLayout()
     //private StonePosHistoryEntry GetNewBoardLayout()
     {
-        //test
-        //todo this
+
+        //todo implement this?
         //StonePosHistoryEntry newStonePosHistoryEntry = new StonePosHistoryEntry();
 
         stonePosHistory.Add(new List<GoStone>());
 
 
-
-        //here.
-        //stonePosHistoryGameObjects = new GameObject[19, 19];
-
-
-
-
         //finds stones in layer 8, "Stone"
-
         Collider[] sortedStonesInRange = Physics.OverlapSphere(new Vector3(0, 0, 0), 10, LayerMask.GetMask("Stone"));
-        //Collider[] sortedStonesInRange = Physics.OverlapSphere(new Vector3(0, 0, 0), 10, 8);
 
-
-        //Collider[] sortedStonesInRange = Physics.OverlapSphere(new Vector3(0, 0, 0), 10, LayerMask.GetMask("SortedStone"));
 
         foreach (Collider sortedStone in sortedStonesInRange)
         {
             //changes layer to "SortingStone"
             sortedStone.gameObject.layer = 9;
-
-            ////changes layer to "Stone"
-            //sortedStone.gameObject.layer = 8;
         }
 
         int searchIncrement = 200;
@@ -900,10 +793,8 @@ public class GameController : MonoBehaviour
                     //GoStone localStone = newStonePosHistoryEntry.stones.Find(s => s.x == iteratedX &&
                     //                                                       s.y == iteratedY);
 
-                    //here.
                     GoStone localStone = stonePosHistory.Last().Find(s => s.x == iteratedX &&
                                                                           s.y == iteratedY);
-
 
 
                     if (localStone == null) { localStone = new GoStone(); }
@@ -916,7 +807,6 @@ public class GameController : MonoBehaviour
                                                                      boardCoordinateSeparationX * 19 * 2 * (r / searchIncrement),
                                                                      //9);
                                                                      LayerMask.GetMask("SortingStone"));
-                    //LayerMask.GetMask("Stone"));
 
                     if (stonesInRange.Length == 0)
                     {
@@ -932,11 +822,6 @@ public class GameController : MonoBehaviour
 
                     //newStonePosHistoryEntry.stones.Add(new GoStone { x = sortedStone.x, y = sortedStone.y, stoneColor = sortedStone.stoneColor });
                     //newStonePosHistoryEntry.gameObjects[sortedStone.x, sortedStone.y] = sortedStone.gameObject;
-
-
-                    //stonePosHistory.Last().Add(new GoStone { x = sortedStone.x, y = sortedStone.y, stoneColor = sortedStone.stoneColor });
-                    //stonePosHistoryGameObjects[sortedStone.x, sortedStone.y] = sortedStone.gameObject;
-
                 }
             }
         }
@@ -947,15 +832,11 @@ public class GameController : MonoBehaviour
                                             currentPlayerColor == StoneColor.white ? StoneColor.black :StoneColor.white
                                             ,
                                             currentPlayerColor
-
-        //List<StoneColor> StoneColors = new List<StoneColor>() {currentPlayerColor,
-        //                                    currentPlayerColor == StoneColor.white ? StoneColor.black :StoneColor.white
         };
 
+        //todo improve this?
         foreach (StoneColor iteratedColor in StoneColors)
         {
-
-            //for (int i = 0; i<2; i++) { 
             for (int iteratedY = 0; iteratedY < 19; iteratedY++)
             {
                 for (int iteratedX = 0; iteratedX < 19; iteratedX++)
@@ -964,7 +845,6 @@ public class GameController : MonoBehaviour
                     //GoStone localStone = newStonePosHistoryEntry.stones.Find(s => (s.x == iteratedX) &&
                     //                                                              (s.y == iteratedY));
 
-                    //here.
                     GoStone localStone = stonePosHistory.Last().Find(s => (s.x == iteratedX) &&
                                                                           (s.y == iteratedY));
 
@@ -974,18 +854,12 @@ public class GameController : MonoBehaviour
                     }
 
                     if (localStone.stoneColor == StoneColor.none ||
-
-
-
-                        localStone.stoneColor != iteratedColor ||
-                        //localStone.stoneColor == iteratedColor ||
+                        localStone.stoneColor != iteratedColor   ||
                         alreadyGroupedStones.Find(p => p.x == iteratedX &&
                                                        p.y == iteratedY) != null)
                     {
                         continue;
                     }
-                    //print(iteratedColor);
-
 
                     GoStoneGroup stoneGroup = new GoStoneGroup();
                     List<GoStone> groupStonesToKill = new List<GoStone>();
@@ -1000,7 +874,6 @@ public class GameController : MonoBehaviour
                         stoneColor = localStone.stoneColor
                     },
                     //newStonePosHistoryEntry.stones,
-                    //here.
                     stonePosHistory.Last(),
                     ref stoneGroup
                     );
@@ -1009,9 +882,6 @@ public class GameController : MonoBehaviour
                     {
                         print("xy: " + coordinates.x + " " + coordinates.y);
                     }
-
-
-                    //print("liberties: " + stoneGroup.libertyCoordinates.Count);
 
                     foreach (GoStone entry in stoneGroup.stones)
                     {
@@ -1029,27 +899,15 @@ public class GameController : MonoBehaviour
                     {
                         foreach (GoStone stone in stoneGroup.stones)
                         {
-                            //print("1: " + stone.x + " " + stone.y);
-                            //print(arr.stoneColor);
                             groupStonesToKill.Add(stone);
                         }
 
                         KillGroupStones(stoneGroup.stones);
-
-
-
                     }
                 }
             }
         }
-
-        //if (currentPlayerColor == StoneColor.black)
-        //{ currentPlayerColor = StoneColor.white; }
-        //else if (currentPlayerColor == StoneColor.white)
-        //{ currentPlayerColor = StoneColor.black; }
-
         //return newStonePosHistoryEntry;
-
     }
 
     public void PlusOneToScore(StoneColor stoneColor)
@@ -1057,14 +915,10 @@ public class GameController : MonoBehaviour
         if (stoneColor == StoneColor.black)
         {
             ChangeFloatAndText(ref blackScore, 1, blackTextObject, "Black Captures: ", false);
-            //blackScore += 1;
-            //blackTextObject.GetComponent<Text>().text = "Black Captures: " + blackScore;
         }
         if (stoneColor == StoneColor.white)
         {
             ChangeFloatAndText(ref whiteScore, 1, whiteTextObject, "White Captures: ", false);
-            //whiteScore += 1;
-            //whiteTextObject.GetComponent<Text>().text = "White Captures: " + whiteScore;
         }
     }
 
@@ -1083,14 +937,12 @@ public class GameController : MonoBehaviour
     {
         currentGameState = GameState.ThrowStone;
         curentGoStoneRotation = Quaternion.identity;
-        //isOgPlay = true;
         isOgNowFirstFrame = true;
         ogProb = ogBaseProb;
         ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
         mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
         mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
         sensorStone.GetComponent<Renderer>().enabled = true;
-        //SensorStoneRenderEnabled(true);
     }
 
     private void ChangeFloatAndText(ref float valueToChange, int valueAdded, GameObject textObject, string text, bool isPercent)
@@ -1108,36 +960,17 @@ public class GameController : MonoBehaviour
             GoStone stoneToDestroy = stonePosHistory.Last().Find(s => (s.x == stone.x) &&
                                                                       (s.y == stone.y));
 
-
-
             if (stoneToDestroy == null) { continue; }
-
-            //here.
-            //if (stonePosHistoryGameObjects[stone.x, stone.y] == null) { continue; }
-
-
-
-
 
             KillStoneWithDelay(
                           stoneToDestroy,
                          0.2f,
                          0.2f * groupStonesToKill.IndexOf(stone));
-            //here.
-            //KillStoneWithDelay(stonePosHistoryGameObjects[stone.x, stone.y],
-            //              stoneToDestroy,
-            //             0.2f,
-            //             0.2f * groupStonesToKill.IndexOf(stone));
-
-
-
         }
 
     }
 
     public void KillStoneWithDelay(GoStone StoneToDestroy, float destroyDelay, float entireDelay = 0)
-    //here.
-    //public void KillStoneWithDelay(GameObject objectToDestroy, GoStone StoneToDestroy, float destroyDelay, float entireDelay = 0)
     {
 
         stonePosHistory.Last().Remove(stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
@@ -1154,20 +987,13 @@ public class GameController : MonoBehaviour
         else { print("NO COLOR SET FOR DESTRUCTION"); }
 
         StoneToDestroy.gameObject.layer = 8;
-        //here.
-        //to "Stone" layer
-        //objectToDestroy.layer = 8;
 
-        ////to "SortedStone" layer
-        //objectToDestroy.layer = 9;
-        //objectToDestroy.layer = LayerMask.NameToLayer("SortedStone");
         StartCoroutine(DelayDestroyCoroutine());
 
         IEnumerator DelayDestroyCoroutine()
         {
             yield return new WaitForSeconds(entireDelay);
 
-            //check
             GameObject exploder = boardExploderGameObjects[StoneToDestroy.y, StoneToDestroy.x];
 
             exploder.GetComponent<UnityEngine.Video.VideoPlayer>().frame = 7;
@@ -1175,29 +1001,13 @@ public class GameController : MonoBehaviour
 
             yield return new WaitForSeconds(0.2f);
 
-
-            
             exploder.transform.position = StoneToDestroy.gameObject.transform.position;
-            //here.
-            //exploder.transform.position = objectToDestroy.transform.position;
-
-
-
             exploder.GetComponent<Renderer>().enabled = true;
             exploder.transform.LookAt(mainCamera.transform, new Vector3(0, 0, 1));
             exploder.transform.rotation = mainCamera.transform.rotation;
 
-
-
-           
             Destroy(StoneToDestroy.gameObject);
-            //here.
-            //Destroy(objectToDestroy);
-
-
-
-
-
+            
             isValidPlay = null;
 
             yield return new WaitForSeconds(7);
@@ -1216,8 +1026,6 @@ public class GameController : MonoBehaviour
         stoneToSort.GetComponent<Transform>().rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
         stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 
-
-
         StoneColor stoneToSortColor = StoneColor.none;
         if (stoneToSort.GetComponent<MeshRenderer>().material.name == "Black Stone (Instance)")
         {
@@ -1229,17 +1037,12 @@ public class GameController : MonoBehaviour
             stoneToSortColor = StoneColor.white;
         }
 
-
-
-        //test
-        
-        //these two needed? test 
         stonePosHistory.Last().Add(new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject });
 
         //changes layer to "Stone"
         stoneToSort.gameObject.layer = 8;
 
-        //todo implement this
+        //todo use this return value
         return new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject  };
     }
 
@@ -1256,15 +1059,12 @@ public class GameController : MonoBehaviour
         //public int x;
         //public int y;
         public StoneColor stoneColor = StoneColor.none;
-        public List<GoStoneCoordinates> libertyCoordinates = new List<GoStoneCoordinates>();
-        //public List<LibertyDirection> stoneLiberties = new List<LibertyDirection>(); 
+        //public List<GoStoneCoordinates> libertyCoordinates = new List<GoStoneCoordinates>();
 
         public GameObject gameObject;
         
         public readonly static float diameter = 0.22f;
     }
-
-    //public class GoStone
 
     public class GoStoneGroup
     {
@@ -1291,14 +1091,7 @@ public class GameController : MonoBehaviour
     {
         public List<GoStone> stones = new List<GoStone>();
         public GameObject[,] gameObjects = new GameObject[19, 19];
-
-
-        //stonePosHistory.Add(new List<GoStone>());
-        //stonePosHistoryGameObjects = new GameObject[19, 19];
-
     }
-
-    //public class 
 
     public class ValidPlayData
     {
