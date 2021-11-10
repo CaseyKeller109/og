@@ -23,10 +23,10 @@ namespace Tests
 
         // A Test behaves as an ordinary method
         [Test]
-        public void PlaceGoStone_12B_11W_12B()
+        public void PlaceGoStone_12B_11W_21B()
         {
 
-
+            //todo make functions for playing stones
             //GameObject whiteTextObject;
             //GameObject blackTextObject;
 

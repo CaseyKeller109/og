@@ -1,4 +1,27 @@
 
+Temp/
+Library/
+
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
 Temp/__Backupscenes/0.backup
 Temp/bin/Debug/Assembly-CSharp.dll
 Temp/bin/Debug/Assembly-CSharp.pdb
@@ -760,3 +783,5 @@ Temp/UnityTempFile-f635a7dc0c6024d4ca8e50aba1a21c0e
 Temp/UnityTempFile-f7a6dd9d628df464e9ee8590d4b43532
 Temp/UnityTempFile-fe34b14d581b0a94ca600911c0a32e0f
 Temp/UnityTempFile-fe439ed90ebefcd419f6c699a9b153b3
+Library/SourceAssetDB
+Library/SourceAssetDB
