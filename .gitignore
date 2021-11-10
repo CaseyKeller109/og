@@ -1,6 +1,6 @@
 
 Temp/
-Library/
+[Ll]ibrary/
 
 ExportedObj/
 obj/
@@ -785,3 +785,15 @@ Temp/UnityTempFile-fe34b14d581b0a94ca600911c0a32e0f
 Temp/UnityTempFile-fe439ed90ebefcd419f6c699a9b153b3
 Library/SourceAssetDB
 Library/SourceAssetDB
+Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+Library/ScriptAssemblies/Assembly-CSharp.dll
+Library/ScriptAssemblies/Assembly-CSharp.pdb
+Library/SourceAssetDB
+Library/StateCache/Hierarchy/125f83-mainStage.json
+Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+Library/ScriptAssemblies/Assembly-CSharp.dll
+Library/ScriptAssemblies/Assembly-CSharp.pdb
+Library/SourceAssetDB
+Library/StateCache/Hierarchy/125f83-mainStage.json

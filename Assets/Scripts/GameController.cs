@@ -312,7 +312,7 @@ public class GameController : MonoBehaviour
                 //todo make background more transparent
                 if (Input.GetMouseButtonUp(0) && isValidPlay == true)
                 {
-                    PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill, sensorStone, genericStoneObject);
+                    PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill);
 
                     if (currentPlayerColor == StoneColor.black)
                     { currentPlayerColor = StoneColor.white; }
@@ -475,9 +475,7 @@ public class GameController : MonoBehaviour
         sensorStone.GetComponent<Renderer>().enabled = isEnabled;
     }
 
-    //todo use less arguments here?
-    public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill, GameObject sensorStone, GameObject genericStoneObject)
-    //public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill)
+    public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill)
     {
         isValidPlay = false;
 
@@ -538,8 +536,6 @@ public class GameController : MonoBehaviour
             //sensorStone.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(0f, 0f, 0f, 0.50f);
             //sensorStone.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
         }
-
-
     }
 
     //todo have direction, speed, etc passed here

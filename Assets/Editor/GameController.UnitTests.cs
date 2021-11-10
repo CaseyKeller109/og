@@ -31,18 +31,16 @@ namespace Tests
             //GameObject blackTextObject;
 
             //todo set these like gameController.sensorStoneObject etc
-            GameObject sensorStoneObject = Resources.Load("StoneSensor") as GameObject;
-            GameObject sensorStone = GameObject.Instantiate(sensorStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
-            GameObject genericStoneObject = Resources.Load("Stone") as GameObject;
-            //GameObject whiteTextObject = new GameObject();
-            //GameObject blackTextObject = new GameObject();
+
+
+            gameController.sensorStone = GameObject.Instantiate(Resources.Load("StoneSensor") as GameObject, new Vector3(0, 0, 0), Quaternion.identity);
+            gameController.genericStoneObject = Resources.Load("Stone") as GameObject;
 
             gameController.whiteTextObject = new GameObject();
             gameController.blackTextObject = new GameObject();
             gameController.whiteTextObject.AddComponent<Text>();
             gameController.blackTextObject.AddComponent<Text>();
 
-            //gameController.coroutineHandler = new GameObject("_coroutineHandler");
 
             gameController.stonePosHistory.Add(new List<GoStone>());
 
@@ -52,13 +50,13 @@ namespace Tests
 
             GameController.ValidPlayData validPlayData = new GameController.ValidPlayData();
             validPlayData = gameController.ValidPlayCheck(stone_12B);
-            gameController.PlaceGoStone(stone_12B, validPlayData.groupStonesToKill, sensorStone, genericStoneObject);
+            gameController.PlaceGoStone(stone_12B, validPlayData.groupStonesToKill);
 
 
 
-            //Assert.IsTrue(null != gameController.stonePosHistory.Last().Find(s => s.x == 0 &&
-            //                                                                      s.y == 1 &&
-            //                                                                      s.stoneColor == GameController.StoneColor.black));
+            Assert.IsTrue(null != gameController.stonePosHistory.Last().Find(s => s.x == 0 &&
+                                                                                  s.y == 1 &&
+                                                                                  s.stoneColor == GameController.StoneColor.black));
 
 
 
@@ -67,7 +65,8 @@ namespace Tests
 
             //GameController.ValidPlayData validPlayData = new GameController.ValidPlayData();
             validPlayData = gameController.ValidPlayCheck(stone_11W);
-            gameController.PlaceGoStone(stone_11W, validPlayData.groupStonesToKill, sensorStone, genericStoneObject);
+            gameController.PlaceGoStone(stone_11W, validPlayData.groupStonesToKill);
+            //gameController.PlaceGoStone(stone_11W, validPlayData.groupStonesToKill, sensorStone, genericStoneObject);
 
 
             Assert.IsTrue(null != gameController.stonePosHistory.Last().Find(s => s.x == 0 &&
@@ -81,7 +80,8 @@ namespace Tests
 
             //GameController.ValidPlayData validPlayData = new GameController.ValidPlayData();
             validPlayData = gameController.ValidPlayCheck(stone_21B);
-            gameController.PlaceGoStone(stone_21B, validPlayData.groupStonesToKill, sensorStone, genericStoneObject);
+            gameController.PlaceGoStone(stone_21B, validPlayData.groupStonesToKill);
+            //gameController.PlaceGoStone(stone_21B, validPlayData.groupStonesToKill, sensorStone, genericStoneObject);
 
 
 
