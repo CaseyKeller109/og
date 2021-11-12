@@ -26,18 +26,20 @@ namespace Tests
 
             //ThrowStone(0, 1, StoneColor.black);
             PlayStoneIfValid(0, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             //ThrowStone(0, 0, StoneColor.white);
             PlayStoneIfValid(0, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             //ThrowStone(1, 0, StoneColor.black);
             PlayStoneIfValid(1, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+
+
         }
 
         [Test]
@@ -46,16 +48,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
         }
 
         [Test]
@@ -64,16 +66,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(0, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
         }
 
         [Test]
@@ -82,16 +84,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(1, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
         }
 
 
@@ -102,29 +104,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
         }
 
         [Test]
@@ -133,29 +135,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
         }
 
         [Test]
@@ -164,29 +166,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(0, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             PlayStoneIfValid(2, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
         }
 
         [Test]
@@ -195,29 +197,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(2, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
         }
 
 
@@ -228,56 +230,56 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(1, 2, StoneColor.Black);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(0, 2, StoneColor.White);
-            Assert.IsTrue(FindStone(0, 2, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(0, 3, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 3, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 2, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 3, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 2, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 2, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
         }
 
@@ -291,16 +293,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
         }
 
         [Test]
@@ -309,16 +311,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
         }
 
         [Test]
@@ -327,16 +329,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(18, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
         }
 
         [Test]
@@ -345,16 +347,16 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(17, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
             PlayStoneIfValid(18, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
         }
 
 
@@ -365,29 +367,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             PlayStoneIfValid(17, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             PlayStoneIfValid(16, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
         }
 
         [Test]
@@ -396,29 +398,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(16, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             PlayStoneIfValid(17, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
         }
 
         [Test]
@@ -427,29 +429,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(18, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             PlayStoneIfValid(17, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             PlayStoneIfValid(16, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
         }
 
         [Test]
@@ -458,29 +460,29 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(16, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             PlayStoneIfValid(17, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             PlayStoneIfValid(18, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
         }
 
 
@@ -491,56 +493,56 @@ namespace Tests
             InitialSetup();
 
             PlayStoneIfValid(17, 17, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(16, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(18, 17, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(17, 16, StoneColor.Black);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(18, 16, StoneColor.White);
-            Assert.IsTrue(FindStone(18, 16, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(18, 15, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 15, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 16, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 15, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 16, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 16, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
         }
 
@@ -564,20 +566,20 @@ namespace Tests
             //PlayStoneIfValid(0, 1, StoneColor.black);
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             //PlayStoneIfValid(0, 0, StoneColor.white);
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             //PlayStoneIfValid(1, 0, StoneColor.black);
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
 
 
@@ -603,18 +605,18 @@ namespace Tests
 
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
         }
 
@@ -625,18 +627,18 @@ namespace Tests
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
         }
 
@@ -647,18 +649,18 @@ namespace Tests
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
         }
 
@@ -672,33 +674,33 @@ namespace Tests
 
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(2, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
         }
 
@@ -709,33 +711,33 @@ namespace Tests
 
             ThrowStone(2, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
         }
 
@@ -746,33 +748,33 @@ namespace Tests
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(1, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(2, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
         }
 
@@ -783,33 +785,33 @@ namespace Tests
 
             ThrowStone(2, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(1, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
         }
 
@@ -823,63 +825,63 @@ namespace Tests
 
             ThrowStone(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(2, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(1, 2, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 2, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 2, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 3, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 3, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 2, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(0, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 3, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 2, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 2, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(0, 1, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(2, 0, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(1, 0, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(1, 1, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 2, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
+            Assert.IsFalse(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
 
         }
@@ -895,18 +897,18 @@ namespace Tests
 
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
         }
 
@@ -917,18 +919,18 @@ namespace Tests
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
 
         }
@@ -940,18 +942,18 @@ namespace Tests
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
         }
 
@@ -962,18 +964,18 @@ namespace Tests
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
         }
 
@@ -987,33 +989,33 @@ namespace Tests
 
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(17, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(16, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
         }
 
@@ -1024,33 +1026,33 @@ namespace Tests
 
             ThrowStone(16, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(17, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
         }
 
@@ -1061,33 +1063,33 @@ namespace Tests
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(17, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(16, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
         }
 
@@ -1098,33 +1100,33 @@ namespace Tests
 
             ThrowStone(16, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(17, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.Black) == null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.White) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
         }
 
@@ -1138,63 +1140,63 @@ namespace Tests
 
             ThrowStone(17, 17, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(16, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(17, 16, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 16, StoneColor.White);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 16, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 15, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 15, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 16, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) != null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout();
-            Assert.IsTrue(FindStone(18, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 15, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 16, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 16, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(18, 17, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(16, 18, StoneColor.Black) != null);
-            Assert.IsTrue(FindStone(17, 18, StoneColor.White) == null);
-            Assert.IsTrue(FindStone(17, 17, StoneColor.Black) != null);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 16, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
+            Assert.IsFalse(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
 
         }
@@ -1278,34 +1280,48 @@ namespace Tests
             gameController.currentGameState = GameState.ThrowStone;
         }
 
-        public GoStone FindStone(int xCoordinate, int yCoordinate, StoneColor stoneColor)
+        public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
         {
-            //bool isFoundStoneExists = false;
-            GoStone foundStone = gameController.stonePosHistory.Last().Find(s => s.x == xCoordinate &&
-                                                                                 s.y == yCoordinate &&
-                                                                                 s.stoneColor == stoneColor);
-            //if (foundStone != null)
+            bool isFoundStoneExists = false;
+            GoStone foundStone = gameController.stonePosHistory.Last().Find(s => s.x == searchX &&
+                                                                                 s.y == searchY &&
+                                                                                 s.stoneColor == searchColor);
+
+            if (foundStone != null)
+            {
+                isFoundStoneExists = true;
+            }
+
+            //if (foundStone == null)
+            //{
+            //    return false;
+            //}
+            //else
             //{
             //    isFoundStoneExists = true;
             //}
 
 
-            //bool isFoundStoneObjectExists = false;
-            //foreach (GameObject stoneObject in GameObject.FindGameObjectsWithTag("Stone"))
-            //{
-            //    //stone object name format
-            //    //$"{stoneCoordinates.x}x{stoneCoordinates.y}x{currentPlayerColor}Stone"
-            //    if (stoneObject.name.Contains(foundStone.x.ToString()) &&
-            //        stoneObject.name.Contains(foundStone.y.ToString()) &&
-            //        stoneObject.name.Contains(foundStone.stoneColor.ToString()))
-            //    {
-            //        isFoundStoneObjectExists = true;
-            //    }
-            //}
+            bool isFoundStoneObjectExists = false;
 
+            foreach (GameObject stoneObject in GameObject.FindGameObjectsWithTag("Stone"))
+            {
+                //stone object name format
+                //$"{stoneCoordinates.x}x{stoneCoordinates.y}x{currentPlayerColor}Stone"
 
-            //return (isFoundStoneExists && isFoundStoneObjectExists);
-            return foundStone;
+                if (stoneObject.name.Contains(searchX.ToString() + "x" + (searchY.ToString())) &&
+                    stoneObject.name.Contains(searchColor.ToString()))
+                //if (stoneObject.name.Contains(foundStone.x.ToString() + "x" + (foundStone.y.ToString())) &&
+                //    stoneObject.name.Contains(foundStone.stoneColor.ToString()))
+                {
+                    //return true;
+                    isFoundStoneObjectExists = true;
+                }
+
+            }
+            //return false;
+
+            return (isFoundStoneExists && isFoundStoneObjectExists);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
