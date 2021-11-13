@@ -71,8 +71,6 @@ public class GameController : MonoBehaviour
 
     public GameObject whiteTextObject;
     public GameObject blackTextObject;
-    //public GameObject whiteTextObject = new GameObject();
-    //public GameObject blackTextObject = new GameObject();
 
     public float whiteScore = 0;
     public float blackScore = 0;
@@ -481,9 +479,6 @@ public class GameController : MonoBehaviour
 
         stonePosHistory.Add(new List<GoStone>());
 
-        //int previousBoardIndex = stonePosHistory.Count - 2;
-        //if (previousBoardIndex == -1) { previousBoardIndex =}
-
         for (int i = 0; i < stonePosHistory[stonePosHistory.Count - 2].Count; i++)
         {
             stonePosHistory.Last().Add(stonePosHistory[stonePosHistory.Count - 2][i]);
@@ -519,22 +514,12 @@ public class GameController : MonoBehaviour
         if (currentPlayerColor == StoneColor.Black)
         {
             newStoneObject.GetComponent<MeshRenderer>().material = blackMaterial;
-            //newStoneObject.GetComponent<MeshRenderer>().sharedMaterial = blackMaterial;
-
-            //test
             sensorStone.GetComponent<MeshRenderer>().material = whiteMaterialTransparent;
-            //sensorStone.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(1f, 1f, 1f, 0.50f);
-            //sensorStone.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.50f);
         }
         else if (currentPlayerColor == StoneColor.White)
         {
             newStoneObject.GetComponent<MeshRenderer>().material = whiteMaterial;
-            //newStoneObject.GetComponent<MeshRenderer>().sharedMaterial = whiteMaterial;
-
-            //test
             sensorStone.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
-            //sensorStone.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(0f, 0f, 0f, 0.50f);
-            //sensorStone.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
         }
     }
 
@@ -1064,30 +1049,6 @@ public class GameController : MonoBehaviour
 
 
         stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
-
-
-
-
-        //if (stoneToSort.transform.parent.stoneColor == StoneColor.black)
-        //{
-        //    stoneToSortColor = StoneColor.black;
-        //}
-
-        //else if (stoneToSort.GetComponent<MeshRenderer>().material.name == "White Stone (Instance)")
-        //{
-        //    stoneToSortColor = StoneColor.white;
-        //}
-
-
-        //if (stoneToSort.GetComponent<MeshRenderer>().material.name == "Black Stone (Instance)")
-        //{
-        //    stoneToSortColor = StoneColor.black;
-        //}
-
-        //else if (stoneToSort.GetComponent<MeshRenderer>().material.name == "White Stone (Instance)")
-        //{
-        //    stoneToSortColor = StoneColor.white;
-        //}
 
         stonePosHistory.Last().Add(new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject });
 
