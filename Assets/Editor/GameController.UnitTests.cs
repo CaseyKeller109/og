@@ -1148,9 +1148,84 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
         }
 
+        //todo rename funcitons with more than just positions
 
+        // simple ko
+        [Test]
+        public void PlaceGoStone_Ko_0_1B_1_1W_1_0B_2_0W_0_0W_0_0B()
+        {
+            InitialSetup();
 
+            PlayStoneIfValid(0, 1, StoneColor.Black);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
+            PlayStoneIfValid(1, 1, StoneColor.White);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+
+            PlayStoneIfValid(1, 0, StoneColor.Black);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+
+            PlayStoneIfValid(2, 0, StoneColor.White);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+
+            PlayStoneIfValid(0, 0, StoneColor.White);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+
+            PlayStoneIfValid(0, 1, StoneColor.Black);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+        }
+
+        [Test]
+        public void PlaceGoStone_Ko_0_1W_1_1B_1_0W_2_0B_0_0B_0_0W()
+        {
+            InitialSetup();
+
+            PlayStoneIfValid(0, 1, StoneColor.White);
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+
+            PlayStoneIfValid(1, 1, StoneColor.Black);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+
+            PlayStoneIfValid(1, 0, StoneColor.White);
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+
+            PlayStoneIfValid(2, 0, StoneColor.Black);
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+
+            PlayStoneIfValid(0, 0, StoneColor.Black);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+
+            PlayStoneIfValid(0, 1, StoneColor.White);
+            Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
+            Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+        }
 
 
 

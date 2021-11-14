@@ -10,9 +10,8 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     //todo make buttons unclickable during play
-    //todo have separate GoStone List for new board layout. last in stonePosHistory should always be current layout.
+    //todo have separate GoStone List for new board layout. last in stonePosHistory should always be current layout?
     //todo more functions should return value?
-    //todo make unit tests
     //todo reduce number of parameters in functions
     //todo reduce function size
     //todo have camera follow stone after throwing
@@ -41,7 +40,7 @@ public class GameController : MonoBehaviour
 
     //stone diameter is 0.22
 
-    //TODO make more things private, local
+    //TODO make more things local
     public GameObject title;
     public GameObject title2;
     public float timer;
@@ -65,7 +64,7 @@ public class GameController : MonoBehaviour
     public GameObject explosionObjectParent;
     public GameObject explosion;
 
-    //todo add these to GoStone class
+    //todo add these to GoStone class?
     private GameObject[,] boardExploderGameObjects = new GameObject[20, 20];
 
 
@@ -126,7 +125,7 @@ public class GameController : MonoBehaviour
         sensorStoneTrans = sensorStone.GetComponent<Transform>();
         stonePosHistory.Add(new List<GoStone>());
 
-        ogNowButton.onClick.AddListener(ogNow);
+        ogNowButton.onClick.AddListener(OgNow);
         plusOgSpeedButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogVelocity, 1, ogSpeedText, "Throw Speed: ", false); });
         minusOgSpeedButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogVelocity, -1, ogSpeedText, "Throw Speed: ", false); });
         plusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogBaseProb, 10, ogBaseProbText, "Base Og Prob: ", true); });
@@ -307,7 +306,6 @@ public class GameController : MonoBehaviour
                                                                               -stoneZValue);
                 sensorStoneTrans.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
-                //todo make background more transparent
                 if (Input.GetMouseButtonUp(0) && isValidPlay == true)
                 {
                     PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill);
@@ -326,6 +324,7 @@ public class GameController : MonoBehaviour
                         ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
                         mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
                         mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
+                        DisableButtons();
                     }
 
                     else
@@ -441,6 +440,7 @@ public class GameController : MonoBehaviour
                     ogProbText.GetComponent<Text>().text = "Og Prob: " + ogProb + "%";
                     mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
                     mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
+                    DisableButtons();
 
                     sensorStone.GetComponent<Renderer>().enabled = true;
                     isOnFirstOgPlay = false;
@@ -454,6 +454,7 @@ public class GameController : MonoBehaviour
                     mainCamera.GetComponent<Transform>().position = defaultCameraPosition;
                     mainCamera.GetComponent<Transform>().rotation = defaultCameraRotation;
                     mainCamera.orthographic = true;
+                    EnableButtons();
 
                     isOnFirstOgPlay = true;
                 }
@@ -946,7 +947,7 @@ public class GameController : MonoBehaviour
         ThrowStone
     }
 
-    private void ogNow()
+    private void OgNow()
     {
         currentGameState = GameState.ThrowStone;
         curentGoStoneRotation = Quaternion.identity;
@@ -956,6 +957,27 @@ public class GameController : MonoBehaviour
         mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
         mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
         sensorStone.GetComponent<Renderer>().enabled = true;
+        DisableButtons();
+    }
+
+    private void EnableButtons()
+    {
+        resetButton.enabled = true;
+        ogNowButton.enabled = true;
+        plusOgSpeedButton.enabled = true;
+        minusOgSpeedButton.enabled = true;
+        plusOgBaseProbButton.enabled = true;
+        minusOgBaseProbButton.enabled = true;
+    }
+
+    private void DisableButtons()
+    {
+        resetButton.enabled = false;
+        ogNowButton.enabled = false;
+        plusOgSpeedButton.enabled = false;
+        minusOgSpeedButton.enabled = false;
+        plusOgBaseProbButton.enabled = false;
+        minusOgBaseProbButton.enabled = false;
     }
 
     private void ChangeFloatAndText(ref float valueToChange, int valueAdded, GameObject textObject, string text, bool isPercent)
@@ -1004,7 +1026,7 @@ public class GameController : MonoBehaviour
         //todo use something other than Text?
         Text coroutineHandler = (new GameObject("_coroutineHandler")).AddComponent<Text>();
         coroutineHandler.StartCoroutine(DelayDestroyCoroutine());
-        
+
         IEnumerator DelayDestroyCoroutine()
         {
             yield return new WaitForSeconds(entireDelay);
