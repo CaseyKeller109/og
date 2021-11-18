@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
     //todo reduce number of parameters in functions
     //todo reduce function size
     //todo get rid of magic numbers everywhere
-    //todo fix stones out of bounds getting picked up after throw
 
     //todo change coordinates to go from 1 to 19?
     //Stone position coordinates are 19x19 and are used as follows. x is left to right, y is top to bottom
@@ -387,16 +386,21 @@ public class GameController : MonoBehaviour
 
         else if (isOgFired)
         {
-            mainCamera.GetComponent<Transform>().position = Vector3.Lerp(mainCamera.GetComponent<Transform>().position,
-                thrownStone.gameObject.GetComponent<Transform>().position - 1.5f * mainCamera.GetComponent<Transform>().forward,
-                0.04f);
-
-            if (Vector3.Angle(mainCamera.GetComponent<Transform>().forward, (Vector3.forward)) < 60)
+            if (thrownStone.gameObject != null)
             {
 
-                mainCamera.GetComponent<Transform>().localRotation = Quaternion.Lerp(mainCamera.GetComponent<Transform>().localRotation,
-                                                                            mainCamera.GetComponent<Transform>().localRotation * Quaternion.Euler(-45, 0, 0),
-                                                                            0.02f);
+
+                mainCamera.GetComponent<Transform>().position = Vector3.Lerp(mainCamera.GetComponent<Transform>().position,
+                    thrownStone.gameObject.GetComponent<Transform>().position - 1.5f * mainCamera.GetComponent<Transform>().forward,
+                    0.04f);
+
+                if (Vector3.Angle(mainCamera.GetComponent<Transform>().forward, (Vector3.forward)) < 60)
+                {
+
+                    mainCamera.GetComponent<Transform>().localRotation = Quaternion.Lerp(mainCamera.GetComponent<Transform>().localRotation,
+                                                                                mainCamera.GetComponent<Transform>().localRotation * Quaternion.Euler(-45, 0, 0),
+                                                                                0.02f);
+                }
             }
 
             //todo rework ogFiredStage?
@@ -530,14 +534,14 @@ public class GameController : MonoBehaviour
             thrownStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterial;
             sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.50f);
             sensorStone.gameObject.name = "WhiteSensorStone";
-            thrownStone.gameObject.name = "BlackNewStone";
+            thrownStone.gameObject.name = "19x19xBlackThrownStone";
         }
         else if (currentPlayerColor == StoneColor.White)
         {
             thrownStone.gameObject.GetComponent<MeshRenderer>().material = whiteMaterial;
             sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
             sensorStone.gameObject.name = "BlackSensorStone";
-            thrownStone.gameObject.name = "WhiteNewStone";
+            thrownStone.gameObject.name = "19x19xWhiteThrownStone";
         }
 
         thrownStone.gameObject.GetComponent<Rigidbody>().velocity = ogVelocity * mainCamera.transform.forward;
@@ -993,8 +997,15 @@ public class GameController : MonoBehaviour
     public void KillStoneWithDelay(GoStone StoneToDestroy, float destroyDelay, float entireDelay = 0)
     {
 
+        GoStone historyStone = stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
+                                                                (s.y == StoneToDestroy.y));
+
+        if (historyStone != null)
+        {
         stonePosHistory.Last().Remove(stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
                                                                        (s.y == StoneToDestroy.y)));
+        }
+
 
         if (StoneToDestroy.stoneColor == StoneColor.Black)
         {
