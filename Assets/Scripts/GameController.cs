@@ -9,12 +9,11 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    //todo make buttons unclickable during play
     //todo have separate GoStone List for new board layout. last in stonePosHistory should always be current layout?
     //todo more functions should return value?
     //todo reduce number of parameters in functions
     //todo reduce function size
-    //todo have camera follow stone after throwing
+    //todo have camera follow stone after throwing?
     //todo groupStonesToKill, groupStones are same? 
     //todo get rid of magic numbers everywhere
 
@@ -59,14 +58,9 @@ public class GameController : MonoBehaviour
     public Material whiteMaterialTransparent;
     public Material blackMaterialTransparent;
     public float stoneZValue = -0.095f;
-    public GameObject sensorStone;
-    public Transform sensorStoneTrans;
+    public GoStone sensorStone = new GoStone();
     public GameObject explosionObjectParent;
     public GameObject explosion;
-
-    //todo add these to GoStone class?
-    private GameObject[,] boardExploderGameObjects = new GameObject[20, 20];
-
 
     public GameObject whiteTextObject;
     public GameObject blackTextObject;
@@ -121,8 +115,14 @@ public class GameController : MonoBehaviour
 
         Application.targetFrameRate = 60;
         resetButton.onClick.AddListener(ResetGame);
-        sensorStone.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(0f, 0f, 0f, 0.50f);
-        sensorStoneTrans = sensorStone.GetComponent<Transform>();
+
+        sensorStone = new GoStone();
+
+        sensorStone.gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
+        sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
+        sensorStone.gameObject.name = "BlackSensorStone";
+        sensorStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
+
         stonePosHistory.Add(new List<GoStone>());
 
         ogNowButton.onClick.AddListener(OgNow);
@@ -144,28 +144,6 @@ public class GameController : MonoBehaviour
         //mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
         //mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
         //sensorStone.GetComponent<MeshRenderer>().material.color = new Color(0f, 1.0f, 1.0f, 0.5f);
-
-        //Instantiates Exploders
-        //This one is for sensor/og stone. [19,19] is outside board.
-        boardExploderGameObjects[19, 19] = Instantiate(explosion, new Vector3(0, 0, 0), Quaternion.identity);
-        boardExploderGameObjects[19, 19].name = "19x19xEXploder";
-        boardExploderGameObjects[19, 19].transform.parent = explosionObjectParent.transform;
-
-        for (int iteratedY = 0; iteratedY < 19; iteratedY++)
-        {
-            for (int iteratedX = 0; iteratedX < 19; iteratedX++)
-            {
-                boardExploderGameObjects[iteratedX, iteratedY] = Instantiate(explosion,
-                                                             new Vector3(iteratedX * boardCoordinateSeparationX,
-                                                                        -iteratedY * boardCoordinateSeparationY,
-                                                                        stoneZValue),
-                                                             Quaternion.identity);
-
-                boardExploderGameObjects[iteratedX, iteratedY].GetComponent<Renderer>().enabled = false;
-                boardExploderGameObjects[iteratedX, iteratedY].name = $"{iteratedX}x{iteratedY}xEXploder";
-                boardExploderGameObjects[iteratedX, iteratedY].transform.parent = explosionObjectParent.transform;
-            }
-        }
 
         StartCoroutine(TitleScreen());
 
@@ -268,7 +246,7 @@ public class GameController : MonoBehaviour
                 Convert.ToInt32(mousePos.y / boardCoordinateSeparationY) < -18
                 )
             {
-                sensorStone.GetComponent<Renderer>().enabled = false;
+                sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
             }
 
             else
@@ -292,19 +270,20 @@ public class GameController : MonoBehaviour
 
                 if (isValidPlay == true)
                 {
-                    sensorStone.GetComponent<Renderer>().enabled = true;
+                    sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
                 }
                 else if (isValidPlay == false)
                 {
-                    sensorStone.GetComponent<Renderer>().enabled = false;
+                    sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
                 }
 
 
 
-                sensorStone.GetComponent<Transform>().position = new Vector3(possibleStoneCoordinates.x * boardCoordinateSeparationX,
+
+                sensorStone.gameObject.GetComponent<Transform>().position = new Vector3(possibleStoneCoordinates.x * boardCoordinateSeparationX,
                                                                               -possibleStoneCoordinates.y * boardCoordinateSeparationY,
                                                                               -stoneZValue);
-                sensorStoneTrans.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
+                sensorStone.gameObject.transform.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
                 if (Input.GetMouseButtonUp(0) && isValidPlay == true)
                 {
@@ -341,9 +320,9 @@ public class GameController : MonoBehaviour
         //og play (throwing)
         else if (currentGameState == GameState.ThrowStone)
         {
-            sensorStone.GetComponent<Renderer>().enabled = true;
-            sensorStoneTrans.position = mainCamera.GetComponent<Transform>().position + 1 * mainCamera.GetComponent<Transform>().forward;
-            sensorStoneTrans.rotation = mainCamera.transform.rotation * curentGoStoneRotation;
+            sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
+            sensorStone.gameObject.transform.position = mainCamera.GetComponent<Transform>().position + 1 * mainCamera.GetComponent<Transform>().forward;
+            sensorStone.gameObject.transform.rotation = mainCamera.transform.rotation * curentGoStoneRotation;
 
             mainCamera.orthographic = false;
 
@@ -442,7 +421,7 @@ public class GameController : MonoBehaviour
                     mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
                     DisableButtons();
 
-                    sensorStone.GetComponent<Renderer>().enabled = true;
+                    sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
                     isOnFirstOgPlay = false;
                 }
 
@@ -464,14 +443,14 @@ public class GameController : MonoBehaviour
 
     private void MakeSensorStoneTransparent(float flo)
     {
-        Color currentColor = sensorStone.GetComponent<MeshRenderer>().material.color;
+        Color currentColor = sensorStone.gameObject.GetComponent<MeshRenderer>().material.color;
         currentColor.a = flo;
-        sensorStone.GetComponent<MeshRenderer>().material.color = currentColor;
+        sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = currentColor;
     }
 
     private void SensorStoneRenderEnabled(bool isEnabled)
     {
-        sensorStone.GetComponent<Renderer>().enabled = isEnabled;
+        sensorStone.gameObject.GetComponent<Renderer>().enabled = isEnabled;
     }
 
     public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill)
@@ -491,7 +470,7 @@ public class GameController : MonoBehaviour
             KillGroupStones(groupStonesToKill);
         }
 
-        sensorStone.GetComponent<Renderer>().enabled = false;
+        sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
 
         GameObject newStoneObject = Instantiate(genericStoneObject,
                                           new Vector3(stoneCoordinates.x * boardCoordinateSeparationX,
@@ -515,32 +494,38 @@ public class GameController : MonoBehaviour
         if (currentPlayerColor == StoneColor.Black)
         {
             newStoneObject.GetComponent<MeshRenderer>().material = blackMaterial;
-            sensorStone.GetComponent<MeshRenderer>().material = whiteMaterialTransparent;
+            sensorStone.gameObject.GetComponent<MeshRenderer>().material = whiteMaterialTransparent;
+            sensorStone.gameObject.name = "WhiteSensorStone";
         }
         else if (currentPlayerColor == StoneColor.White)
         {
             newStoneObject.GetComponent<MeshRenderer>().material = whiteMaterial;
-            sensorStone.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
+            sensorStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
+            sensorStone.gameObject.name = "BlackSensorStone";
         }
     }
 
     //todo have direction, speed, etc passed here
     private void ThrowGoStone()
     {
-        GameObject newStone = Instantiate(genericStoneObject, sensorStoneTrans.position, Quaternion.identity);
-        newStone.name = $"19x19xStone";
+        GameObject newStone = Instantiate(genericStoneObject, sensorStone.gameObject.transform.position, Quaternion.identity);
+
         newStone.GetComponent<Transform>().rotation = mainCamera.transform.rotation * curentGoStoneRotation;
-        sensorStone.GetComponent<Renderer>().enabled = false;
+        sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
 
         if (currentPlayerColor == StoneColor.Black)
         {
             newStone.GetComponent<MeshRenderer>().material = blackMaterial;
-            sensorStone.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.50f);
+            sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.50f);
+            sensorStone.gameObject.name = "WhiteSensorStone";
+            newStone.name = "BlackNewStone";
         }
         else if (currentPlayerColor == StoneColor.White)
         {
             newStone.GetComponent<MeshRenderer>().material = whiteMaterial;
-            sensorStone.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
+            sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
+            sensorStone.gameObject.name = "BlackSensorStone";
+            newStone.name = "WhiteNewStone";
         }
 
         newStone.GetComponent<Rigidbody>().velocity = ogVelocity * mainCamera.transform.forward;
@@ -956,7 +941,7 @@ public class GameController : MonoBehaviour
         ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
         mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
         mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
-        sensorStone.GetComponent<Renderer>().enabled = true;
+        sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
         DisableButtons();
     }
 
@@ -1032,8 +1017,12 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(entireDelay);
             //yield return new WaitForSeconds(entireDelay);
 
-            GameObject exploder = boardExploderGameObjects[StoneToDestroy.y, StoneToDestroy.x];
+            GameObject exploder = StoneToDestroy.exploderGameObject;
+            exploder = Instantiate(explosion, new Vector3(0, 0, 0), Quaternion.identity);
 
+            exploder.GetComponent<Renderer>().enabled = false;
+            exploder.name = $"{StoneToDestroy.gameObject.name}xEXploder";
+            exploder.transform.parent = explosionObjectParent.transform;
             exploder.GetComponent<UnityEngine.Video.VideoPlayer>().frame = 7;
             exploder.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
 
@@ -1097,6 +1086,7 @@ public class GameController : MonoBehaviour
         //public List<GoStoneCoordinates> libertyCoordinates = new List<GoStoneCoordinates>();
 
         public GameObject gameObject;
+        public GameObject exploderGameObject;
 
         public readonly static float diameter = 0.22f;
     }

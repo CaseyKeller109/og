@@ -79,6 +79,6 @@ Material:
     - slope: 0.408
     - thresh: 0.8
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.5}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - keyingColor: {r: 0.20185125, g: 0.990566, b: 0.0046724924, a: 1}

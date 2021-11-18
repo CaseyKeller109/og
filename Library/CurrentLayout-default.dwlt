@@ -20,10 +20,61 @@ MonoBehaviour:
     height: 1037
   m_ShowMode: 4
   m_Title: 
-  m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 300}
+  m_RootView: {fileID: 4}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 544
+    width: 679
+    height: 443
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 17}
+  m_Panes:
+  - {fileID: 17}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &3
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 16}
+  - {fileID: 2}
+  m_Position:
+    serializedVersion: 2
+    x: 1241
+    y: 0
+    width: 679
+    height: 987
+  m_MinSize: {x: 275, y: 171}
+  m_MaxSize: {x: 4001, y: 8021}
+  vertical: 1
+  controlID: 316
+--- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36,9 +87,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 3}
   - {fileID: 5}
-  - {fileID: 4}
+  - {fileID: 7}
+  - {fileID: 6}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -47,7 +98,7 @@ MonoBehaviour:
     height: 1037
   m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
---- !u!114 &3
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &4
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,57 +141,6 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &5
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 6}
-  - {fileID: 11}
-  - {fileID: 14}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 30
-    width: 1920
-    height: 987
-  m_MinSize: {x: 870, y: 492}
-  m_MaxSize: {x: 22005, y: 14042}
-  vertical: 0
-  controlID: 22778
---- !u!114 &6
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 7}
-  - {fileID: 10}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 798
-    height: 987
-  m_MinSize: {x: 362, y: 458}
-  m_MaxSize: {x: 8002, y: 8042}
-  vertical: 1
-  controlID: 22719
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -155,17 +155,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 8}
-  - {fileID: 9}
+  - {fileID: 13}
+  - {fileID: 3}
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 798
-    height: 502
-  m_MinSize: {x: 362, y: 237}
-  m_MaxSize: {x: 8002, y: 4021}
+    y: 30
+    width: 1920
+    height: 987
+  m_MinSize: {x: 867, y: 492}
+  m_MaxSize: {x: 22003, y: 14042}
   vertical: 0
-  controlID: 22610
+  controlID: 180
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -175,25 +176,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Children: []
+  m_Children:
+  - {fileID: 9}
+  - {fileID: 12}
   m_Position:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 279
-    height: 502
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 17}
-  m_Panes:
-  - {fileID: 16}
-  - {fileID: 17}
-  - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
+    width: 789
+    height: 987
+  m_MinSize: {x: 360, y: 437}
+  m_MaxSize: {x: 8000, y: 8021}
+  vertical: 1
+  controlID: 181
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -203,24 +201,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Children: []
+  m_Children:
+  - {fileID: 10}
+  - {fileID: 11}
   m_Position:
     serializedVersion: 2
-    x: 279
+    x: 0
     y: 0
-    width: 519
-    height: 502
-  m_MinSize: {x: 262, y: 237}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 19}
-  m_Panes:
-  - {fileID: 19}
-  - {fileID: 20}
-  m_Selected: 0
-  m_LastSelected: 1
+    width: 789
+    height: 501
+  m_MinSize: {x: 360, y: 216}
+  m_MaxSize: {x: 8000, y: 4000}
+  vertical: 0
+  controlID: 249
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -237,18 +233,18 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 502
-    width: 798
-    height: 485
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 15}
+    y: 0
+    width: 261
+    height: 501
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 15}
+  - {fileID: 19}
+  - {fileID: 20}
   - {fileID: 21}
-  - {fileID: 22}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -258,22 +254,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 12}
-  - {fileID: 13}
+  m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 798
+    x: 261
     y: 0
-    width: 512
-    height: 987
-  m_MinSize: {x: 232, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
-  vertical: 1
-  controlID: 22691
+    width: 528
+    height: 501
+  m_MinSize: {x: 260, y: 216}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 22}
+  m_Panes:
+  - {fileID: 22}
+  - {fileID: 23}
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -290,17 +288,18 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 512
-    height: 459
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 23}
+    y: 501
+    width: 789
+    height: 486
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 23}
+  - {fileID: 18}
   - {fileID: 24}
+  - {fileID: 25}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 2
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -310,23 +309,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Children: []
+  m_Children:
+  - {fileID: 14}
+  - {fileID: 15}
   m_Position:
     serializedVersion: 2
-    x: 0
-    y: 459
-    width: 512
-    height: 528
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 25}
-  m_Panes:
-  - {fileID: 25}
-  m_Selected: 0
-  m_LastSelected: 0
+    x: 789
+    y: 0
+    width: 452
+    height: 987
+  m_MinSize: {x: 232, y: 492}
+  m_MaxSize: {x: 10002, y: 14042}
+  vertical: 1
+  controlID: 285
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -342,12 +340,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1310
+    x: 0
     y: 0
-    width: 610
-    height: 987
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+    width: 452
+    height: 460
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 26}
   m_Panes:
   - {fileID: 26}
@@ -355,6 +353,903 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &15
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 460
+    width: 452
+    height: 527
+  m_MinSize: {x: 232, y: 271}
+  m_MaxSize: {x: 10002, y: 10021}
+  m_ActualView: {fileID: 28}
+  m_Panes:
+  - {fileID: 28}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &16
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 679
+    height: 544
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 29}
+  m_Panes:
+  - {fileID: 29}
+  - {fileID: 30}
+  m_Selected: 0
+  m_LastSelected: 1
+--- !u!114 &17
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Runner
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 1241
+    y: 617
+    width: 678
+    height: 422
+  m_ViewDataDictionary: {fileID: 0}
+  m_TestTypeToolbarIndex: 1
+  m_PlayModeTestListGUI:
+    m_Window: {fileID: 17}
+    newResultList:
+    - id: 1042
+      uniqueId: '[Og][suite]'
+      name: Og
+      fullName: Og
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 661283cbffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+  m_EditModeTestListGUI:
+    m_Window: {fileID: 17}
+    newResultList:
+    - id: 1000
+      uniqueId: '[Og][suite]'
+      name: Og
+      fullName: Og
+      resultStatus: 1
+      duration: 12.563688
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1004
+      uniqueId: '[K:/C_O/test project/Og/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll][suite]'
+      name: Assembly-CSharp-Editor.dll
+      fullName: K:/C_O/test project/Og/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+      resultStatus: 1
+      duration: 12.282308
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[Og][suite]'
+    - id: 1005
+      uniqueId: Assembly-CSharp-Editor.dll/[Tests][suite]
+      name: Tests
+      fullName: Tests
+      resultStatus: 1
+      duration: 12.193055
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1004
+      parentUniqueId: '[K:/C_O/test project/Og/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll][suite]'
+    - id: 1001
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+      name: GameController_UnitTests
+      fullName: Tests.GameController_UnitTests
+      resultStatus: 1
+      duration: 12.123847
+      messages: 
+      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
+        This is not allowed.  MonoBehaviours can only be added using AddComponent().
+        Alternatively, your script can inherit from ScriptableObject or no base class
+        at all
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1005
+      parentUniqueId: Assembly-CSharp-Editor.dll/[Tests][suite]
+    - id: 1003
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.gamecWithEnumeratorPasses]
+      name: gamecWithEnumeratorPasses
+      fullName: Tests.GameController_UnitTests.gamecWithEnumeratorPasses
+      resultStatus: 1
+      duration: 0.0626065
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1002
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_0_1B_0_0W_1_0B]
+      name: PlaceGoStone_0_1B_0_0W_1_0B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_0_1B_0_0W_1_0B
+      resultStatus: 1
+      duration: 0.0197278
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1006
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_0_1B_0_0W_1_1B_1_0W_2_0B]
+      name: PlaceGoStone_0_1B_0_0W_1_1B_1_0W_2_0B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_0_1B_0_0W_1_1B_1_0W_2_0B
+      resultStatus: 1
+      duration: 0.0027026
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1004
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_0_1W_0_0B_1_0W]
+      name: PlaceGoStone_0_1W_0_0B_1_0W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_0_1W_0_0B_1_0W
+      resultStatus: 1
+      duration: 0.0012061
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1008
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_0_1W_0_0B_1_1W_1_0B_2_0W]
+      name: PlaceGoStone_0_1W_0_0B_1_1W_1_0B_2_0W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_0_1W_0_0B_1_1W_1_0B_2_0W
+      resultStatus: 1
+      duration: 0.0017613
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1003
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_1_0B_0_0W_0_1B]
+      name: PlaceGoStone_1_0B_0_0W_0_1B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_1_0B_0_0W_0_1B
+      resultStatus: 1
+      duration: 0.0015556
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1005
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_1_0W_0_0B_0_1W]
+      name: PlaceGoStone_1_0W_0_0B_0_1W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_1_0W_0_0B_0_1W
+      resultStatus: 1
+      duration: 0.0014009
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1010
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_1_1B_1_0W_2_0B_0_1W_1_2B_0_2W_0_3B_0_0B]
+      name: PlaceGoStone_1_1B_1_0W_2_0B_0_1W_1_2B_0_2W_0_3B_0_0B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_1_1B_1_0W_2_0B_0_1W_1_2B_0_2W_0_3B_0_0B
+      resultStatus: 1
+      duration: 0.0124682
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1016
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_16_18B_17_18W_17_17B_18_18W_18_17B]
+      name: PlaceGoStone_16_18B_17_18W_17_17B_18_18W_18_17B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_16_18B_17_18W_17_17B_18_18W_18_17B
+      resultStatus: 1
+      duration: 0.0017939
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1018
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_16_18W_17_18B_17_17W_18_18B_18_17W]
+      name: PlaceGoStone_16_18W_17_18B_17_17W_18_18B_18_17W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_16_18W_17_18B_17_17W_18_18B_18_17W
+      resultStatus: 1
+      duration: 0.001519
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1019
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_17_17B_17_18W_16_18B_18_17W_17_16B_18_16W_18_15B_18_18B]
+      name: PlaceGoStone_17_17B_17_18W_16_18B_18_17W_17_16B_18_16W_18_15B_18_18B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_17_17B_17_18W_16_18B_18_17W_17_16B_18_16W_18_15B_18_18B
+      resultStatus: 1
+      duration: 0.0024703
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1012
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_17_18B_18_18W_18_17B]
+      name: PlaceGoStone_17_18B_18_18W_18_17B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_17_18B_18_18W_18_17B
+      resultStatus: 1
+      duration: 0.0010499
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1014
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_17_18W_18_18B_18_17W]
+      name: PlaceGoStone_17_18W_18_18B_18_17W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_17_18W_18_18B_18_17W
+      resultStatus: 1
+      duration: 0.001001
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1015
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_18_17B_18_18W_17_17B_17_18W_16_18B]
+      name: PlaceGoStone_18_17B_18_18W_17_17B_17_18W_16_18B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_18_17B_18_18W_17_17B_17_18W_16_18B
+      resultStatus: 1
+      duration: 0.0015029
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1011
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_18_17B_18_18W_17_18B]
+      name: PlaceGoStone_18_17B_18_18W_17_18B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_18_17B_18_18W_17_18B
+      resultStatus: 1
+      duration: 0.0015248
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1017
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_18_17W_18_18B_17_17W_17_18B_16_18W]
+      name: PlaceGoStone_18_17W_18_18B_17_17W_17_18B_16_18W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_18_17W_18_18B_17_17W_17_18B_16_18W
+      resultStatus: 1
+      duration: 0.0017876
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1013
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_18_17W_18_18B_17_18W]
+      name: PlaceGoStone_18_17W_18_18B_17_18W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_18_17W_18_18B_17_18W
+      resultStatus: 1
+      duration: 0.0010639
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1007
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_2_0B_1_0W_1_1B_0_0W_0_1B]
+      name: PlaceGoStone_2_0B_1_0W_1_1B_0_0W_0_1B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_2_0B_1_0W_1_1B_0_0W_0_1B
+      resultStatus: 1
+      duration: 0.0015077
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1009
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_2_0W_1_0B_1_1W_0_0B_0_1W]
+      name: PlaceGoStone_2_0W_1_0B_1_1W_0_0B_0_1W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_2_0W_1_0B_1_1W_0_0B_0_1W
+      resultStatus: 1
+      duration: 0.001515
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1038
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_Ko_0_1B_1_1W_1_0B_2_0W_0_0W_0_0B]
+      name: PlaceGoStone_Ko_0_1B_1_1W_1_0B_2_0W_0_0W_0_0B
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_Ko_0_1B_1_1W_1_0B_2_0W_0_0W_0_0B
+      resultStatus: 1
+      duration: 0.0015168
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1039
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.PlaceGoStone_Ko_0_1W_1_1B_1_0W_2_0B_0_0B_0_0W]
+      name: PlaceGoStone_Ko_0_1W_1_1B_1_0W_2_0B_0_0B_0_0W
+      fullName: Tests.GameController_UnitTests.PlaceGoStone_Ko_0_1W_1_1B_1_0W_2_0B_0_0B_0_0W
+      resultStatus: 1
+      duration: 0.0015928
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1020
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_0_1B_0_0W_1_0B]
+      name: ThrowGoStone_0_1B_0_0W_1_0B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_0_1B_0_0W_1_0B
+      resultStatus: 1
+      duration: 0.4124285
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1024
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_0_1B_0_0W_1_1B_1_0W_2_0B]
+      name: ThrowGoStone_0_1B_0_0W_1_1B_1_0W_2_0B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_0_1B_0_0W_1_1B_1_0W_2_0B
+      resultStatus: 1
+      duration: 0.6752277
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1022
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_0_1W_0_0B_1_0W]
+      name: ThrowGoStone_0_1W_0_0B_1_0W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_0_1W_0_0B_1_0W
+      resultStatus: 1
+      duration: 0.4130035
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1026
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_0_1W_0_0B_1_1W_1_0B_2_0W]
+      name: ThrowGoStone_0_1W_0_0B_1_1W_1_0B_2_0W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_0_1W_0_0B_1_1W_1_0B_2_0W
+      resultStatus: 1
+      duration: 0.676245
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1021
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_1_0B_0_0W_0_1B]
+      name: ThrowGoStone_1_0B_0_0W_0_1B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_1_0B_0_0W_0_1B
+      resultStatus: 1
+      duration: 0.4121772
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1023
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_1_0W_0_0B_0_1W]
+      name: ThrowGoStone_1_0W_0_0B_0_1W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_1_0W_0_0B_0_1W
+      resultStatus: 1
+      duration: 0.3880128
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1028
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_1_1B_1_0W_2_0B_0_1W_1_2B_0_2W_0_3B_0_0B]
+      name: ThrowGoStone_1_1B_1_0W_2_0B_0_1W_1_2B_0_2W_0_3B_0_0B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_1_1B_1_0W_2_0B_0_1W_1_2B_0_2W_0_3B_0_0B
+      resultStatus: 1
+      duration: 1.191889
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1034
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_16_18B_17_18W_17_17B_18_18W_18_17B]
+      name: ThrowGoStone_16_18B_17_18W_17_17B_18_18W_18_17B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_16_18B_17_18W_17_17B_18_18W_18_17B
+      resultStatus: 1
+      duration: 0.7760404
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1036
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_16_18W_17_18B_17_17W_18_18B_18_17W]
+      name: ThrowGoStone_16_18W_17_18B_17_17W_18_18B_18_17W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_16_18W_17_18B_17_17W_18_18B_18_17W
+      resultStatus: 1
+      duration: 0.982563
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1037
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_17_17B_17_18W_16_18B_18_17W_17_16B_18_16W_18_15B_18_18B]
+      name: ThrowGoStone_17_17B_17_18W_16_18B_18_17W_17_16B_18_16W_18_15B_18_18B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_17_17B_17_18W_16_18B_18_17W_17_16B_18_16W_18_15B_18_18B
+      resultStatus: 1
+      duration: 1.3283802
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1030
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_17_18B_18_18W_18_17B]
+      name: ThrowGoStone_17_18B_18_18W_18_17B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_17_18B_18_18W_18_17B
+      resultStatus: 1
+      duration: 0.3996102
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1032
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_17_18W_18_18B_18_17W]
+      name: ThrowGoStone_17_18W_18_18B_18_17W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_17_18W_18_18B_18_17W
+      resultStatus: 1
+      duration: 0.4501318
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1033
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_18_17B_18_18W_17_17B_17_18W_16_18B]
+      name: ThrowGoStone_18_17B_18_18W_17_17B_17_18W_16_18B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_18_17B_18_18W_17_17B_17_18W_16_18B
+      resultStatus: 1
+      duration: 0.7649469
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1029
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_18_17B_18_18W_17_18B]
+      name: ThrowGoStone_18_17B_18_18W_17_18B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_18_17B_18_18W_17_18B
+      resultStatus: 1
+      duration: 0.4122893
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1035
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_18_17W_18_18B_17_17W_17_18B_16_18W]
+      name: ThrowGoStone_18_17W_18_18B_17_17W_17_18B_16_18W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_18_17W_18_18B_17_17W_17_18B_16_18W
+      resultStatus: 1
+      duration: 0.7239513
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1031
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_18_17W_18_18B_17_18W]
+      name: ThrowGoStone_18_17W_18_18B_17_18W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_18_17W_18_18B_17_18W
+      resultStatus: 1
+      duration: 0.4585805
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1025
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_2_0B_1_0W_1_1B_0_0W_0_1B]
+      name: ThrowGoStone_2_0B_1_0W_1_1B_0_0W_0_1B
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_2_0B_1_0W_1_1B_0_0W_0_1B
+      resultStatus: 1
+      duration: 0.7043643
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    - id: 1027
+      uniqueId: Assembly-CSharp-Editor.dll/Tests/GameController_UnitTests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests.ThrowGoStone_2_0W_1_0B_1_1W_0_0B_0_1W]
+      name: ThrowGoStone_2_0W_1_0B_1_1W_0_0B_0_1W
+      fullName: Tests.GameController_UnitTests.ThrowGoStone_2_0W_1_0B_1_1W_0_0B_0_1W
+      resultStatus: 1
+      duration: 0.7531785
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Assembly-CSharp-Editor.dll/Tests/[Assembly-CSharp-Editor][Tests.GameController_UnitTests][suite]
+    m_ResultText: PlaceGoStone_0_1B_0_0W_1_0B (0.020s)
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 727db53a
+      m_LastClickedID: 984972658
+      m_ExpandedIDs: 582736c2661283cb5ac4dfd999bbc123ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -376,9 +1271,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 575
-    width: 797
-    height: 464
+    y: 574
+    width: 788
+    height: 465
   m_ViewDataDictionary: {fileID: 0}
   m_PreviewName: GameView
   m_ShowGizmos: 0
@@ -419,29 +1314,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 797
-      height: 443
+      width: 788
+      height: 444
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 398.5, y: 221.5}
+    m_Translation: {x: 394, y: 222}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -398.5
-      y: -221.5
-      width: 797
-      height: 443
+      x: -394
+      y: -222
+      width: 788
+      height: 444
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 797, y: 464}
+  m_LastWindowPixelSize: {x: 788, y: 465}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000100000100
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &16
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -541,7 +1436,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &17
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,10 +1459,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 278
-    height: 481
+    width: 260
+    height: 480
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &18
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -610,7 +1505,7 @@ MonoBehaviour:
   m_CurrentEditor: 0
   m_LayerEditor:
     m_SelectedLayerIndex: 0
---- !u!114 &19
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -631,29 +1526,29 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 279
+    x: 261
     y: 73
-    width: 517
-    height: 481
+    width: 526
+    height: 480
   m_ViewDataDictionary: {fileID: 0}
   m_VertSplit:
-    ID: 22415
+    ID: 72
     splitterInitialOffset: 0
     currentActiveSplitter: -1
-    realSizes: e7000000e7000000
+    realSizes: e6000000e7000000
     relativeSizes:
     - 0.5
     - 0.5
     minSizes: 6400000064000000
     maxSizes: 0000000000000000
-    lastTotalSize: 462
+    lastTotalSize: 461
     splitSize: 6
     xOffset: 0
   m_Recording: 1
   m_ActiveNativePlatformSupportModule: 
   m_ViewType: 0
   m_ClearOnPlay: 0
---- !u!114 &20
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -681,8 +1576,8 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 12980
---- !u!114 &21
+  m_LastSelectedObjectID: 14726
+--- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -704,23 +1599,23 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 576
-    width: 798
-    height: 463
+    y: 520
+    width: 788
+    height: 465
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: c5ec67aa9b30ed24ab732050c9aed7cd
   m_Gizmos: 1
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.802887, y: 0.7794094, z: -3.6897755}
+    m_Target: {x: 2.2064004, y: -2.5856733, z: 16.548485}
     speed: 2
-    m_Value: {x: 3.802887, y: 0.7794094, z: -3.6897755}
+    m_Value: {x: 2.2064004, y: -2.5856733, z: 16.548485}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -742,25 +1637,25 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 1
-      speed: 2
-      m_Value: 1
-    zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
+    zGrid:
+      m_Target: 1
+      speed: 2
+      m_Value: 1
   m_Rotation:
-    m_Target: {x: -0.17757489, y: 0.2796845, z: -0.052718755, w: -0.94206345}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: -0.17757319, y: 0.27968186, z: -0.052718252, w: -0.94205445}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 2.57887
+    m_Target: 7.2753916
     speed: 2
-    m_Value: 2.57887
+    m_Value: 7.2753916
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.49748743
@@ -775,14 +1670,14 @@ MonoBehaviour:
     m_DynamicClip: 1
     m_OcclusionCulling: 0
   m_ShowGlobalGrid: 1
-  m_LastSceneViewRotation: {x: -0.069243774, y: -0.017360725, z: 0.0012053266, w: -0.997453}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &22
+--- !u!114 &25
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -804,9 +1699,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 576
-    width: 691
-    height: 463
+    y: 574
+    width: 788
+    height: 465
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: 3d1b21e96fbd7c144811502d266162b2
@@ -818,9 +1713,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 15.863598, y: -11.297972, z: -9.97698}
+    m_Target: {x: -2.6033535, y: -5.643503, z: 13.973834}
     speed: 2
-    m_Value: {x: 15.863598, y: -11.297972, z: -9.97698}
+    m_Value: {x: -2.6033535, y: -5.643503, z: 13.973834}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -850,20 +1745,20 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.12068747, y: 0.376113, z: -0.04948112, w: -0.9173487}
+    m_Target: {x: -0.1134807, y: 0.18720195, z: -0.021777181, w: -0.97550637}
     speed: 2
-    m_Value: {x: -0.12068727, y: 0.37611237, z: -0.049481038, w: -0.91734713}
+    m_Value: {x: -0.11348017, y: 0.18720108, z: -0.02177708, w: -0.97550184}
   m_Size:
-    m_Target: 45.772503
+    m_Target: 19.619087
     speed: 2
-    m_Value: 45.772503
+    m_Value: 19.619087
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 1
-    m_SpeedNormalized: 0.49748743
+    m_Speed: 0.9
+    m_SpeedNormalized: 0.46748742
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -875,14 +1770,14 @@ MonoBehaviour:
     m_DynamicClip: 1
     m_OcclusionCulling: 0
   m_ShowGlobalGrid: 1
-  m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_LastSceneViewRotation: {x: -0.10142597, y: 0.64382493, z: -0.086667605, w: -0.7534571}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &23
+--- !u!114 &26
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -903,33 +1798,33 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 798
+    x: 789
     y: 73
-    width: 510
-    height: 438
+    width: 450
+    height: 439
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b4320000
-      m_LastClickedID: 12980
-      m_ExpandedIDs: 82fbffff
+      m_SelectedIDs: f4330000
+      m_LastClickedID: 0
+      m_ExpandedIDs: cc1dffff2231ffff1a33ffff5836ffff564dffff9868ffff0a7dffff107fffff4282ffffea87ffffae92ffffe698fffffae4ffffd8f4ffff82fbffffd0380000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: 8x9xWhiteStone
+        m_OriginalName: 8x9xWhiteStone
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: -26142
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 12}
+        m_ClientGUIView: {fileID: 14}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -937,7 +1832,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 125f834c3c03ee04193d6edef69c19b8
---- !u!114 &24
+--- !u!114 &27
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -958,12 +1853,12 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 691
-    y: 73
-    width: 702
-    height: 514
+    x: 797
+    y: 84
+    width: 509
+    height: 434
   m_ViewDataDictionary: {fileID: 0}
---- !u!114 &25
+--- !u!114 &28
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -984,10 +1879,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 798
-    y: 532
-    width: 510
-    height: 507
+    x: 789
+    y: 533
+    width: 450
+    height: 506
   m_ViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -1001,7 +1896,8 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/Prefabs/Resources
   m_ViewMode: 0
   m_StartGridSize: 16
   m_LastFolders: []
@@ -1013,7 +1909,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 341d0000
     m_LastClickedID: 7476
-    m_ExpandedIDs: ffffffff000000005434000056340000583400005a3400005c340000
+    m_ExpandedIDs: 00000000d0340000d2340000d4340000d6340000d8340000da340000dc340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1038,10 +1934,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 126}
+    scrollPos: {x: 0, y: 120}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000005434000056340000583400005a3400005c340000
+    m_ExpandedIDs: ffffffff00000000d0340000d2340000d4340000d6340000d8340000da340000dc340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1057,7 +1953,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 13}
+      m_ClientGUIView: {fileID: 15}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -1085,7 +1981,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 13}
+      m_ClientGUIView: {fileID: 15}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1097,7 +1993,7 @@ MonoBehaviour:
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 198
---- !u!114 &26
+--- !u!114 &29
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1118,10 +2014,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1310
+    x: 1241
     y: 73
-    width: 609
-    height: 966
+    width: 678
+    height: 523
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
   m_ObjectsLockedBeforeSerialization: []
@@ -1133,7 +2029,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
---- !u!114 &27
+--- !u!114 &30
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1154,10 +2050,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1311
+    x: 1241
     y: 73
-    width: 608
-    height: 966
+    width: 678
+    height: 523
   m_ViewDataDictionary: {fileID: 0}
   m_OpenAddComponentMenu: 0
   m_ObjectsLockedBeforeSerialization:
