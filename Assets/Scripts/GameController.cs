@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
     //todo reduce number of parameters in functions
     //todo reduce function size
     //todo have camera follow stone after throwing?
-    //todo groupStonesToKill, groupStones are same? 
     //todo get rid of magic numbers everywhere
 
     //todo change coordinates to go from 1 to 19?
@@ -861,7 +860,6 @@ public class GameController : MonoBehaviour
                     }
 
                     GoStoneGroup stoneGroup = new GoStoneGroup();
-                    List<GoStone> groupStonesToKill = new List<GoStone>();
 
                     //return groupstonestokill?
                     //todo make sure all FindGroupAndLibertyCoordinates are passing color in?
@@ -889,18 +887,9 @@ public class GameController : MonoBehaviour
                             alreadyGroupedStones.Add(entry);
                         }
                     }
-                    foreach (GoStone entry in groupStonesToKill)
-                    {
-                        alreadyGroupedStones.Add(entry);
-                    }
 
                     if (stoneGroup.libertyCoordinates.Count == 0)
                     {
-                        foreach (GoStone stone in stoneGroup.stones)
-                        {
-                            groupStonesToKill.Add(stone);
-                        }
-
                         KillGroupStones(stoneGroup.stones);
                     }
                 }
