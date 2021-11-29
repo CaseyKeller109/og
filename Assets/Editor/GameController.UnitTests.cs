@@ -1255,7 +1255,7 @@ namespace Tests
 
         public void PlayStoneIfValid(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
-            gameController.currentGameState = GameState.PlaceStone;
+            gameController.currentGameState = GameState.CanPlaceStone;
             gameController.currentPlayerColor = stoneColor;
             GoStone newStone = new GoStone
             {
@@ -1285,7 +1285,7 @@ namespace Tests
             ValidPlayData validPlayData = new ValidPlayData() { isValidPlay = true, groupStonesToKill = new List<GoStone>() };
 
             gameController.PlaceGoStone(newStone, validPlayData.groupStonesToKill);
-            gameController.currentGameState = GameState.ThrowStone;
+            gameController.currentGameState = GameState.CanThrowStone;
         }
 
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)

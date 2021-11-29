@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
     public float blackScore = 0;
     public StoneColor currentPlayerColor = StoneColor.Black;
 
-    public GameState currentGameState = GameState.PlaceStone;
+    public GameState currentGameState = GameState.CanPlaceStone;
     public float ogBaseProb = -70;
     public float ogProb = -70;
     public float ogVelocity = 6;
@@ -77,7 +77,6 @@ public class GameController : MonoBehaviour
     public GameObject wall2;
     public GameObject wall3;
     public GameObject wall4;
-    public int ogFiredStage = 0;
 
     public List<List<GoStone>> stonePosHistory = new List<List<GoStone>>();
 
@@ -227,7 +226,7 @@ public class GameController : MonoBehaviour
 
 
         //normal go play
-        if (currentGameState == GameState.PlaceStone && !isOgFired)
+        if (currentGameState == GameState.CanPlaceStone && !isOgFired)
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -291,7 +290,7 @@ public class GameController : MonoBehaviour
                     if (UnityEngine.Random.Range(0, 100) < ogProb)
                     {
                         //to og play
-                        currentGameState = GameState.ThrowStone;
+                        currentGameState = GameState.CanThrowStone;
                         curentGoStoneRotation = Quaternion.identity;
                         ogProb = ogBaseProb;
                         ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
@@ -312,7 +311,7 @@ public class GameController : MonoBehaviour
         }
 
         //og play (throwing)
-        else if (currentGameState == GameState.ThrowStone)
+        else if (currentGameState == GameState.CanThrowStone)
         {
             sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
             sensorStone.gameObject.transform.position = mainCamera.GetComponent<Transform>().position + 1 * mainCamera.GetComponent<Transform>().forward;
@@ -398,13 +397,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            //todo rework ogFiredStage?
-            if (Time.time - timer > 1 && ogFiredStage == 0)
-            {
-                ogFiredStage = 1;
-            }
-
-            if (Time.time - timer > 2 && ogFiredStage == 1)
+            if (Time.time - timer > 2 && currentGameState == GameState.StoneHasBeenThrown)
             {
                 GetNewBoardLayout();
 
@@ -413,17 +406,15 @@ public class GameController : MonoBehaviour
                 else if (currentPlayerColor == StoneColor.White)
                 { currentPlayerColor = StoneColor.Black; }
 
-                ogFiredStage = 2;
+                currentGameState = GameState.StonesHaveBeenSorted;
             }
 
-            if (Time.time - timer > 3 && ogFiredStage == 2)
+            if (Time.time - timer > 3 && currentGameState == GameState.StonesHaveBeenSorted)
             {
-                ogFiredStage = 0;
-
                 //stay in og play for other player
                 if (isOnFirstOgPlay)
                 {
-                    currentGameState = GameState.ThrowStone;
+                    currentGameState = GameState.CanThrowStone;
                     curentGoStoneRotation = Quaternion.identity;
 
                     ogProb = ogBaseProb;
@@ -439,6 +430,7 @@ public class GameController : MonoBehaviour
                 //back to go play
                 else
                 {
+                    currentGameState = GameState.CanPlaceStone;
                     isOgFired = false;
 
                     mainCamera.GetComponent<Transform>().position = defaultCameraPosition;
@@ -540,10 +532,7 @@ public class GameController : MonoBehaviour
 
         thrownStone.gameObject.GetComponent<Rigidbody>().velocity = ogVelocity * mainCamera.transform.forward;
 
-        //todo implement this
-        //currentGameState = GameState.ProcessingThrow;
-
-        currentGameState = GameState.PlaceStone;
+        currentGameState = GameState.StoneHasBeenThrown;
         isOgFired = true;
         timer = Time.time;
     }
@@ -900,13 +889,15 @@ public class GameController : MonoBehaviour
 
     public enum GameState
     {
-        PlaceStone,
-        ThrowStone
+        CanPlaceStone,
+        CanThrowStone,
+        StoneHasBeenThrown,
+        StonesHaveBeenSorted
     }
 
     private void OgNow()
     {
-        currentGameState = GameState.ThrowStone;
+        currentGameState = GameState.CanThrowStone;
         curentGoStoneRotation = Quaternion.identity;
         isOgNowFirstFrame = true;
         ogProb = ogBaseProb;
