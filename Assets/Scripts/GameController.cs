@@ -9,8 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    //todo have separate GoStone List for new board layout. last in stonePosHistory should always be current layout?
-    //todo more functions should return value?
+    //todo more functions should return value
     //todo reduce number of parameters in functions
     //todo reduce function size
     //todo get rid of magic numbers everywhere
@@ -250,6 +249,7 @@ public class GameController : MonoBehaviour
 
             else
             {
+                //todo can improve by not checking every time
                 ValidPlayData validPlayData = new ValidPlayData();
                 validPlayData = ValidPlayCheck(possibleStoneCoordinates);
                 if (!SameStoneCoordinates(previousMouseCoordinates, possibleStoneCoordinates))
@@ -259,8 +259,6 @@ public class GameController : MonoBehaviour
 
                 if (isValidPlay == null)
                 {
-                    //todo this should return both isValidPlay bool, and groupStonesToKill?
-                    //validPlayData = ValidPlayCheck(possibleStoneCoordinates);
                     isValidPlay = validPlayData.isValidPlay;
                 }
 
@@ -275,9 +273,6 @@ public class GameController : MonoBehaviour
                 {
                     sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
                 }
-
-
-
 
                 sensorStone.gameObject.GetComponent<Transform>().position = new Vector3(possibleStoneCoordinates.x * boardCoordinateSeparationX,
                                                                               -possibleStoneCoordinates.y * boardCoordinateSeparationY,
@@ -482,7 +477,6 @@ public class GameController : MonoBehaviour
 
         if (groupStonesToKill != null)
         {
-            //todo move this further down?
             KillGroupStones(groupStonesToKill);
         }
 
@@ -724,7 +718,7 @@ public class GameController : MonoBehaviour
 
 
     private void FindGroupAndLibertyCoordinatesSideStone(GoStone sideStoneCoordinates, List<GoStone> boardIfStoneIsPlayed,
-        bool isPositionGood, GoStoneCoordinates offset, ref GoStoneGroup stoneGroup)
+        bool isPositionGood, BoardCoordinates offset, ref GoStoneGroup stoneGroup)
     {
         if (isPositionGood)
         {
@@ -777,18 +771,11 @@ public class GameController : MonoBehaviour
     }
 
     public void GetNewBoardLayout()
-    //private StonePosHistoryEntry GetNewBoardLayout()
     {
-
-        //todo implement this?
-        //StonePosHistoryEntry newStonePosHistoryEntry = new StonePosHistoryEntry();
-
         stonePosHistory.Add(new List<GoStone>());
-
 
         //finds stones in layer 8, "Stone"
         Collider[] sortedStonesInRange = Physics.OverlapSphere(new Vector3(0, 0, 0), 10, LayerMask.GetMask("Stone"));
-
 
         foreach (Collider sortedStone in sortedStonesInRange)
         {
@@ -803,9 +790,6 @@ public class GameController : MonoBehaviour
             {
                 for (int iteratedX = 0; iteratedX < 19; iteratedX++)
                 {
-                    //GoStone localStone = newStonePosHistoryEntry.stones.Find(s => s.x == iteratedX &&
-                    //                                                       s.y == iteratedY);
-
                     GoStone localStone = stonePosHistory.Last().Find(s => s.x == iteratedX &&
                                                                           s.y == iteratedY);
 
@@ -818,7 +802,6 @@ public class GameController : MonoBehaviour
                                                                                 -boardCoordinateSeparationY * iteratedY,
                                                                                  0),
                                                                      boardCoordinateSeparationX * 19 * 2 * (r / searchIncrement),
-                                                                     //9);
                                                                      LayerMask.GetMask("SortingStone"));
 
                     if (stonesInRange.Length == 0)
@@ -831,12 +814,6 @@ public class GameController : MonoBehaviour
                     stonesInRange[0].name = $"{iteratedX}x{iteratedY}x{foundStoneColor}Stone";
 
                     GoStone sortedStone = SortStone(stonesInRange[0], iteratedX, iteratedY);
-
-
-
-
-                    //newStonePosHistoryEntry.stones.Add(new GoStone { x = sortedStone.x, y = sortedStone.y, stoneColor = sortedStone.stoneColor });
-                    //newStonePosHistoryEntry.gameObjects[sortedStone.x, sortedStone.y] = sortedStone.gameObject;
                 }
             }
         }
@@ -856,10 +833,6 @@ public class GameController : MonoBehaviour
             {
                 for (int iteratedX = 0; iteratedX < 19; iteratedX++)
                 {
-
-                    //GoStone localStone = newStonePosHistoryEntry.stones.Find(s => (s.x == iteratedX) &&
-                    //                                                              (s.y == iteratedY));
-
                     GoStone localStone = stonePosHistory.Last().Find(s => (s.x == iteratedX) &&
                                                                           (s.y == iteratedY));
 
@@ -887,15 +860,9 @@ public class GameController : MonoBehaviour
 
                         stoneColor = localStone.stoneColor
                     },
-                    //newStonePosHistoryEntry.stones,
                     stonePosHistory.Last(),
                     ref stoneGroup
                     );
-
-                    foreach (GoStoneCoordinates coordinates in stoneGroup.libertyCoordinates)
-                    {
-                        //print("xy: " + coordinates.x + " " + coordinates.y);
-                    }
 
                     foreach (GoStone entry in stoneGroup.stones)
                     {
@@ -912,7 +879,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        //return newStonePosHistoryEntry;
     }
 
     public void PlusOneToScore(StoneColor stoneColor)
@@ -1083,20 +1049,15 @@ public class GameController : MonoBehaviour
         return new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject };
     }
 
-    //todo rename this?
-    public class GoStoneCoordinates
+    public class BoardCoordinates
     {
         public int x;
         public int y;
     }
 
-    //todo add liberties property?
-    public class GoStone : GoStoneCoordinates
+    public class GoStone : BoardCoordinates
     {
-        //public int x;
-        //public int y;
         public StoneColor stoneColor = StoneColor.None;
-        //public List<GoStoneCoordinates> libertyCoordinates = new List<GoStoneCoordinates>();
 
         public GameObject gameObject;
         public GameObject exploderGameObject;
@@ -1107,7 +1068,7 @@ public class GameController : MonoBehaviour
     public class GoStoneGroup
     {
         public List<GoStone> stones = new List<GoStone>();
-        public List<GoStoneCoordinates> libertyCoordinates = new List<GoStoneCoordinates>();
+        public List<BoardCoordinates> libertyCoordinates = new List<BoardCoordinates>();
     }
 
     public enum StoneColor
@@ -1119,10 +1080,10 @@ public class GameController : MonoBehaviour
 
     public class StoneOffset
     {
-        public static GoStoneCoordinates left = new GoStoneCoordinates { x = -1, y = 0 };
-        public static GoStoneCoordinates right = new GoStoneCoordinates { x = +1, y = 0 };
-        public static GoStoneCoordinates up = new GoStoneCoordinates { x = 0, y = +1 };
-        public static GoStoneCoordinates down = new GoStoneCoordinates { x = 0, y = -1 };
+        public static BoardCoordinates left = new BoardCoordinates { x = -1, y = 0 };
+        public static BoardCoordinates right = new BoardCoordinates { x = +1, y = 0 };
+        public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
+        public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
     }
 
     public class StonePosHistoryEntry
