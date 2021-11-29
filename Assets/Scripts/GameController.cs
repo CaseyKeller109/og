@@ -373,7 +373,10 @@ public class GameController : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0) && !isOgNowFirstFrame)
             {
-                ThrowGoStone();
+                ThrowGoStone(sensorStone.gameObject.transform.position,
+                             mainCamera.transform.rotation * curentGoStoneRotation,
+                             ogVelocity * mainCamera.transform.forward);
+                             
             }
             isOgNowFirstFrame = false;
         }
@@ -507,13 +510,13 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //todo have direction, speed, etc passed here
-    private void ThrowGoStone()
+    //todo make unit tests for ThrowGoStone?
+    private void ThrowGoStone(Vector3 StonePosition, Quaternion StoneRotation, Vector3 StoneVelocity)
     {
-        thrownStone.gameObject = Instantiate(genericStoneObject, sensorStone.gameObject.transform.position, Quaternion.identity);
-
-        thrownStone.gameObject.GetComponent<Transform>().rotation = mainCamera.transform.rotation * curentGoStoneRotation;
+        thrownStone.gameObject = Instantiate(genericStoneObject, StonePosition, Quaternion.identity);
+        thrownStone.gameObject.GetComponent<Transform>().rotation = StoneRotation;
         sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
+        thrownStone.gameObject.GetComponent<Rigidbody>().velocity = StoneVelocity;
 
         if (currentPlayerColor == StoneColor.Black)
         {
@@ -529,8 +532,6 @@ public class GameController : MonoBehaviour
             sensorStone.gameObject.name = "BlackSensorStone";
             thrownStone.gameObject.name = "19x19xWhiteThrownStone";
         }
-
-        thrownStone.gameObject.GetComponent<Rigidbody>().velocity = ogVelocity * mainCamera.transform.forward;
 
         currentGameState = GameState.StoneHasBeenThrown;
         isOgFired = true;
