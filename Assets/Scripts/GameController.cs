@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     //todo reduce number of parameters in functions
     //todo reduce function size
     //todo get rid of magic numbers everywhere
+    //todo make more unit tests?
 
     //todo change coordinates to go from 1 to 19?
     //Stone position coordinates are 19x19 and are used as follows. x is left to right, y is top to bottom
@@ -304,8 +305,6 @@ public class GameController : MonoBehaviour
                         ogProb += 8;
                         ogProbText.GetComponent<Text>().text = "Og Prob: " + ogProb + "%";
                     }
-
-
                 }
             }
         }
@@ -376,7 +375,6 @@ public class GameController : MonoBehaviour
                 ThrowGoStone(sensorStone.gameObject.transform.position,
                              mainCamera.transform.rotation * curentGoStoneRotation,
                              ogVelocity * mainCamera.transform.forward);
-                             
             }
             isOgNowFirstFrame = false;
         }
@@ -447,18 +445,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void MakeSensorStoneTransparent(float flo)
-    {
-        Color currentColor = sensorStone.gameObject.GetComponent<MeshRenderer>().material.color;
-        currentColor.a = flo;
-        sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = currentColor;
-    }
-
-    private void SensorStoneRenderEnabled(bool isEnabled)
-    {
-        sensorStone.gameObject.GetComponent<Renderer>().enabled = isEnabled;
-    }
-
     public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill)
     {
         isValidPlay = false;
@@ -511,7 +497,9 @@ public class GameController : MonoBehaviour
     }
 
     //todo make unit tests for ThrowGoStone?
-    private void ThrowGoStone(Vector3 StonePosition, Quaternion StoneRotation, Vector3 StoneVelocity)
+    private void ThrowGoStone(Vector3 StonePosition, 
+                              Quaternion StoneRotation, 
+                              Vector3 StoneVelocity)
     {
         thrownStone.gameObject = Instantiate(genericStoneObject, StonePosition, Quaternion.identity);
         thrownStone.gameObject.GetComponent<Transform>().rotation = StoneRotation;
@@ -563,6 +551,20 @@ public class GameController : MonoBehaviour
         });
         centerStone.stoneColor = currentPlayerColor;
 
+        //Simple Ko rule
+        bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
+        if (isSameBoard) { return new ValidPlayData() { isValidPlay = false }; }
+
+        string openSides = OpenSidesCheck(centerStone, boardIfStoneIsPlayed, groupStonesToKill);
+        if (openSides.Length > 0)
+        { return new ValidPlayData() { isValidPlay = true, groupStonesToKill = groupStonesToKill }; }
+        else { return new ValidPlayData() { isValidPlay = false }; }
+    }
+
+    private string OpenSidesCheck(GoStone centerStone, 
+                                  List<GoStone> boardIfStoneIsPlayed, 
+                                  List<GoStone> groupStonesToKill)
+    {
         string openSides = "";
 
         //top side
@@ -600,31 +602,29 @@ public class GameController : MonoBehaviour
                 openSides += "right";
             }
         }
+        return openSides;
+    }
 
-        //Simple Ko rule
-        bool sameBoard = false;
+    public bool IsSameBoardSimpleCheck(List<GoStone> boardIfStoneIsPlayed)
+    {
+        bool isSameBoard = false;
         if (stonePosHistory.Count > 3
             && boardIfStoneIsPlayed.Count == stonePosHistory[stonePosHistory.Count - 2].Count
             )
         {
-            sameBoard = true;
+            isSameBoard = true;
             for (int i = 0; i < stonePosHistory[stonePosHistory.Count - 2].Count; i++)
             {
                 if (boardIfStoneIsPlayed.Find(s => s.x == (stonePosHistory[stonePosHistory.Count - 2][i].x) &&
                                                    s.y == (stonePosHistory[stonePosHistory.Count - 2][i].y) &&
                                                    s.stoneColor == (stonePosHistory[stonePosHistory.Count - 2][i].stoneColor)) == null)
                 {
-                    sameBoard = false;
+                    isSameBoard = false;
                     break;
                 }
             }
         }
-
-        if (sameBoard) { return new ValidPlayData() { isValidPlay = false }; }
-
-        if (openSides.Length > 0)
-        { return new ValidPlayData() { isValidPlay = true, groupStonesToKill = groupStonesToKill }; }
-        else { return new ValidPlayData() { isValidPlay = false }; }
+        return isSameBoard;
     }
 
     private bool LibertiesFromSideExists(GoStone centerStone,
@@ -687,7 +687,9 @@ public class GameController : MonoBehaviour
     }
 
     //starts searching at centerStoneCoordinates
-    private void FindGroupAndLibertyCoordinates(GoStone startStone, List<GoStone> boardIfStoneIsPlayed, ref GoStoneGroup stoneGroup)
+    private void FindGroupAndLibertyCoordinates(GoStone startStone, 
+                                                List<GoStone> boardIfStoneIsPlayed, 
+                                                ref GoStoneGroup stoneGroup)
     {
         if (stoneGroup.stones.Find(s => SameStoneCoordinates(s, startStone)) == null)
         {
@@ -699,16 +701,17 @@ public class GameController : MonoBehaviour
             });
         }
 
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.x > 0), StoneOffset.left, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.x < 18), StoneOffset.right, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y < 18), StoneOffset.up, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y > 0), StoneOffset.down, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.x > 0), StoneDirectionOffset.left, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.x < 18), StoneDirectionOffset.right, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y < 18), StoneDirectionOffset.up, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y > 0), StoneDirectionOffset.down, ref stoneGroup);
     }
 
-
-
-    private void FindGroupAndLibertyCoordinatesSideStone(GoStone sideStoneCoordinates, List<GoStone> boardIfStoneIsPlayed,
-        bool isPositionGood, BoardCoordinates offset, ref GoStoneGroup stoneGroup)
+    private void FindGroupAndLibertyCoordinatesSideStone(GoStone sideStoneCoordinates, 
+                                                         List<GoStone> boardIfStoneIsPlayed,
+                                                         bool isPositionGood, 
+                                                         BoardCoordinates offset, 
+                                                         ref GoStoneGroup stoneGroup)
     {
         if (isPositionGood)
         {
@@ -773,6 +776,12 @@ public class GameController : MonoBehaviour
             sortedStone.gameObject.layer = 9;
         }
 
+        FindAndSortAllStones();
+        KillSortedStones();
+    }
+
+    public void FindAndSortAllStones()
+    {
         int searchIncrement = 200;
         for (float r = 1; r < searchIncrement; r++)
         {
@@ -807,7 +816,37 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
 
+    public GoStone SortStone(Collider stoneToSort, 
+                             int CoordinateX, 
+                             int CoordinateY)
+    {
+        stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        stoneToSort.GetComponent<Transform>().position =
+            new Vector3(CoordinateX * boardCoordinateSeparationX,
+                       -CoordinateY * boardCoordinateSeparationY,
+                       -stoneZValue);
+        stoneToSort.GetComponent<Transform>().rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
+        stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+
+        StoneColor stoneToSortColor = StoneColor.None;
+
+
+
+        stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
+
+        stonePosHistory.Last().Add(new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject });
+
+        //changes layer to "Stone"
+        stoneToSort.gameObject.layer = 8;
+
+        //todo use this return value
+        return new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject };
+    }
+
+    public void KillSortedStones()
+    {
         List<GoStone> alreadyGroupedStones = new List<GoStone>();
 
         List<StoneColor> StoneColors = new List<StoneColor>() {
@@ -871,6 +910,83 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void KillGroupStones(List<GoStone> groupStonesToKill)
+    {
+        foreach (GoStone stone in groupStonesToKill)
+        {
+            //todo just get color data from foreach GoStone
+            GoStone stoneToDestroy = stonePosHistory.Last().Find(s => (s.x == stone.x) &&
+                                                                      (s.y == stone.y));
+
+            if (stoneToDestroy == null) { continue; }
+
+            KillStoneWithDelay(
+                          stoneToDestroy,
+                         0.2f,
+                         0.2f * groupStonesToKill.IndexOf(stone));
+        }
+    }
+
+    public void KillStoneWithDelay(GoStone StoneToDestroy, 
+                                   float destroyDelay, 
+                                   float totalDelay = 0)
+    {
+        GoStone historyStone = stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
+                                                                (s.y == StoneToDestroy.y));
+
+        if (historyStone != null)
+        {
+            stonePosHistory.Last().Remove(stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
+                                                                           (s.y == StoneToDestroy.y)));
+        }
+
+        if (StoneToDestroy.stoneColor == StoneColor.Black)
+        {
+            PlusOneToScore(StoneColor.White);
+        }
+        else if (StoneToDestroy.stoneColor == StoneColor.White)
+        {
+            PlusOneToScore(StoneColor.Black);
+        }
+        else { print("NO COLOR SET FOR DESTRUCTION"); }
+
+        StoneToDestroy.gameObject.layer = 8;
+
+        //todo use something other than Text?
+        Text coroutineHandler = (new GameObject("_coroutineHandler")).AddComponent<Text>();
+        coroutineHandler.StartCoroutine(DelayDestroyCoroutine());
+
+        IEnumerator DelayDestroyCoroutine()
+        {
+            yield return new WaitForSeconds(totalDelay);
+            //yield return new WaitForSeconds(entireDelay);
+
+            GameObject exploder = StoneToDestroy.exploderGameObject;
+            exploder = Instantiate(explosion, new Vector3(0, 0, 0), Quaternion.identity);
+
+            exploder.GetComponent<Renderer>().enabled = false;
+            exploder.name = $"{StoneToDestroy.gameObject.name}xEXploder";
+            exploder.transform.parent = explosionObjectParent.transform;
+            exploder.GetComponent<UnityEngine.Video.VideoPlayer>().frame = 7;
+            exploder.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+
+            yield return new WaitForSeconds(0.2f);
+
+            exploder.transform.position = StoneToDestroy.gameObject.transform.position;
+            exploder.GetComponent<Renderer>().enabled = true;
+            exploder.transform.LookAt(mainCamera.transform, new Vector3(0, 0, 1));
+            exploder.transform.rotation = mainCamera.transform.rotation;
+
+            Destroy(StoneToDestroy.gameObject);
+
+            isValidPlay = null;
+
+            yield return new WaitForSeconds(7);
+            exploder.GetComponent<Renderer>().enabled = false;
+            exploder.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
+        }
+    }
+
     public void PlusOneToScore(StoneColor stoneColor)
     {
         if (stoneColor == StoneColor.Black)
@@ -883,9 +999,64 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void ResetGame()
+    public bool SameStoneCoordinates(GoStone first, GoStone second)
     {
-        SceneManager.LoadScene("og");
+        if ((first.x == second.x) &&
+            (first.y == second.y))
+        { return true; }
+        else { return false; }
+    }
+
+    public void CopyStoneCoordinates(GoStone source, GoStone destination)
+    {
+        destination.x = source.x;
+        destination.y = source.y;
+    }
+
+
+
+
+    public class BoardCoordinates
+    {
+        public int x;
+        public int y;
+    }
+
+    public enum StoneColor
+    {
+        None,
+        Black,
+        White
+    }
+
+    public class GoStone : BoardCoordinates
+    {
+        public StoneColor stoneColor = StoneColor.None;
+
+        public GameObject gameObject;
+        public GameObject exploderGameObject;
+
+        public readonly static float diameter = 0.22f;
+    }
+
+    public class GoStoneGroup
+    {
+        public List<GoStone> stones = new List<GoStone>();
+        public List<BoardCoordinates> libertyCoordinates = new List<BoardCoordinates>();
+    }
+
+    public class StoneDirectionOffset
+    {
+        public static BoardCoordinates left = new BoardCoordinates { x = -1, y = 0 };
+        public static BoardCoordinates right = new BoardCoordinates { x = +1, y = 0 };
+        public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
+        public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
+    }
+
+    public class ValidPlayData
+    {
+        public bool isValidPlay;
+        public List<GoStone> groupStonesToKill;
     }
 
     public enum GameState
@@ -895,6 +1066,9 @@ public class GameController : MonoBehaviour
         StoneHasBeenThrown,
         StonesHaveBeenSorted
     }
+
+
+
 
     private void OgNow()
     {
@@ -907,6 +1081,11 @@ public class GameController : MonoBehaviour
         mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
         sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
         DisableButtons();
+    }
+
+    private void ResetGame()
+    {
+        SceneManager.LoadScene("og");
     }
 
     private void EnableButtons()
@@ -934,175 +1113,6 @@ public class GameController : MonoBehaviour
         valueToChange += valueAdded;
         textObject.GetComponent<Text>().text = text + valueToChange + (isPercent ? "%" : "");
     }
-
-    public void KillGroupStones(List<GoStone> groupStonesToKill)
-    {
-        foreach (GoStone stone in groupStonesToKill)
-        {
-            //todo just get color data from foreach GoStone
-            GoStone stoneToDestroy = stonePosHistory.Last().Find(s => (s.x == stone.x) &&
-                                                                      (s.y == stone.y));
-
-            if (stoneToDestroy == null) { continue; }
-
-            KillStoneWithDelay(
-                          stoneToDestroy,
-                         0.2f,
-                         0.2f * groupStonesToKill.IndexOf(stone));
-        }
-    }
-
-    public void KillStoneWithDelay(GoStone StoneToDestroy, float destroyDelay, float entireDelay = 0)
-    {
-
-        GoStone historyStone = stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
-                                                                (s.y == StoneToDestroy.y));
-
-        if (historyStone != null)
-        {
-        stonePosHistory.Last().Remove(stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
-                                                                       (s.y == StoneToDestroy.y)));
-        }
-
-
-        if (StoneToDestroy.stoneColor == StoneColor.Black)
-        {
-            PlusOneToScore(StoneColor.White);
-        }
-        else if (StoneToDestroy.stoneColor == StoneColor.White)
-        {
-            PlusOneToScore(StoneColor.Black);
-        }
-        else { print("NO COLOR SET FOR DESTRUCTION"); }
-
-
-        StoneToDestroy.gameObject.layer = 8;
-
-
-        //todo use something other than Text?
-        Text coroutineHandler = (new GameObject("_coroutineHandler")).AddComponent<Text>();
-        coroutineHandler.StartCoroutine(DelayDestroyCoroutine());
-
-        IEnumerator DelayDestroyCoroutine()
-        {
-            yield return new WaitForSeconds(entireDelay);
-            //yield return new WaitForSeconds(entireDelay);
-
-            GameObject exploder = StoneToDestroy.exploderGameObject;
-            exploder = Instantiate(explosion, new Vector3(0, 0, 0), Quaternion.identity);
-
-            exploder.GetComponent<Renderer>().enabled = false;
-            exploder.name = $"{StoneToDestroy.gameObject.name}xEXploder";
-            exploder.transform.parent = explosionObjectParent.transform;
-            exploder.GetComponent<UnityEngine.Video.VideoPlayer>().frame = 7;
-            exploder.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
-
-            yield return new WaitForSeconds(0.2f);
-
-            exploder.transform.position = StoneToDestroy.gameObject.transform.position;
-            exploder.GetComponent<Renderer>().enabled = true;
-            exploder.transform.LookAt(mainCamera.transform, new Vector3(0, 0, 1));
-            exploder.transform.rotation = mainCamera.transform.rotation;
-
-            Destroy(StoneToDestroy.gameObject);
-
-            isValidPlay = null;
-
-            yield return new WaitForSeconds(7);
-            exploder.GetComponent<Renderer>().enabled = false;
-            exploder.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
-
-
-        }
-    }
-
-    public GoStone SortStone(Collider stoneToSort, int CoordinateX, int CoordinateY)
-    {
-        stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        stoneToSort.GetComponent<Transform>().position =
-            new Vector3(CoordinateX * boardCoordinateSeparationX,
-                       -CoordinateY * boardCoordinateSeparationY,
-                       -stoneZValue);
-        stoneToSort.GetComponent<Transform>().rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
-        stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-
-        StoneColor stoneToSortColor = StoneColor.None;
-
-
-
-        stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
-
-        stonePosHistory.Last().Add(new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject });
-
-        //changes layer to "Stone"
-        stoneToSort.gameObject.layer = 8;
-
-        //todo use this return value
-        return new GoStone { x = CoordinateX, y = CoordinateY, stoneColor = stoneToSortColor, gameObject = stoneToSort.gameObject };
-    }
-
-    public class BoardCoordinates
-    {
-        public int x;
-        public int y;
-    }
-
-    public class GoStone : BoardCoordinates
-    {
-        public StoneColor stoneColor = StoneColor.None;
-
-        public GameObject gameObject;
-        public GameObject exploderGameObject;
-
-        public readonly static float diameter = 0.22f;
-    }
-
-    public class GoStoneGroup
-    {
-        public List<GoStone> stones = new List<GoStone>();
-        public List<BoardCoordinates> libertyCoordinates = new List<BoardCoordinates>();
-    }
-
-    public enum StoneColor
-    {
-        None,
-        Black,
-        White
-    }
-
-    public class StoneOffset
-    {
-        public static BoardCoordinates left = new BoardCoordinates { x = -1, y = 0 };
-        public static BoardCoordinates right = new BoardCoordinates { x = +1, y = 0 };
-        public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
-        public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
-    }
-
-    public class StonePosHistoryEntry
-    {
-        public List<GoStone> stones = new List<GoStone>();
-        public GameObject[,] gameObjects = new GameObject[19, 19];
-    }
-
-    public class ValidPlayData
-    {
-        public bool isValidPlay;
-        public List<GoStone> groupStonesToKill;
-    }
-
-    public bool SameStoneCoordinates(GoStone first, GoStone second)
-    {
-        if ((first.x == second.x) &&
-            (first.y == second.y))
-        { return true; }
-        else { return false; }
-    }
-
-    public void CopyStoneCoordinates(GoStone source, GoStone destination)
-    {
-        destination.x = source.x;
-        destination.y = source.y;
-    }
 }
 
 
@@ -1113,6 +1123,6 @@ public class GameController : MonoBehaviour
 
 //Sky background used from (sketchuptexture.com/2013/02/panoramic-ski-360.html)
 
-// Original concept from Nicholas Abentroth
+//Original concept from Nicholas Abentroth
 
-// Copyright 2021, Casey Keller, All rights reserved.
+//Copyright 2021, Casey Keller, All rights reserved.
