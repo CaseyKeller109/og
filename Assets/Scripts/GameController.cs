@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    //todo put global variables in classes
+    //todo add constructors to classes. GoStone, etc
+
+    //todo sensor stone shouldn't cast shadow
     //todo more functions should return value
     //todo reduce number of parameters in functions
     //todo reduce function size
@@ -43,12 +47,11 @@ public class GameController : MonoBehaviour
     public float timer;
     public Button resetButton;
     public Camera mainCamera;
+    public Vector3 cameraStartPosition;
     public Vector3 defaultCameraPosition;
     public Quaternion defaultCameraRotation;
-    public Quaternion curentGoStoneRotation;
-    public Camera ogCameraReference;
-    public Vector3 cameraStartPosition;
     public GameObject genericStoneObject;
+    public Camera defaultThrowingCamera;
     public readonly float boardCoordinateSeparationX = 0.2211f;
     public readonly float boardCoordinateSeparationY = 0.2366f;
     public Material whiteMaterial;
@@ -64,16 +67,7 @@ public class GameController : MonoBehaviour
     public GameObject whiteTextObject;
     public GameObject blackTextObject;
 
-    public float whiteScore = 0;
-    public float blackScore = 0;
-    public StoneColor currentPlayerColor = StoneColor.Black;
 
-    public GameState currentGameState = GameState.CanPlaceStone;
-    public float ogBaseProb = -70;
-    public float ogProb = -70;
-    public float ogVelocity = 6;
-    public bool isOgFired = false;
-    public bool isOnFirstOgPlay = true;
     public GameObject wall1;
     public GameObject wall2;
     public GameObject wall3;
@@ -83,13 +77,6 @@ public class GameController : MonoBehaviour
 
     public Vector3 mousePos;
     public GoStone previousMouseCoordinates = new GoStone();
-    public bool? isValidPlay = true;
-
-    public float speedH = 5.0f;
-    public float speedV = 3.0f;
-
-    private float yaw = 0.0f;
-    private float pitch = 0.0f;
 
     private string codeEntered = "";
     private readonly string konamiCode = "UUDDLRLRBAS";
@@ -106,6 +93,46 @@ public class GameController : MonoBehaviour
     public GameObject ogProbText;
     public GameObject ogBaseProbText;
 
+    public static class CurrentStateData
+    {
+        //todo use sensorstone rotation instead of this
+        public static Quaternion curentGoStoneRotation;
+        public static StoneColor currentPlayerColor = StoneColor.Black;
+        public static GameState currentGameState = GameState.CanPlaceStone;
+        public static bool? isValidPlay = true;
+    }
+
+    public static class CameraMouseMovementData
+    {
+        public static float speedH = 5.0f; //todo add CameraMovement class?
+        public static float speedV = 3.0f;
+
+        public static float yaw = 0.0f;
+        public static float pitch = 0.0f;
+    }
+
+    public static class ThrowingData
+    {
+        public static float ogBaseProb = -70;
+        public static float ogProb = -70;
+        public static float ogVelocity = 6;
+        public static bool isOgFired = false;
+        public static bool isOnFirstOgPlay = true;
+    }
+
+    public static class PlayerScore
+    {
+        public static float whiteScore = 0;
+        public static float blackScore = 0;
+    }
+
+    public static class StoneDirectionOffset
+    {
+        public static BoardCoordinates left = new BoardCoordinates { x = -1, y = 0 };
+        public static BoardCoordinates right = new BoardCoordinates { x = +1, y = 0 };
+        public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
+        public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -124,14 +151,14 @@ public class GameController : MonoBehaviour
         stonePosHistory.Add(new List<GoStone>());
 
         ogNowButton.onClick.AddListener(OgNow);
-        plusOgSpeedButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogVelocity, 1, ogSpeedText, "Throw Speed: ", false); });
-        minusOgSpeedButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogVelocity, -1, ogSpeedText, "Throw Speed: ", false); });
-        plusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogBaseProb, 10, ogBaseProbText, "Base Og Prob: ", true); });
-        minusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ogBaseProb, -10, ogBaseProbText, "Base Og Prob: ", true); });
+        plusOgSpeedButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ThrowingData.ogVelocity, 1, ogSpeedText, "Throw Speed: ", false); });
+        minusOgSpeedButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ThrowingData.ogVelocity, -1, ogSpeedText, "Throw Speed: ", false); });
+        plusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ThrowingData.ogBaseProb, 10, ogBaseProbText, "Base Og Prob: ", true); });
+        minusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ThrowingData.ogBaseProb, -10, ogBaseProbText, "Base Og Prob: ", true); });
 
-        ogSpeedText.GetComponent<Text>().text = "Throw Speed: " + ogVelocity;
-        ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
-        ogBaseProbText.GetComponent<Text>().text = "Base Og prob: " + ogBaseProb + "%";
+        ogSpeedText.GetComponent<Text>().text = "Throw Speed: " + ThrowingData.ogVelocity;
+        ogProbText.GetComponent<Text>().text = "Og prob: " + ThrowingData.ogProb + "%";
+        ogBaseProbText.GetComponent<Text>().text = "Base Og prob: " + ThrowingData.ogBaseProb + "%";
 
         cameraStartPosition = new Vector3(1.9883f, -2.1326f, -5);
         defaultCameraPosition = mainCamera.GetComponent<Transform>().position;
@@ -227,7 +254,7 @@ public class GameController : MonoBehaviour
 
 
         //normal go play
-        if (currentGameState == GameState.CanPlaceStone && !isOgFired)
+        if (CurrentStateData.currentGameState == GameState.CanPlaceStone && !ThrowingData.isOgFired)
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -254,22 +281,22 @@ public class GameController : MonoBehaviour
                 validPlayData = ValidPlayCheck(possibleStoneCoordinates);
                 if (!SameStoneCoordinates(previousMouseCoordinates, possibleStoneCoordinates))
                 {
-                    isValidPlay = null;
+                    CurrentStateData.isValidPlay = null;
                 }
 
-                if (isValidPlay == null)
+                if (CurrentStateData.isValidPlay == null)
                 {
-                    isValidPlay = validPlayData.isValidPlay;
+                    CurrentStateData.isValidPlay = validPlayData.isValidPlayLocal;
                 }
 
                 CopyStoneCoordinates(possibleStoneCoordinates, previousMouseCoordinates);
 
 
-                if (isValidPlay == true)
+                if (CurrentStateData.isValidPlay == true)
                 {
                     sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                else if (isValidPlay == false)
+                else if (CurrentStateData.isValidPlay == false)
                 {
                     sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
                 }
@@ -279,53 +306,53 @@ public class GameController : MonoBehaviour
                                                                               -stoneZValue);
                 sensorStone.gameObject.transform.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
-                if (Input.GetMouseButtonUp(0) && isValidPlay == true)
+                if (Input.GetMouseButtonUp(0) && CurrentStateData.isValidPlay == true)
                 {
                     PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill);
 
-                    if (currentPlayerColor == StoneColor.Black)
-                    { currentPlayerColor = StoneColor.White; }
-                    else if (currentPlayerColor == StoneColor.White)
-                    { currentPlayerColor = StoneColor.Black; }
+                    if (CurrentStateData.currentPlayerColor == StoneColor.Black)
+                    { CurrentStateData.currentPlayerColor = StoneColor.White; }
+                    else if (CurrentStateData.currentPlayerColor == StoneColor.White)
+                    { CurrentStateData.currentPlayerColor = StoneColor.Black; }
 
-                    if (UnityEngine.Random.Range(0, 100) < ogProb)
+                    if (UnityEngine.Random.Range(0, 100) < ThrowingData.ogProb)
                     {
                         //to og play
-                        currentGameState = GameState.CanThrowStone;
-                        curentGoStoneRotation = Quaternion.identity;
-                        ogProb = ogBaseProb;
-                        ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
-                        mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
-                        mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
+                        CurrentStateData.currentGameState = GameState.CanThrowStone;
+                        CurrentStateData.curentGoStoneRotation = Quaternion.identity;
+                        ThrowingData.ogProb = ThrowingData.ogBaseProb;
+                        ogProbText.GetComponent<Text>().text = "Og prob: " + ThrowingData.ogProb + "%";
+                        mainCamera.GetComponent<Transform>().position = defaultThrowingCamera.GetComponent<Transform>().position;
+                        mainCamera.GetComponent<Transform>().rotation = defaultThrowingCamera.GetComponent<Transform>().rotation;
                         DisableButtons();
                     }
 
                     else
                     {
-                        ogProb += 8;
-                        ogProbText.GetComponent<Text>().text = "Og Prob: " + ogProb + "%";
+                        ThrowingData.ogProb += 8;
+                        ogProbText.GetComponent<Text>().text = "Og Prob: " + ThrowingData.ogProb + "%";
                     }
                 }
             }
         }
 
         //og play (throwing)
-        else if (currentGameState == GameState.CanThrowStone)
+        else if (CurrentStateData.currentGameState == GameState.CanThrowStone)
         {
             sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
             sensorStone.gameObject.transform.position = mainCamera.GetComponent<Transform>().position + 1 * mainCamera.GetComponent<Transform>().forward;
-            sensorStone.gameObject.transform.rotation = mainCamera.transform.rotation * curentGoStoneRotation;
+            sensorStone.gameObject.transform.rotation = mainCamera.transform.rotation * CurrentStateData.curentGoStoneRotation;
 
             mainCamera.orthographic = false;
 
-            yaw += speedH * Input.GetAxis("Mouse X");
-            pitch -= speedV * Input.GetAxis("Mouse Y");
+            CameraMouseMovementData.yaw += CameraMouseMovementData.speedH * Input.GetAxis("Mouse X");
+            CameraMouseMovementData.pitch -= CameraMouseMovementData.speedV * Input.GetAxis("Mouse Y");
 
-            mainCamera.GetComponent<Transform>().Rotate(new Vector3(pitch, 0, 0), Space.Self);
-            mainCamera.GetComponent<Transform>().Rotate(new Vector3(0, 0, -yaw), Space.World);
+            mainCamera.GetComponent<Transform>().Rotate(new Vector3(CameraMouseMovementData.pitch, 0, 0), Space.Self);
+            mainCamera.GetComponent<Transform>().Rotate(new Vector3(0, 0, -CameraMouseMovementData.yaw), Space.World);
 
-            yaw = 0;
-            pitch = 0;
+            CameraMouseMovementData.yaw = 0;
+            CameraMouseMovementData.pitch = 0;
 
             Transform camtran = mainCamera.GetComponent<Transform>();
 
@@ -347,11 +374,11 @@ public class GameController : MonoBehaviour
             }
             if (Input.GetKey("e"))
             {
-                curentGoStoneRotation *= Quaternion.Euler(5, 0, 0);
+                CurrentStateData.curentGoStoneRotation *= Quaternion.Euler(5, 0, 0);
             }
             if (Input.GetKey("q"))
             {
-                curentGoStoneRotation *= Quaternion.Euler(-5, 0, 0);
+                CurrentStateData.curentGoStoneRotation *= Quaternion.Euler(-5, 0, 0);
             }
             if (Input.GetKey(KeyCode.LeftControl) && camtran.position.z < stoneZValue)
             {
@@ -373,13 +400,13 @@ public class GameController : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && !isOgNowFirstFrame)
             {
                 ThrowGoStone(sensorStone.gameObject.transform.position,
-                             mainCamera.transform.rotation * curentGoStoneRotation,
-                             ogVelocity * mainCamera.transform.forward);
+                             mainCamera.transform.rotation * CurrentStateData.curentGoStoneRotation,
+                             ThrowingData.ogVelocity * mainCamera.transform.forward);
             }
             isOgNowFirstFrame = false;
         }
 
-        else if (isOgFired)
+        else if (ThrowingData.isOgFired)
         {
             if (thrownStone.gameObject != null)
             {
@@ -398,48 +425,48 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            if (Time.time - timer > 2 && currentGameState == GameState.StoneHasBeenThrown)
+            if (Time.time - timer > 2 && CurrentStateData.currentGameState == GameState.StoneHasBeenThrown)
             {
                 GetNewBoardLayout();
 
-                if (currentPlayerColor == StoneColor.Black)
-                { currentPlayerColor = StoneColor.White; }
-                else if (currentPlayerColor == StoneColor.White)
-                { currentPlayerColor = StoneColor.Black; }
+                if (CurrentStateData.currentPlayerColor == StoneColor.Black)
+                { CurrentStateData.currentPlayerColor = StoneColor.White; }
+                else if (CurrentStateData.currentPlayerColor == StoneColor.White)
+                { CurrentStateData.currentPlayerColor = StoneColor.Black; }
 
-                currentGameState = GameState.StonesHaveBeenSorted;
+                CurrentStateData.currentGameState = GameState.StonesHaveBeenSorted;
             }
 
-            if (Time.time - timer > 3 && currentGameState == GameState.StonesHaveBeenSorted)
+            if (Time.time - timer > 3 && CurrentStateData.currentGameState == GameState.StonesHaveBeenSorted)
             {
                 //stay in og play for other player
-                if (isOnFirstOgPlay)
+                if (ThrowingData.isOnFirstOgPlay)
                 {
-                    currentGameState = GameState.CanThrowStone;
-                    curentGoStoneRotation = Quaternion.identity;
+                    CurrentStateData.currentGameState = GameState.CanThrowStone;
+                    CurrentStateData.curentGoStoneRotation = Quaternion.identity;
 
-                    ogProb = ogBaseProb;
-                    ogProbText.GetComponent<Text>().text = "Og Prob: " + ogProb + "%";
-                    mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
-                    mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
+                    ThrowingData.ogProb = ThrowingData.ogBaseProb;
+                    ogProbText.GetComponent<Text>().text = "Og Prob: " + ThrowingData.ogProb + "%";
+                    mainCamera.GetComponent<Transform>().position = defaultThrowingCamera.GetComponent<Transform>().position;
+                    mainCamera.GetComponent<Transform>().rotation = defaultThrowingCamera.GetComponent<Transform>().rotation;
                     DisableButtons();
 
                     sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
-                    isOnFirstOgPlay = false;
+                    ThrowingData.isOnFirstOgPlay = false;
                 }
 
                 //back to go play
                 else
                 {
-                    currentGameState = GameState.CanPlaceStone;
-                    isOgFired = false;
+                    CurrentStateData.currentGameState = GameState.CanPlaceStone;
+                    ThrowingData.isOgFired = false;
 
                     mainCamera.GetComponent<Transform>().position = defaultCameraPosition;
                     mainCamera.GetComponent<Transform>().rotation = defaultCameraRotation;
                     mainCamera.orthographic = true;
                     EnableButtons();
 
-                    isOnFirstOgPlay = true;
+                    ThrowingData.isOnFirstOgPlay = true;
                 }
             }
         }
@@ -447,7 +474,7 @@ public class GameController : MonoBehaviour
 
     public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill)
     {
-        isValidPlay = false;
+        CurrentStateData.isValidPlay = false;
 
         stonePosHistory.Add(new List<GoStone>());
 
@@ -469,7 +496,7 @@ public class GameController : MonoBehaviour
                                                        -stoneZValue),
                                           Quaternion.identity);
 
-        newStoneObject.name = $"{stoneCoordinates.x}x{stoneCoordinates.y}x{currentPlayerColor}Stone";
+        newStoneObject.name = $"{stoneCoordinates.x}x{stoneCoordinates.y}x{CurrentStateData.currentPlayerColor}Stone";
         newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
 
 
@@ -477,18 +504,18 @@ public class GameController : MonoBehaviour
         {
             x = stoneCoordinates.x,
             y = stoneCoordinates.y,
-            stoneColor = currentPlayerColor,
+            stoneColor = CurrentStateData.currentPlayerColor,
             gameObject = newStoneObject
 
         });
 
-        if (currentPlayerColor == StoneColor.Black)
+        if (CurrentStateData.currentPlayerColor == StoneColor.Black)
         {
             newStoneObject.GetComponent<MeshRenderer>().material = blackMaterial;
             sensorStone.gameObject.GetComponent<MeshRenderer>().material = whiteMaterialTransparent;
             sensorStone.gameObject.name = "WhiteSensorStone";
         }
-        else if (currentPlayerColor == StoneColor.White)
+        else if (CurrentStateData.currentPlayerColor == StoneColor.White)
         {
             newStoneObject.GetComponent<MeshRenderer>().material = whiteMaterial;
             sensorStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
@@ -497,8 +524,8 @@ public class GameController : MonoBehaviour
     }
 
     //todo make unit tests for ThrowGoStone?
-    private void ThrowGoStone(Vector3 StonePosition, 
-                              Quaternion StoneRotation, 
+    private void ThrowGoStone(Vector3 StonePosition,
+                              Quaternion StoneRotation,
                               Vector3 StoneVelocity)
     {
         thrownStone.gameObject = Instantiate(genericStoneObject, StonePosition, Quaternion.identity);
@@ -506,14 +533,14 @@ public class GameController : MonoBehaviour
         sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
         thrownStone.gameObject.GetComponent<Rigidbody>().velocity = StoneVelocity;
 
-        if (currentPlayerColor == StoneColor.Black)
+        if (CurrentStateData.currentPlayerColor == StoneColor.Black)
         {
             thrownStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterial;
             sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f, 0.50f);
             sensorStone.gameObject.name = "WhiteSensorStone";
             thrownStone.gameObject.name = "19x19xBlackThrownStone";
         }
-        else if (currentPlayerColor == StoneColor.White)
+        else if (CurrentStateData.currentPlayerColor == StoneColor.White)
         {
             thrownStone.gameObject.GetComponent<MeshRenderer>().material = whiteMaterial;
             sensorStone.gameObject.GetComponent<MeshRenderer>().material.color = new Color(0f, 0f, 0f, 0.50f);
@@ -521,8 +548,8 @@ public class GameController : MonoBehaviour
             thrownStone.gameObject.name = "19x19xWhiteThrownStone";
         }
 
-        currentGameState = GameState.StoneHasBeenThrown;
-        isOgFired = true;
+        CurrentStateData.currentGameState = GameState.StoneHasBeenThrown;
+        ThrowingData.isOgFired = true;
         timer = Time.time;
     }
 
@@ -547,9 +574,9 @@ public class GameController : MonoBehaviour
         {
             x = centerStone.x,
             y = centerStone.y,
-            stoneColor = currentPlayerColor
+            stoneColor = CurrentStateData.currentPlayerColor
         });
-        centerStone.stoneColor = currentPlayerColor;
+        centerStone.stoneColor = CurrentStateData.currentPlayerColor;
 
         //Simple Ko rule
         bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
@@ -561,8 +588,8 @@ public class GameController : MonoBehaviour
         else { return new ValidPlayData() { isValidPlay = false }; }
     }
 
-    private string OpenSidesCheck(GoStone centerStone, 
-                                  List<GoStone> boardIfStoneIsPlayed, 
+    private string OpenSidesCheck(GoStone centerStone,
+                                  List<GoStone> boardIfStoneIsPlayed,
                                   List<GoStone> groupStonesToKill)
     {
         string openSides = "";
@@ -687,8 +714,8 @@ public class GameController : MonoBehaviour
     }
 
     //starts searching at centerStoneCoordinates
-    private void FindGroupAndLibertyCoordinates(GoStone startStone, 
-                                                List<GoStone> boardIfStoneIsPlayed, 
+    private void FindGroupAndLibertyCoordinates(GoStone startStone,
+                                                List<GoStone> boardIfStoneIsPlayed,
                                                 ref GoStoneGroup stoneGroup)
     {
         if (stoneGroup.stones.Find(s => SameStoneCoordinates(s, startStone)) == null)
@@ -707,10 +734,10 @@ public class GameController : MonoBehaviour
         FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.y > 0), StoneDirectionOffset.down, ref stoneGroup);
     }
 
-    private void FindGroupAndLibertyCoordinatesSideStone(GoStone sideStoneCoordinates, 
+    private void FindGroupAndLibertyCoordinatesSideStone(GoStone sideStoneCoordinates,
                                                          List<GoStone> boardIfStoneIsPlayed,
-                                                         bool isPositionGood, 
-                                                         BoardCoordinates offset, 
+                                                         bool isPositionGood,
+                                                         BoardCoordinates offset,
                                                          ref GoStoneGroup stoneGroup)
     {
         if (isPositionGood)
@@ -818,8 +845,8 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public GoStone SortStone(Collider stoneToSort, 
-                             int CoordinateX, 
+    public GoStone SortStone(Collider stoneToSort,
+                             int CoordinateX,
                              int CoordinateY)
     {
         stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
@@ -850,9 +877,9 @@ public class GameController : MonoBehaviour
         List<GoStone> alreadyGroupedStones = new List<GoStone>();
 
         List<StoneColor> StoneColors = new List<StoneColor>() {
-                                            currentPlayerColor == StoneColor.White ? StoneColor.Black :StoneColor.White
+                                            CurrentStateData.currentPlayerColor == StoneColor.White ? StoneColor.Black :StoneColor.White
                                             ,
-                                            currentPlayerColor
+                                            CurrentStateData.currentPlayerColor
         };
 
         //todo improve this?
@@ -927,8 +954,8 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void KillStoneWithDelay(GoStone StoneToDestroy, 
-                                   float destroyDelay, 
+    public void KillStoneWithDelay(GoStone StoneToDestroy,
+                                   float destroyDelay,
                                    float totalDelay = 0)
     {
         GoStone historyStone = stonePosHistory.Last().Find(s => (s.x == StoneToDestroy.x) &&
@@ -979,7 +1006,7 @@ public class GameController : MonoBehaviour
 
             Destroy(StoneToDestroy.gameObject);
 
-            isValidPlay = null;
+            CurrentStateData.isValidPlay = null;
 
             yield return new WaitForSeconds(7);
             exploder.GetComponent<Renderer>().enabled = false;
@@ -991,11 +1018,11 @@ public class GameController : MonoBehaviour
     {
         if (stoneColor == StoneColor.Black)
         {
-            ChangeFloatAndText(ref blackScore, 1, blackTextObject, "Black Captures: ", false);
+            ChangeFloatAndText(ref PlayerScore.blackScore, 1, blackTextObject, "Black Captures: ", false);
         }
         if (stoneColor == StoneColor.White)
         {
-            ChangeFloatAndText(ref whiteScore, 1, whiteTextObject, "White Captures: ", false);
+            ChangeFloatAndText(ref PlayerScore.whiteScore, 1, whiteTextObject, "White Captures: ", false);
         }
     }
 
@@ -1045,13 +1072,6 @@ public class GameController : MonoBehaviour
         public List<BoardCoordinates> libertyCoordinates = new List<BoardCoordinates>();
     }
 
-    public class StoneDirectionOffset
-    {
-        public static BoardCoordinates left = new BoardCoordinates { x = -1, y = 0 };
-        public static BoardCoordinates right = new BoardCoordinates { x = +1, y = 0 };
-        public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
-        public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
-    }
 
     public class ValidPlayData
     {
@@ -1072,13 +1092,13 @@ public class GameController : MonoBehaviour
 
     private void OgNow()
     {
-        currentGameState = GameState.CanThrowStone;
-        curentGoStoneRotation = Quaternion.identity;
+        CurrentStateData.currentGameState = GameState.CanThrowStone;
+        CurrentStateData.curentGoStoneRotation = Quaternion.identity;
         isOgNowFirstFrame = true;
-        ogProb = ogBaseProb;
-        ogProbText.GetComponent<Text>().text = "Og prob: " + ogProb + "%";
-        mainCamera.GetComponent<Transform>().position = ogCameraReference.GetComponent<Transform>().position;
-        mainCamera.GetComponent<Transform>().rotation = ogCameraReference.GetComponent<Transform>().rotation;
+        ThrowingData.ogProb = ThrowingData.ogBaseProb;
+        ogProbText.GetComponent<Text>().text = "Og prob: " + ThrowingData.ogProb + "%";
+        mainCamera.GetComponent<Transform>().position = defaultThrowingCamera.GetComponent<Transform>().position;
+        mainCamera.GetComponent<Transform>().rotation = defaultThrowingCamera.GetComponent<Transform>().rotation;
         sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
         DisableButtons();
     }
