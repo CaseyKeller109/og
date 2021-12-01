@@ -3137,12 +3137,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1083405588 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8657081187035293025, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1200783038}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1106839411
 GameObject:
   m_ObjectHideFlags: 0
@@ -3467,7 +3461,7 @@ PrefabInstance:
     - target: {fileID: 1240641845312462420, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.1
+      value: 1.94
       objectReference: {fileID: 0}
     - target: {fileID: 1240641845312462420, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
         type: 3}
@@ -3477,7 +3471,7 @@ PrefabInstance:
     - target: {fileID: 1240641845312462420, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.76
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 1240641845312462420, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
         type: 3}
@@ -4375,13 +4369,11 @@ MonoBehaviour:
   timer: 0
   resetButton: {fileID: 81860380}
   mainCamera: {fileID: 265160132}
+  cameraStartPosition: {x: 0, y: 0, z: 0}
   defaultCameraPosition: {x: 0, y: 0, z: 0}
   defaultCameraRotation: {x: 0, y: 0, z: 0, w: 0}
   curentGoStoneRotation: {x: 0, y: 0, z: 0, w: 0}
-  ogCameraReference: {fileID: 1739669728}
-  cameraStartPosition: {x: 0, y: 0, z: 0}
-  genericStoneObject: {fileID: 9011502473379578707, guid: cd226d13af9d4a741adb167745b48e97,
-    type: 3}
+  defaultThrowingCamera: {fileID: 0}
   whiteMaterial: {fileID: 2100000, guid: a9edcca0151416b4ab23e575fd8097ba, type: 2}
   blackMaterial: {fileID: 2100000, guid: a9d6768c3ece6cf42a944d2b3201e6ee, type: 2}
   whiteMaterialTransparent: {fileID: 2100000, guid: a8890ff8245c70e4bac95b5542452131,
@@ -4389,30 +4381,16 @@ MonoBehaviour:
   blackMaterialTransparent: {fileID: 2100000, guid: d7dafbd011c77d145ac356ff19a3f5cf,
     type: 2}
   stoneZValue: 0.095
-  sensorStone: {fileID: 1083405588}
-  sensorStoneTrans: {fileID: 0}
   explosionObjectParent: {fileID: 385541037}
   explosion: {fileID: 3474114883269312668, guid: 9c3d55abfdc1a8f45aea256aae5a1a9e,
     type: 3}
   whiteTextObject: {fileID: 636115327}
   blackTextObject: {fileID: 1704916201}
-  whiteScore: 0
-  blackScore: 0
-  currentPlayerColor: 1
-  currentGameState: 0
-  ogBaseProb: -70
-  ogProb: -70
-  ogVelocity: 6
-  isOgFired: 0
-  isOnFirstOgPlay: 1
   wall1: {fileID: 1016443385}
   wall2: {fileID: 1463368472}
   wall3: {fileID: 167456727}
   wall4: {fileID: 915307894}
-  ogFiredStage: 0
   mousePos: {x: 0, y: 0, z: 0}
-  speedH: 2
-  speedV: 2
   konamiText: {fileID: 427387758}
   ogDebugStuff: {fileID: 1945409278}
   ogNowButton: {fileID: 1669432211}
