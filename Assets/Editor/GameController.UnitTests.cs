@@ -1257,38 +1257,50 @@ namespace Tests
         {
             GameController.CurrentStateData.currentGameState = GameState.CanPlaceStone;
             GameController.CurrentStateData.currentPlayerColor = stoneColor;
-            GoStone newStone = new GoStone
+            //GoStone newStone = new GoStone
+            //{
+            //    coordinates = {
+            //    x = xCoordinate,
+            //    y = yCoordinate
+            //    },
+            //    stoneColor = stoneColor
+            //};
+
+            BoardCoordinates newStoneCoordinates = new BoardCoordinates
             {
-                coordinates = {
                 x = xCoordinate,
                 y = yCoordinate
-                },
-                stoneColor = stoneColor
             };
 
             ValidPlayData validPlayData = new ValidPlayData();
-            validPlayData = gameController.ValidPlayCheck(newStone);
+            validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.CurrentStateData.currentPlayerColor);
             if (validPlayData.isValidPlayLocal)
             {
-                gameController.PlaceGoStone(newStone, validPlayData.groupStonesToKill);
+                gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
             }
         }
 
         public void ThrowStone(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
             GameController.CurrentStateData.currentPlayerColor = stoneColor;
-            GoStone newStone = new GoStone
+            //GoStone newStone = new GoStone
+            //{
+            //    coordinates = {
+            //    x = xCoordinate,
+            //    y = yCoordinate
+            //    },
+            //    stoneColor = stoneColor
+            //};
+
+            BoardCoordinates newStoneCoordinates = new BoardCoordinates
             {
-                coordinates = {
                 x = xCoordinate,
                 y = yCoordinate
-                },
-                stoneColor = stoneColor
             };
 
             ValidPlayData validPlayData = new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = new List<GoStone>() };
 
-            gameController.PlaceGoStone(newStone, validPlayData.groupStonesToKill);
+            gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
             GameController.CurrentStateData.currentGameState = GameState.CanThrowStone;
         }
 

@@ -76,7 +76,7 @@ public class GameController : MonoBehaviour
     public List<List<GoStone>> stonePosHistory = new List<List<GoStone>>();
 
     public Vector3 mousePos;
-    public GoStone previousMouseCoordinates;
+    public BoardCoordinates previousMouseCoordinates;
 
     private string codeEntered = "";
     private readonly string konamiCode = "UUDDLRLRBAS";
@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour
     {
         genericStoneObject = Resources.Load("Stone") as GameObject;
 
-        previousMouseCoordinates = new GoStone();
+        previousMouseCoordinates = new BoardCoordinates();
         sensorStone = new GoStone();
         thrownStone = new GoStone();
     }
@@ -271,14 +271,12 @@ public class GameController : MonoBehaviour
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            GoStone possibleStoneCoordinates =
-                new GoStone
+            BoardCoordinates possibleStoneCoordinates =
+                new BoardCoordinates
                 {
-                    coordinates =
-                    {
                     x = Convert.ToInt32(mousePos.x / boardCoordinateSeparationX),
                     y = -Convert.ToInt32(mousePos.y / boardCoordinateSeparationY)
-                    }
+                    
                 };
 
             if (Convert.ToInt32(mousePos.x / boardCoordinateSeparationX) < 0 ||
@@ -293,7 +291,7 @@ public class GameController : MonoBehaviour
             else
             {
                 //3todo can improve by not checking every time
-                ValidPlayData validPlayData = ValidPlayCheck(possibleStoneCoordinates);
+                ValidPlayData validPlayData = ValidPlayCheck(possibleStoneCoordinates, CurrentStateData.currentPlayerColor);
                 if (!SameStoneCoordinates(previousMouseCoordinates, possibleStoneCoordinates))
                 {
                     CurrentStateData.isValidPlay = null;
@@ -319,8 +317,8 @@ public class GameController : MonoBehaviour
                 }
 
                 //0todo don't use GoStone for possibleStoneCoordinates?
-                sensorStone.gameObject.GetComponent<Transform>().position = new Vector3(possibleStoneCoordinates.coordinates.x * boardCoordinateSeparationX,
-                                                                              -possibleStoneCoordinates.coordinates.y * boardCoordinateSeparationY,
+                sensorStone.gameObject.GetComponent<Transform>().position = new Vector3(possibleStoneCoordinates.x * boardCoordinateSeparationX,
+                                                                              -possibleStoneCoordinates.y * boardCoordinateSeparationY,
                                                                               -stoneZValue);
                 sensorStone.gameObject.transform.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
@@ -490,7 +488,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void PlaceGoStone(GoStone stoneCoordinates, List<GoStone> groupStonesToKill)
+    public void PlaceGoStone(BoardCoordinates stoneCoordinates, List<GoStone> groupStonesToKill)
     {
         CurrentStateData.isValidPlay = false;
 
@@ -509,12 +507,12 @@ public class GameController : MonoBehaviour
         sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
 
         GameObject newStoneObject = Instantiate(genericStoneObject,
-                                          new Vector3(stoneCoordinates.coordinates.x * boardCoordinateSeparationX,
-                                                       -stoneCoordinates.coordinates.y * boardCoordinateSeparationY,
+                                          new Vector3(stoneCoordinates.x * boardCoordinateSeparationX,
+                                                       -stoneCoordinates.y * boardCoordinateSeparationY,
                                                        -stoneZValue),
                                           Quaternion.identity);
 
-        newStoneObject.name = $"{stoneCoordinates.coordinates.x}x{stoneCoordinates.coordinates.y}x{CurrentStateData.currentPlayerColor}Stone";
+        newStoneObject.name = $"{stoneCoordinates.x}x{stoneCoordinates.y}x{CurrentStateData.currentPlayerColor}Stone";
         newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
 
 
@@ -522,8 +520,8 @@ public class GameController : MonoBehaviour
         {
             coordinates =
             {
-            x = stoneCoordinates.coordinates.x,
-            y = stoneCoordinates.coordinates.y
+            x = stoneCoordinates.x,
+            y = stoneCoordinates.y
             },
             stoneColor = CurrentStateData.currentPlayerColor,
             gameObject = newStoneObject
@@ -575,12 +573,14 @@ public class GameController : MonoBehaviour
     }
 
     //0todo put gostone check stuff in separate file
-    public ValidPlayData ValidPlayCheck(GoStone newStone)
+    public ValidPlayData ValidPlayCheck(BoardCoordinates newStoneCoordinates, StoneColor newStoneColor)
     {
+        GoStone newStone = new GoStone { coordinates = newStoneCoordinates, stoneColor = newStoneColor };
+        //GoStoneHypothetical newStone = new GoStoneHypothetical { coordinates = newStoneCoordinates, stoneColor = newStoneColor };
         List<GoStone> groupStonesToKill = new List<GoStone>();
 
-        if (stonePosHistory.Last().Find(s => (s.coordinates.x == newStone.coordinates.x) &&
-                                             (s.coordinates.y == newStone.coordinates.y)) != null)
+        if (stonePosHistory.Last().Find(s => (s.coordinates.x == newStoneCoordinates.x) &&
+                                             (s.coordinates.y == newStoneCoordinates.y)) != null)
         {
             return new ValidPlayData() { isValidPlayLocal = false };
         }
@@ -597,8 +597,8 @@ public class GameController : MonoBehaviour
         {
             coordinates =
             {
-            x = newStone.coordinates.x,
-            y = newStone.coordinates.y
+            x = newStoneCoordinates.x,
+            y = newStoneCoordinates.y
             },
             stoneColor = CurrentStateData.currentPlayerColor
         });
@@ -748,7 +748,7 @@ public class GameController : MonoBehaviour
                                                 List<GoStone> boardIfStoneIsPlayed,
                                                 ref GoStoneGroup stoneGroup)
     {
-        if (stoneGroup.stones.Find(s => SameStoneCoordinates(s, startStone)) == null)
+        if (stoneGroup.stones.Find(s => SameStoneCoordinates(s.coordinates, startStone.coordinates)) == null)
         {
             stoneGroup.stones.Add(new GoStone
             {
@@ -1070,18 +1070,18 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public bool SameStoneCoordinates(GoStone first, GoStone second)
+    public bool SameStoneCoordinates(BoardCoordinates first, BoardCoordinates second)
     {
-        if ((first.coordinates.x == second.coordinates.x) &&
-            (first.coordinates.y == second.coordinates.y))
+        if ((first.x == second.x) &&
+            (first.y == second.y))
         { return true; }
         else { return false; }
     }
 
-    public void CopyStoneCoordinates(GoStone source, GoStone destination)
+    public void CopyStoneCoordinates(BoardCoordinates source, BoardCoordinates destination)
     {
-        destination.coordinates.x = source.coordinates.x;
-        destination.coordinates.y = source.coordinates.y;
+        destination.x = source.x;
+        destination.y = source.y;
     }
 
 
@@ -1100,11 +1100,9 @@ public class GameController : MonoBehaviour
     }
 
     //0todo implement this
-    //public class GoStoneData
+    //public class GoStoneHypothetical
     //{
-       
-
-    //    public BoardCoordinates boardCoordinates = new BoardCoordinates { x = 20, y = 20 };
+    //    public BoardCoordinates coordinates = new BoardCoordinates { x = 100, y = 100 };
     //    public StoneColor stoneColor = StoneColor.None;
 
     //    public readonly static float diameter = 0.22f;
