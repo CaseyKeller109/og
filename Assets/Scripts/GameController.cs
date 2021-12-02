@@ -50,8 +50,8 @@ public class GameController : MonoBehaviour
     public Vector3 cameraStartPosition;
     public Vector3 defaultCameraPosition;
     public Quaternion defaultCameraRotation;
-    public GameObject genericStoneObject;
     public Camera defaultThrowingCamera;
+    public static GameObject genericStoneObject;
     public readonly float boardCoordinateSeparationX = 0.2211f;
     public readonly float boardCoordinateSeparationY = 0.2366f;
     public Material whiteMaterial;
@@ -59,8 +59,8 @@ public class GameController : MonoBehaviour
     public Material whiteMaterialTransparent;
     public Material blackMaterialTransparent;
     public float stoneZValue = -0.095f;
-    public GoStone sensorStone = new GoStone();
-    public GoStone thrownStone = new GoStone();
+    public GoStone sensorStone;
+    public GoStone thrownStone;
     public GameObject explosionObjectParent;
     public GameObject explosion;
 
@@ -76,7 +76,7 @@ public class GameController : MonoBehaviour
     public List<List<GoStone>> stonePosHistory = new List<List<GoStone>>();
 
     public Vector3 mousePos;
-    public GoStone previousMouseCoordinates = new GoStone();
+    public GoStone previousMouseCoordinates;
 
     private string codeEntered = "";
     private readonly string konamiCode = "UUDDLRLRBAS";
@@ -104,7 +104,7 @@ public class GameController : MonoBehaviour
 
     public static class CameraMouseMovementData
     {
-        public static float speedH = 5.0f; //todo add CameraMovement class?
+        public static float speedH = 5.0f; 
         public static float speedV = 3.0f;
 
         public static float yaw = 0.0f;
@@ -133,6 +133,16 @@ public class GameController : MonoBehaviour
         public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
         public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
     }
+
+    private void Awake()
+    {
+        genericStoneObject = Resources.Load("Stone") as GameObject;
+
+        previousMouseCoordinates = new GoStone();
+        sensorStone = new GoStone();
+        thrownStone = new GoStone();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -553,14 +563,15 @@ public class GameController : MonoBehaviour
         timer = Time.time;
     }
 
-    public ValidPlayData ValidPlayCheck(GoStone centerStone)
+    //0todo put gostone check stuff in separate file
+    public ValidPlayData ValidPlayCheck(GoStone newStone)
     {
         List<GoStone> groupStonesToKill = new List<GoStone>();
 
-        if (stonePosHistory.Last().Find(s => (s.x == centerStone.x) &&
-                                             (s.y == centerStone.y)) != null)
+        if (stonePosHistory.Last().Find(s => (s.x == newStone.x) &&
+                                             (s.y == newStone.y)) != null)
         {
-            return new ValidPlayData() { isValidPlay = false };
+            return new ValidPlayData() { isValidPlayLocal = false };
         }
 
         List<GoStone> boardIfStoneIsPlayed = new List<GoStone>();
@@ -572,20 +583,20 @@ public class GameController : MonoBehaviour
 
         boardIfStoneIsPlayed.Add(new GoStone
         {
-            x = centerStone.x,
-            y = centerStone.y,
+            x = newStone.x,
+            y = newStone.y,
             stoneColor = CurrentStateData.currentPlayerColor
         });
-        centerStone.stoneColor = CurrentStateData.currentPlayerColor;
+        newStone.stoneColor = CurrentStateData.currentPlayerColor;
 
         //Simple Ko rule
         bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
-        if (isSameBoard) { return new ValidPlayData() { isValidPlay = false }; }
+        if (isSameBoard) { return new ValidPlayData() { isValidPlayLocal = false }; }
 
-        string openSides = OpenSidesCheck(centerStone, boardIfStoneIsPlayed, groupStonesToKill);
+        string openSides = OpenSidesCheck(newStone, boardIfStoneIsPlayed, groupStonesToKill);
         if (openSides.Length > 0)
-        { return new ValidPlayData() { isValidPlay = true, groupStonesToKill = groupStonesToKill }; }
-        else { return new ValidPlayData() { isValidPlay = false }; }
+        { return new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = groupStonesToKill }; }
+        else { return new ValidPlayData() { isValidPlayLocal = false }; }
     }
 
     private string OpenSidesCheck(GoStone centerStone,
@@ -1064,6 +1075,54 @@ public class GameController : MonoBehaviour
         public GameObject exploderGameObject;
 
         public readonly static float diameter = 0.22f;
+
+        public GoStone()
+        {
+
+
+
+            if (genericStoneObject == null)
+            {
+                genericStoneObject = new GameObject();
+            }
+
+            gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
+
+            //gameObject = Instantiate(genericStoneObjectInstance, new Vector3(0, 0, 0), Quaternion.identity);
+            //gameObject = Instantiate(Resources.Load("Assets/Resources/Stone") as GameObject, new Vector3(0, 0, 0), Quaternion.identity);
+            //gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
+            gameObject.name = "No Name";
+            //gameObject.GetComponent<MeshRenderer>().material = Resources.Load("TransparentBlack") as Material;
+
+            //exploderGameObject.GetComponent<Renderer>().enabled = false
+        }
+
+
+        public GoStone(String name)
+        {
+
+
+
+            if (genericStoneObject == null)
+            {
+                genericStoneObject = new GameObject();
+            }
+
+            //GameController newGameController = new GameController().genericStoneObject;
+            //GameObject genericStoneObjectInstance = newGameController.genericStoneObject;
+
+            gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
+
+            //gameObject = Instantiate(genericStoneObjectInstance, new Vector3(0, 0, 0), Quaternion.identity);
+            //gameObject = Instantiate(Resources.Load("Assets/Resources/Stone") as GameObject, new Vector3(0, 0, 0), Quaternion.identity);
+            //gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
+            gameObject.name = name;
+            //gameObject.GetComponent<MeshRenderer>().material = Resources.Load("TransparentBlack") as Material;
+
+            //exploderGameObject.GetComponent<Renderer>().enabled = false
+        }
+
+
     }
 
     public class GoStoneGroup

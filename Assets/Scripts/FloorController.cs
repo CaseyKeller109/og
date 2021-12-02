@@ -20,8 +20,15 @@ public class FloorController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string[] xy = other.gameObject.name.Split('x');
+        //print(other.gameObject.name);
 
-        gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone { x = Convert.ToInt32(xy[0]), y = Convert.ToInt32(xy[1]), gameObject = other.gameObject }, 0f);
-
+        if (xy.Length > 0 && other.gameObject.name.Contains("Stone"))
+        {
+            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone { x = Convert.ToInt32(xy[0]), y = Convert.ToInt32(xy[1]), gameObject = other.gameObject }, 0f);
+        }
+        else
+        {
+            print("non-stone object trying to be destroyed");
+        }
     }
 }

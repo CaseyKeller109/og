@@ -1242,7 +1242,7 @@ namespace Tests
             gameController.sensorStone.gameObject.GetComponent<MeshCollider>().enabled = false;
             gameController.sensorStone.gameObject.name = "BlackSensorStone";
 
-            gameController.genericStoneObject = Resources.Load("Stone") as GameObject;
+            GameController.genericStoneObject = Resources.Load("Stone") as GameObject;
 
             gameController.whiteTextObject = new GameObject();
             gameController.blackTextObject = new GameObject();
@@ -1266,7 +1266,7 @@ namespace Tests
 
             ValidPlayData validPlayData = new ValidPlayData();
             validPlayData = gameController.ValidPlayCheck(newStone);
-            if (validPlayData.isValidPlay)
+            if (validPlayData.isValidPlayLocal)
             {
                 gameController.PlaceGoStone(newStone, validPlayData.groupStonesToKill);
             }
@@ -1282,7 +1282,7 @@ namespace Tests
                 stoneColor = stoneColor
             };
 
-            ValidPlayData validPlayData = new ValidPlayData() { isValidPlay = true, groupStonesToKill = new List<GoStone>() };
+            ValidPlayData validPlayData = new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = new List<GoStone>() };
 
             gameController.PlaceGoStone(newStone, validPlayData.groupStonesToKill);
             GameController.CurrentStateData.currentGameState = GameState.CanThrowStone;
