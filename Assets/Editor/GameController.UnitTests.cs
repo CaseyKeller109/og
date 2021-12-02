@@ -1259,8 +1259,10 @@ namespace Tests
             GameController.CurrentStateData.currentPlayerColor = stoneColor;
             GoStone newStone = new GoStone
             {
+                coordinates = {
                 x = xCoordinate,
-                y = yCoordinate,
+                y = yCoordinate
+                },
                 stoneColor = stoneColor
             };
 
@@ -1277,8 +1279,10 @@ namespace Tests
             GameController.CurrentStateData.currentPlayerColor = stoneColor;
             GoStone newStone = new GoStone
             {
+                coordinates = {
                 x = xCoordinate,
-                y = yCoordinate,
+                y = yCoordinate
+                },
                 stoneColor = stoneColor
             };
 
@@ -1291,8 +1295,8 @@ namespace Tests
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
         {
             bool isFoundStoneExists = false;
-            GoStone foundStone = gameController.stonePosHistory.Last().Find(s => s.x == searchX &&
-                                                                                 s.y == searchY &&
+            GoStone foundStone = gameController.stonePosHistory.Last().Find(s => s.coordinates.x == searchX &&
+                                                                                 s.coordinates.y == searchY &&
                                                                                  s.stoneColor == searchColor);
 
             if (foundStone != null)

@@ -24,7 +24,7 @@ public class FloorController : MonoBehaviour
 
         if (xy.Length > 0 && other.gameObject.name.Contains("Stone"))
         {
-            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone { x = Convert.ToInt32(xy[0]), y = Convert.ToInt32(xy[1]), gameObject = other.gameObject }, 0f);
+            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone { coordinates = { x = Convert.ToInt32(xy[0]), y = Convert.ToInt32(xy[1]) }, gameObject = other.gameObject }, 0f);
         }
         else
         {
