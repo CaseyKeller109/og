@@ -4372,8 +4372,7 @@ MonoBehaviour:
   cameraStartPosition: {x: 0, y: 0, z: 0}
   defaultCameraPosition: {x: 0, y: 0, z: 0}
   defaultCameraRotation: {x: 0, y: 0, z: 0, w: 0}
-  curentGoStoneRotation: {x: 0, y: 0, z: 0, w: 0}
-  defaultThrowingCamera: {fileID: 0}
+  defaultThrowingCamera: {fileID: 1739669728}
   whiteMaterial: {fileID: 2100000, guid: a9edcca0151416b4ab23e575fd8097ba, type: 2}
   blackMaterial: {fileID: 2100000, guid: a9d6768c3ece6cf42a944d2b3201e6ee, type: 2}
   whiteMaterialTransparent: {fileID: 2100000, guid: a8890ff8245c70e4bac95b5542452131,
