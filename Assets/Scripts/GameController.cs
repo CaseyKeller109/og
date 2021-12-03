@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     //0todo more functions should return value
     //2todo reduce number of parameters in functions
     //3todo reduce function size
-    //0todo get rid of magic numbers everywhere
+    //1todo get rid of magic numbers everywhere
     //2todo make more unit tests?
 
     //3todo change coordinates to go from 1 to 19?
@@ -52,13 +52,10 @@ public class GameController : MonoBehaviour
     public Quaternion defaultCameraRotation;
     public Camera defaultThrowingCamera;
     public static GameObject genericStoneObject;
-    public readonly float boardCoordinateSeparationX = 0.2211f;
-    public readonly float boardCoordinateSeparationY = 0.2366f;
     public Material whiteMaterial;
     public Material blackMaterial;
     public Material whiteMaterialTransparent;
     public Material blackMaterialTransparent;
-    public float stoneZValue = -0.095f;
     public GoStone sensorStone;
     public GameObject sensorStoneObject;
     public GoStone thrownStone;
@@ -67,7 +64,6 @@ public class GameController : MonoBehaviour
 
     public GameObject whiteTextObject;
     public GameObject blackTextObject;
-
 
     public GameObject wall1;
     public GameObject wall2;
@@ -96,7 +92,8 @@ public class GameController : MonoBehaviour
 
     public static class CurrentStateData
     {
-        //0todo use sensorstone rotation instead of this
+        //0todo use sensorstone rotation instead of this?
+        //sensorStone.gameObject.GetComponent<Transform>().rotation
         public static Quaternion curentGoStoneRotation;
         public static StoneColor currentPlayerColor = StoneColor.Black;
         public static GameState currentGameState = GameState.CanPlaceStone;
@@ -154,7 +151,7 @@ public class GameController : MonoBehaviour
         resetButton.onClick.AddListener(ResetGame);
 
         //0todo put stuff in constructor
-        sensorStone = new GoStone(new BoardCoordinates { x = 8, y = 8 }, sensorStoneObject );
+        sensorStone = new GoStone(new BoardCoordinates { x = 8, y = 8 }, sensorStoneObject);
 
         //sensorStone.gameObject.layer = 0;
         sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
@@ -275,15 +272,15 @@ public class GameController : MonoBehaviour
             BoardCoordinates possibleStoneCoordinates =
                 new BoardCoordinates
                 {
-                    x = Convert.ToInt32(mousePos.x / boardCoordinateSeparationX),
-                    y = -Convert.ToInt32(mousePos.y / boardCoordinateSeparationY)
+                    x = Convert.ToInt32(mousePos.x / GoStone.boardCoordinateSeparationX),
+                    y = -Convert.ToInt32(mousePos.y / GoStone.boardCoordinateSeparationY)
 
                 };
 
-            if (Convert.ToInt32(mousePos.x / boardCoordinateSeparationX) < 0 ||
-                Convert.ToInt32(mousePos.x / boardCoordinateSeparationX) > 18 ||
-                Convert.ToInt32(mousePos.y / boardCoordinateSeparationY) > 0 ||
-                Convert.ToInt32(mousePos.y / boardCoordinateSeparationY) < -18
+            if (Convert.ToInt32(mousePos.x / GoStone.boardCoordinateSeparationX) < 0 ||
+                Convert.ToInt32(mousePos.x / GoStone.boardCoordinateSeparationX) > 18 ||
+                Convert.ToInt32(mousePos.y / GoStone.boardCoordinateSeparationY) > 0 ||
+                Convert.ToInt32(mousePos.y / GoStone.boardCoordinateSeparationY) < -18
                 )
             {
                 sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
@@ -318,9 +315,10 @@ public class GameController : MonoBehaviour
                 }
 
                 //0todo don't use GoStone for possibleStoneCoordinates?
-                sensorStone.gameObject.GetComponent<Transform>().position = new Vector3(possibleStoneCoordinates.x * boardCoordinateSeparationX,
-                                                                              -possibleStoneCoordinates.y * boardCoordinateSeparationY,
-                                                                              -stoneZValue);
+                sensorStone.gameObject.GetComponent<Transform>().position = 
+                        new Vector3(possibleStoneCoordinates.x * GoStone.boardCoordinateSeparationX,
+                                   -possibleStoneCoordinates.y * GoStone.boardCoordinateSeparationY,
+                                             -GoStone.ZHeightValue);
                 sensorStone.gameObject.transform.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
                 if (Input.GetMouseButtonUp(0) && CurrentStateData.isValidPlay == true)
@@ -397,7 +395,7 @@ public class GameController : MonoBehaviour
             {
                 CurrentStateData.curentGoStoneRotation *= Quaternion.Euler(-5, 0, 0);
             }
-            if (Input.GetKey(KeyCode.LeftControl) && camtran.position.z < stoneZValue)
+            if (Input.GetKey(KeyCode.LeftControl) && camtran.position.z < GoStone.ZHeightValue)
             {
                 camtran.position += 0.02f * (new Vector3(0, 0, 1));
             }
@@ -508,9 +506,9 @@ public class GameController : MonoBehaviour
         sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
 
         GameObject newStoneObject = Instantiate(genericStoneObject,
-                                          new Vector3(stoneCoordinates.x * boardCoordinateSeparationX,
-                                                       -stoneCoordinates.y * boardCoordinateSeparationY,
-                                                       -stoneZValue),
+                                          new Vector3(stoneCoordinates.x * GoStone.boardCoordinateSeparationX,
+                                                     -stoneCoordinates.y * GoStone.boardCoordinateSeparationY,
+                                                     -GoStone.ZHeightValue),
                                           Quaternion.identity);
 
         newStoneObject.name = $"{stoneCoordinates.x}x{stoneCoordinates.y}x{CurrentStateData.currentPlayerColor}Stone";
@@ -898,10 +896,10 @@ public class GameController : MonoBehaviour
 
                     if (localStone.stoneColor != StoneColor.None) { continue; }
 
-                    Collider[] stonesInRange = Physics.OverlapSphere(new Vector3(boardCoordinateSeparationX * iteratedX,
-                                                                                -boardCoordinateSeparationY * iteratedY,
+                    Collider[] stonesInRange = Physics.OverlapSphere(new Vector3(GoStone.boardCoordinateSeparationX * iteratedX,
+                                                                                -GoStone.boardCoordinateSeparationY * iteratedY,
                                                                                  0),
-                                                                     boardCoordinateSeparationX * 19 * 2 * (r / searchIncrement),
+                                                                     GoStone.boardCoordinateSeparationX * 19 * 2 * (r / searchIncrement),
                                                                      LayerMask.GetMask("SortingStone"));
 
                     if (stonesInRange.Length == 0)
@@ -929,9 +927,9 @@ public class GameController : MonoBehaviour
     {
         stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         stoneToSort.GetComponent<Transform>().position =
-            new Vector3(CoordinateX * boardCoordinateSeparationX,
-                       -CoordinateY * boardCoordinateSeparationY,
-                       -stoneZValue);
+            new Vector3(CoordinateX * GoStone.boardCoordinateSeparationX,
+                       -CoordinateY * GoStone.boardCoordinateSeparationY,
+                       -GoStone.ZHeightValue);
         stoneToSort.GetComponent<Transform>().rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
         stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 
@@ -1143,13 +1141,12 @@ public class GameController : MonoBehaviour
         White
     }
 
-    //0todo implement this
     public class GoStoneHypothetical
     {
         public BoardCoordinates coordinates = new BoardCoordinates { x = 100, y = 100 };
         public StoneColor stoneColor = StoneColor.None;
 
-        public readonly static float diameter = 0.22f;
+        //public readonly static float diameter = 0.22f;
     }
 
     public GoStoneHypothetical ConvertGoStoneToHypothetical(GoStone goStone)
@@ -1165,6 +1162,11 @@ public class GameController : MonoBehaviour
     //implement equals function for this
     public class GoStone : GoStoneHypothetical
     {
+        public readonly static float diameter = 0.22f;
+        public readonly static float boardCoordinateSeparationX = 0.2211f;
+        public readonly static float boardCoordinateSeparationY = 0.2366f;
+        public readonly static float ZHeightValue = -0.095f;
+
         //public BoardCoordinates coordinates;
 
         //0todo use this
@@ -1178,7 +1180,7 @@ public class GameController : MonoBehaviour
         }
 
         //0todo use this
-        public GoStoneHypothetical ToHypoThetical(GoStone goStone)
+        public GoStoneHypothetical ToHypothetical(GoStone goStone)
         {
             return new GoStoneHypothetical
             {
@@ -1187,11 +1189,6 @@ public class GameController : MonoBehaviour
             };
         }
 
-
-
-
-        //0todo implement this
-        //public BoardCoordinates boardCoordinates = new BoardCoordinates { x = 20, y = 20 };
 
         //0todo use this in constructor
         //public StoneColor stoneColor = StoneColor.None;
@@ -1225,7 +1222,6 @@ public class GameController : MonoBehaviour
 
         public GoStone(BoardCoordinates newCoordinates, GameObject newGameObject)
         {
-            
             coordinates = newCoordinates;
 
             if (genericStoneObject == null)
@@ -1234,7 +1230,6 @@ public class GameController : MonoBehaviour
             }
 
             gameObject = newGameObject;
-
         }
     }
 
