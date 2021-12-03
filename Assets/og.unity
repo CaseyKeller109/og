@@ -1716,6 +1716,12 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &575301743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8657081187035293025, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1200783038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &632553264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3458,6 +3464,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StoneSensor
       objectReference: {fileID: 0}
+    - target: {fileID: 8657081187035293025, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1240641845312462420, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3523,6 +3534,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d7dafbd011c77d145ac356ff19a3f5cf, type: 2}
+    - target: {fileID: 2575652262251816481, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 949253848640473356, guid: 6f5a200e9e7a2034f95a8b2184b6c52b,
         type: 3}
       propertyPath: m_UseGravity
@@ -4380,6 +4396,7 @@ MonoBehaviour:
   blackMaterialTransparent: {fileID: 2100000, guid: d7dafbd011c77d145ac356ff19a3f5cf,
     type: 2}
   stoneZValue: 0.095
+  sensorStoneObject: {fileID: 575301743}
   explosionObjectParent: {fileID: 385541037}
   explosion: {fileID: 3474114883269312668, guid: 9c3d55abfdc1a8f45aea256aae5a1a9e,
     type: 3}

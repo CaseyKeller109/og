@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour
     public Material blackMaterialTransparent;
     public float stoneZValue = -0.095f;
     public GoStone sensorStone;
+    public GameObject sensorStoneObject;
     public GoStone thrownStone;
     public GameObject explosionObjectParent;
     public GameObject explosion;
@@ -142,8 +143,6 @@ public class GameController : MonoBehaviour
         genericStoneObject = Resources.Load("Stone") as GameObject;
 
         previousMouseCoordinates = new BoardCoordinates();
-        //sensorStone = new GoStone();
-        //thrownStone = new GoStone();
     }
 
     // Start is called before the first frame update
@@ -154,8 +153,10 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 60;
         resetButton.onClick.AddListener(ResetGame);
 
-        sensorStone = new GoStone();
+        //0todo put stuff in constructor
+        sensorStone = new GoStone(new BoardCoordinates { x = 8, y = 8 }, sensorStoneObject );
 
+        //sensorStone.gameObject.layer = 0;
         sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
         sensorStone.gameObject.name = "BlackSensorStone";
         sensorStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
@@ -907,6 +908,10 @@ public class GameController : MonoBehaviour
                     {
                         continue;
                     }
+                    if (stonesInRange[0].name.Contains("Sensor"))
+                    {
+                        continue;
+                    }
 
                     string foundStoneColor = stonesInRange[0].name.Contains("Black") ? "Black" : "White";
 
@@ -1158,9 +1163,9 @@ public class GameController : MonoBehaviour
 
 
     //implement equals function for this
-    public class GoStone
+    public class GoStone : GoStoneHypothetical
     {
-        public BoardCoordinates coordinates;
+        //public BoardCoordinates coordinates;
 
         //0todo use this
         public bool Equals(GoStone otherStone)
@@ -1189,12 +1194,12 @@ public class GameController : MonoBehaviour
         //public BoardCoordinates boardCoordinates = new BoardCoordinates { x = 20, y = 20 };
 
         //0todo use this in constructor
-        public StoneColor stoneColor = StoneColor.None;
+        //public StoneColor stoneColor = StoneColor.None;
 
         public GameObject gameObject;
         public GameObject exploderGameObject;
 
-        public readonly static float diameter = 0.22f;
+        //public readonly static float diameter = 0.22f;
 
         public GoStone()
         {
@@ -1218,9 +1223,9 @@ public class GameController : MonoBehaviour
         }
 
 
-        public GoStone(BoardCoordinates newCoordinates, GameObject gameObject)
+        public GoStone(BoardCoordinates newCoordinates, GameObject newGameObject)
         {
-
+            
             coordinates = newCoordinates;
 
             if (genericStoneObject == null)
@@ -1228,21 +1233,9 @@ public class GameController : MonoBehaviour
                 genericStoneObject = new GameObject();
             }
 
-            //GameController newGameController = new GameController().genericStoneObject;
-            //GameObject genericStoneObjectInstance = newGameController.genericStoneObject;
+            gameObject = newGameObject;
 
-            //gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
-
-            //gameObject = Instantiate(genericStoneObjectInstance, new Vector3(0, 0, 0), Quaternion.identity);
-            //gameObject = Instantiate(Resources.Load("Assets/Resources/Stone") as GameObject, new Vector3(0, 0, 0), Quaternion.identity);
-            //gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
-            //gameObject.name = name;
-            //gameObject.GetComponent<MeshRenderer>().material = Resources.Load("TransparentBlack") as Material;
-
-            //exploderGameObject.GetComponent<Renderer>().enabled = false
         }
-
-
     }
 
     public class GoStoneGroup

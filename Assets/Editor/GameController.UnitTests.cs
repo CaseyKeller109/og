@@ -1237,10 +1237,11 @@ namespace Tests
                 GameObject.DestroyImmediate(fooObj);
             }
 
-            gameController.sensorStone = new GoStone();
-            gameController.sensorStone.gameObject = GameObject.Instantiate(Resources.Load("Stone") as GameObject, new Vector3(0, 0, 0), Quaternion.identity);
+            //0todo improve this?
+            gameController.sensorStone = new GoStone(new BoardCoordinates { x = 20, y = 20 }, GameObject.Instantiate(Resources.Load("Stone") as GameObject));
             gameController.sensorStone.gameObject.GetComponent<MeshCollider>().enabled = false;
             gameController.sensorStone.gameObject.name = "BlackSensorStone";
+            gameController.sensorStone.gameObject.layer = 0;
 
             GameController.genericStoneObject = Resources.Load("Stone") as GameObject;
 
