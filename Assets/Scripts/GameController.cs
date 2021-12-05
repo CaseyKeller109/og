@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    //0todo move methods inside related classes
     //0todo fix throw bug where it doesn't properly destroy stones
     //0todo put global variables in classes
     //0todo add constructors to classes. GoStone, etc
@@ -291,7 +292,9 @@ public class GameController : MonoBehaviour
             {
                 //3todo can improve by not checking every time
                 ValidPlayData validPlayData = ValidPlayCheck(possibleStoneCoordinates, CurrentStateData.currentPlayerColor);
-                if (!SameStoneCoordinates(previousMouseCoordinates, possibleStoneCoordinates))
+
+                //if (previousMouseCoordinates.SameCoordinatesAs(possibleStoneCoordinates) != "")
+                if (!previousMouseCoordinates.SameCoordinatesAs(possibleStoneCoordinates))
                 {
                     CurrentStateData.isValidPlay = null;
                 }
@@ -301,7 +304,7 @@ public class GameController : MonoBehaviour
                     CurrentStateData.isValidPlay = validPlayData.isValidPlayLocal;
                 }
 
-                CopyStoneCoordinates(possibleStoneCoordinates, previousMouseCoordinates);
+                possibleStoneCoordinates.CopyCoordinatesTo(previousMouseCoordinates);
 
                 //0todo comment here?
                 //0todo implement this
@@ -581,8 +584,7 @@ public class GameController : MonoBehaviour
         GoStoneHypothetical newStone = new GoStoneHypothetical { coordinates = newStoneCoordinates, stoneColor = newStoneColor };
         List<GoStoneHypothetical> groupStonesToKill = new List<GoStoneHypothetical>();
 
-        if (BoardHistory.Last().boardStones.Find(s => (s.coordinates.x == newStoneCoordinates.x) &&
-                                             (s.coordinates.y == newStoneCoordinates.y)) != null)
+        if (BoardHistory.Last().boardStones.Find(stone => (stone.coordinates.SameCoordinatesAs(newStoneCoordinates))) != null)
         {
             return new ValidPlayData() { isValidPlayLocal = false };
         }
@@ -675,9 +677,8 @@ public class GameController : MonoBehaviour
             for (int i = 0; i < BoardHistory[BoardHistory.Count - 2].boardStones.Count; i++)
             {
                 //0todo use equals method for this? == or .Equals
-                if (boardIfStoneIsPlayed.Find(s => s.coordinates.x == (BoardHistory[BoardHistory.Count - 2].boardStones[i].coordinates.x) &&
-                                                   s.coordinates.y == (BoardHistory[BoardHistory.Count - 2].boardStones[i].coordinates.y) &&
-                                                   s.stoneColor == (BoardHistory[BoardHistory.Count - 2].boardStones[i].stoneColor)) == null)
+
+                if (boardIfStoneIsPlayed.Find(stone => stone.SameCoordinatesAndColorAs(BoardHistory[BoardHistory.Count - 2].boardStones[i])) == null)
                 {
                     isSameBoard = false;
                     break;
@@ -700,8 +701,8 @@ public class GameController : MonoBehaviour
         GoStoneHypothetical sideStone = new GoStoneHypothetical();
         //GoStoneHypothetical sideStone = new GoStoneHypothetical();
 
-        GoStone sideStoneReal = BoardHistory.Last().boardStones.Find(s => s.coordinates.x == centerStone.coordinates.x + offsetFromCenterStone.x &&
-                                                                 s.coordinates.y == centerStone.coordinates.y + offsetFromCenterStone.y);
+
+        GoStone sideStoneReal = BoardHistory.Last().boardStones.Find(stone => stone.coordinates.SameCoordinatesAs(centerStone.coordinates + offsetFromCenterStone));
 
         if (sideStoneReal != null)
         {
@@ -715,8 +716,7 @@ public class GameController : MonoBehaviour
         //    sideStone = new GoStoneHypothetical();
         //}
 
-        if (boardIfStoneIsPlayed.Find(s => (s.coordinates.x == sideStone.coordinates.x) &&
-                                           (s.coordinates.y == sideStone.coordinates.y)) == null)
+        if (boardIfStoneIsPlayed.Find(stone => (stone.HYPO_SameCoordinatesAs(sideStone))) == null)
         {
             return true;
         }
@@ -748,8 +748,7 @@ public class GameController : MonoBehaviour
 
             foreach (GoStoneHypothetical stone in groupStonesToKill)
             {
-                boardIfStoneIsPlayed.Remove(boardIfStoneIsPlayed.Find(s => (s.coordinates.x == stone.coordinates.x) &&
-                                                                           (s.coordinates.y == stone.coordinates.y)));
+                boardIfStoneIsPlayed.Remove(boardIfStoneIsPlayed.Find(Qstone => (Qstone.HYPO_SameCoordinatesAs(stone))));
             }
 
             return true;
@@ -762,7 +761,7 @@ public class GameController : MonoBehaviour
                                                 List<GoStoneHypothetical> boardIfStoneIsPlayed,
                                                 ref GoStoneGroup stoneGroup)
     {
-        if (stoneGroup.stones.Find(s => SameStoneCoordinates(s.coordinates, startStone.coordinates)) == null)
+        if (stoneGroup.stones.Find(Qstone => (Qstone.HYPO_SameCoordinatesAs(startStone))) == null)
         {
             //stoneGroup.stones.Add(new GoStoneHypothetical {x });
 
@@ -787,13 +786,13 @@ public class GameController : MonoBehaviour
             //});
         }
 
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.coordinates.x > 0), StoneDirectionOffset.left, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.coordinates.x < 18), StoneDirectionOffset.right, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.coordinates.y < 18), StoneDirectionOffset.up, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone, boardIfStoneIsPlayed, (startStone.coordinates.y > 0), StoneDirectionOffset.down, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.coordinates, boardIfStoneIsPlayed, (startStone.coordinates.x > 0), StoneDirectionOffset.left, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.coordinates, boardIfStoneIsPlayed, (startStone.coordinates.x < 18), StoneDirectionOffset.right, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.coordinates, boardIfStoneIsPlayed, (startStone.coordinates.y < 18), StoneDirectionOffset.up, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.coordinates, boardIfStoneIsPlayed, (startStone.coordinates.y > 0), StoneDirectionOffset.down, ref stoneGroup);
     }
 
-    private void FindGroupAndLibertyCoordinatesSideStone(GoStoneHypothetical sideStoneCoordinates,
+    private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
                                                          List<GoStoneHypothetical> boardIfStoneIsPlayed,
                                                          bool isPositionGood,
                                                          BoardCoordinates offset,
@@ -801,11 +800,10 @@ public class GameController : MonoBehaviour
     {
         if (isPositionGood)
         {
-            GoStoneHypothetical sideStone = boardIfStoneIsPlayed.Find(s => (s.coordinates.x == sideStoneCoordinates.coordinates.x) &&
-                                                               (s.coordinates.y == sideStoneCoordinates.coordinates.y));
+            GoStoneHypothetical sideStone = boardIfStoneIsPlayed.Find(Qstone => (Qstone.coordinates.SameCoordinatesAs(sideStoneCoordinates)));
 
-            GoStoneHypothetical otherStone = boardIfStoneIsPlayed.Find(s => (s.coordinates.x == sideStone.coordinates.x + offset.x) &&
-                                                                (s.coordinates.y == sideStone.coordinates.y + offset.y));
+            GoStoneHypothetical otherStone = boardIfStoneIsPlayed.Find(Qstone => (Qstone.coordinates.SameCoordinatesAs(sideStone.coordinates + offset)));
+
 
             if (sideStone == null)
             {
@@ -821,8 +819,7 @@ public class GameController : MonoBehaviour
                 &&
                 sideStone.stoneColor != StoneColor.None
                 &&
-                stoneGroup.stones.Find(p => (p.coordinates.x == sideStone.coordinates.x + offset.x) &&
-                                            (p.coordinates.y == sideStone.coordinates.y + offset.y)) == null
+                stoneGroup.stones.Find(Qstone => (Qstone.coordinates.SameCoordinatesAs( sideStone.coordinates + offset))) == null
                 )
             {
                 FindGroupAndLibertyCoordinates(new GoStoneHypothetical
@@ -837,8 +834,7 @@ public class GameController : MonoBehaviour
             }
             else if ((otherStone.stoneColor == StoneColor.None)
                      &&
-                     (stoneGroup.libertyCoordinates.Find(p => (p.x == sideStone.coordinates.x + offset.x) &&
-                                                              (p.y == sideStone.coordinates.y + offset.y))) == null)
+                     (stoneGroup.libertyCoordinates.Find(Qcoord => (Qcoord.SameCoordinatesAs( sideStone.coordinates + offset)))) == null)
 
             {
 
@@ -892,8 +888,10 @@ public class GameController : MonoBehaviour
 
 
 
-                    if (BoardHistory.Last().boardStones.Find(s => s.coordinates.x == iteratedX &&
-                                                         s.coordinates.y == iteratedY) == null) { localStone = new GoStoneHypothetical(); }
+
+                    if (BoardHistory.Last().boardStones.Find(Qstone => Qstone.coordinates.SameCoordinatesAs(new BoardCoordinates ( iteratedX, iteratedY) )) == null) { localStone = new GoStoneHypothetical(); }
+                   
+                    
                     //if (localStoneReal == null) { localStone = new GoStoneHypothetical(); }
 
                     if (localStone.stoneColor != StoneColor.None) { continue; }
@@ -968,8 +966,7 @@ public class GameController : MonoBehaviour
             {
                 for (int iteratedX = 0; iteratedX < 19; iteratedX++)
                 {
-                    GoStone localStone = BoardHistory.Last().boardStones.Find(s => (s.coordinates.x == iteratedX) &&
-                                                                          (s.coordinates.y == iteratedY));
+                    GoStone localStone = BoardHistory.Last().boardStones.Find(Qstone => (Qstone.coordinates.SameCoordinatesAs(new BoardCoordinates(iteratedX, iteratedY))));
 
                     if (localStone == null)
                     {
@@ -978,8 +975,7 @@ public class GameController : MonoBehaviour
 
                     if (localStone.stoneColor == StoneColor.None ||
                         localStone.stoneColor != iteratedColor ||
-                        alreadyGroupedStones.Find(p => p.coordinates.x == iteratedX &&
-                                                       p.coordinates.y == iteratedY) != null)
+                        alreadyGroupedStones.Find(Qstone => Qstone.coordinates.SameCoordinatesAs(new BoardCoordinates(iteratedX, iteratedY))) != null)
                     {
                         continue;
                     }
@@ -990,7 +986,7 @@ public class GameController : MonoBehaviour
                     List<GoStoneHypothetical> stonePosHistoryHypothetical = new List<GoStoneHypothetical>();
                     foreach (GoStone stone in BoardHistory.Last().boardStones)
                     {
-                        stonePosHistoryHypothetical.Add(ConvertGoStoneToHypothetical(stone));
+                        stonePosHistoryHypothetical.Add(stone.ToHypothetical());
                     }
 
                     //return groupstonestokill?
@@ -1010,7 +1006,7 @@ public class GameController : MonoBehaviour
 
                     foreach (GoStoneHypothetical entry in stoneGroup.stones)
                     {
-                        if (!alreadyGroupedStones.Any(p => p == (entry)))
+                        if (!alreadyGroupedStones.Any(Qstone => Qstone.SameCoordinatesAndColorAs(entry)))
                         {
                             alreadyGroupedStones.Add(entry);
                         }
@@ -1030,8 +1026,8 @@ public class GameController : MonoBehaviour
         foreach (GoStoneHypothetical stone in groupStonesToKill)
         {
             //0todo just get color data from foreach GoStone
-            GoStone stoneToDestroy = BoardHistory.Last().boardStones.Find(s => (s.coordinates.x == stone.coordinates.x) &&
-                                                                               (s.coordinates.y == stone.coordinates.y));
+
+            GoStone stoneToDestroy = BoardHistory.Last().boardStones.Find(Qstone => (Qstone.HYPO_SameCoordinatesAs(stone)));
 
             if (stoneToDestroy == null) { continue; }
 
@@ -1046,13 +1042,16 @@ public class GameController : MonoBehaviour
                                    float destroyDelay,
                                    float totalDelay = 0)
     {
-        GoStone historyStone = BoardHistory.Last().boardStones.Find(s => (s.coordinates.x == StoneToDestroy.coordinates.x) &&
-                                                                         (s.coordinates.y == StoneToDestroy.coordinates.y));
+        GoStone historyStone = BoardHistory.Last().boardStones.Find(Qstone => (Qstone.HYPO_SameCoordinatesAs(StoneToDestroy)));
 
         if (historyStone != null)
         {
-            BoardHistory.Last().boardStones.Remove(BoardHistory.Last().boardStones.Find(s => (s.coordinates.x == StoneToDestroy.coordinates.x) &&
-                                                                                       (s.coordinates.y == StoneToDestroy.coordinates.y)));
+            BoardHistory.Last().boardStones.Remove(BoardHistory.Last().boardStones.Find(Qstone => (Qstone.HYPO_SameCoordinatesAs( StoneToDestroy))));
+
+            //BoardHistory.Last().boardStones.Remove(BoardHistory.Last().boardStones.Find(Qstone => (Qstone.HYPO_SameCoordinatesAs( StoneToDestroy))));
+            
+            //BoardHistory.Last().boardStones.Remove(BoardHistory.Last().boardStones.Find(s => (s.coordinates.x == StoneToDestroy.coordinates.x) &&
+            //                                                                           (s.coordinates.y == StoneToDestroy.coordinates.y)));
         }
 
         if (StoneToDestroy.stoneColor == StoneColor.Black)
@@ -1114,26 +1113,72 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public bool SameStoneCoordinates(BoardCoordinates first, BoardCoordinates second)
-    {
-        if ((first.x == second.x) &&
-            (first.y == second.y))
-        { return true; }
-        else { return false; }
-    }
-
-    public void CopyStoneCoordinates(BoardCoordinates source, BoardCoordinates destination)
-    {
-        destination.x = source.x;
-        destination.y = source.y;
-    }
 
 
 
+    //0todo make boardcoordinates inherit to hypothetical gostone
     public class BoardCoordinates
     {
         public int x;
         public int y;
+
+        public BoardCoordinates()
+        {
+
+        }
+
+        public BoardCoordinates(int newX, int newY)
+        {
+            x = newX;
+            y = newY;
+        }
+
+        public static BoardCoordinates operator +(BoardCoordinates left, BoardCoordinates right)
+        {
+            return new BoardCoordinates(right.x + left.x, right.y + left.y);
+        }
+
+        //public static bool Equals(BoardCoordinates left, BoardCoordinates right)
+        //{
+        //    return (left.x == right.x) && (left.y == right.y);
+        //}
+
+        //public static bool operator ==(BoardCoordinates left, BoardCoordinates right)
+        //{
+        //    return (right.x == left.x && right.y == left.y);
+        //}
+
+        //public static bool operator !=(BoardCoordinates left, BoardCoordinates right)
+        //{
+        //    return (right.x != left.x || right.y != left.y);
+        //}
+
+        //public static bool SameCoordinatesAs(BoardCoordinates second)
+        //{
+        //    return SameCoordinatesAs(second);
+        //}
+
+        public bool SameCoordinatesAs(BoardCoordinates second)
+        {
+            string errorString = "";
+            if (this.x != second.x)
+            {
+                errorString += "x values not equal. ";
+            }
+            if (this.y != second.y)
+            {
+                errorString += "y values not equal. ";
+            }
+
+            if (errorString == "") { return true; }
+            else { return false; }
+        }
+
+        public void CopyCoordinatesTo(BoardCoordinates destination)
+        {
+            destination.x = this.x;
+            destination.y = this.y;
+        }
     }
 
     public enum StoneColor
@@ -1148,17 +1193,29 @@ public class GameController : MonoBehaviour
         public BoardCoordinates coordinates = new BoardCoordinates { x = 100, y = 100 };
         public StoneColor stoneColor = StoneColor.None;
 
-        //public readonly static float diameter = 0.22f;
+        public bool HYPO_SameCoordinatesAs(GoStoneHypothetical otherStone)
+        {
+            return (coordinates.SameCoordinatesAs(otherStone.coordinates));
+        }
+
+        public bool SameColorAs(GoStoneHypothetical otherStone)
+        {
+            string errorString = "";
+            if (this.stoneColor != otherStone.stoneColor)
+            {
+                errorString += "colors not same. ";
+            }
+
+            if (errorString == "") { return true; }
+            else { return false; }
+        }
+
+        public bool SameCoordinatesAndColorAs(GoStoneHypothetical otherStone)
+        {
+            return (this.HYPO_SameCoordinatesAs(otherStone) && this.SameColorAs(otherStone));
+        }
     }
 
-    public GoStoneHypothetical ConvertGoStoneToHypothetical(GoStone goStone)
-    {
-        return new GoStoneHypothetical
-        {
-            coordinates = goStone.coordinates,
-            stoneColor = goStone.stoneColor
-        };
-    }
 
 
     //implement equals function for this
@@ -1167,25 +1224,32 @@ public class GameController : MonoBehaviour
         public readonly static float diameter = 0.22f;
         public readonly static float ZHeightValue = 0.095f;
 
-        //public BoardCoordinates coordinates;
+
+
+        //public bool GO_SameCoordinatesAs(GoStone otherStone)
+        //{
+        //    return (HYPO_SameCoordinatesAs(otherStone.ToHypothetical()));
+        //}
+
+        //public bool GO_SameColorAs(GoStone otherStone)
+        //{
+        //    return (HYPO_SameColorAs(otherStone.ToHypothetical()));
+        //}
+
+        //public bool GO_SameCoordinatesAndColorAs(GoStone otherStone)
+        //{
+        //    return HYPO_SameCoordinatesAndColorAs(otherStone.ToHypothetical());
+        //}
+
+
 
         //0todo use this
-        public bool Equals(GoStone otherStone)
-        {
-            if (this.coordinates.x == otherStone.coordinates.x)
-            {
-                return true;
-            }
-            else { return false; }
-        }
-
-        //0todo use this
-        public GoStoneHypothetical ToHypothetical(GoStone goStone)
+        public GoStoneHypothetical ToHypothetical()
         {
             return new GoStoneHypothetical
             {
-                coordinates = goStone.coordinates,
-                stoneColor = goStone.stoneColor
+                coordinates = this.coordinates,
+                stoneColor = this.stoneColor
             };
         }
 
