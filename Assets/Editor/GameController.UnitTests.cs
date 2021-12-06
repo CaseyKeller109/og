@@ -1308,8 +1308,8 @@ namespace Tests
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
         {
             bool isFoundStoneExists = false;
-            GoStone foundStone = gameController.BoardHistory.Last().boardStones.Find(s => s.coordinates.x == searchX &&
-                                                                                          s.coordinates.y == searchY &&
+            GoStone foundStone = gameController.BoardHistory.Last().boardStones.Find(s => s.Coordinates.x == searchX &&
+                                                                                          s.Coordinates.y == searchY &&
                                                                                           s.stoneColor == searchColor);
 
             if (foundStone != null)
