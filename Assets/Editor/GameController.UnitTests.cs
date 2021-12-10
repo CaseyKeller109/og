@@ -1238,7 +1238,7 @@ namespace Tests
             }
 
             //0todo improve this?
-            gameController.sensorStone = new GoStone(new BoardCoordinates { x = 20, y = 20 }, GameObject.Instantiate(Resources.Load("Stone") as GameObject));
+            gameController.sensorStone = new GoStone(new BoardCoordinates ( 20, 20 ), GameObject.Instantiate(Resources.Load("Stone") as GameObject));
             gameController.sensorStone.gameObject.GetComponent<MeshCollider>().enabled = false;
             gameController.sensorStone.gameObject.name = "BlackSensorStone";
             gameController.sensorStone.gameObject.layer = 0;
@@ -1268,10 +1268,10 @@ namespace Tests
             //};
 
             BoardCoordinates newStoneCoordinates = new BoardCoordinates
-            {
-                x = xCoordinate,
-                y = yCoordinate
-            };
+            (
+                xCoordinate,
+                yCoordinate
+            );
 
             ValidPlayData validPlayData = new ValidPlayData();
             validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.CurrentStateData.currentPlayerColor);
@@ -1294,10 +1294,10 @@ namespace Tests
             //};
 
             BoardCoordinates newStoneCoordinates = new BoardCoordinates
-            {
-                x = xCoordinate,
-                y = yCoordinate
-            };
+            (
+               xCoordinate,
+               yCoordinate
+            );
 
             ValidPlayData validPlayData = new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = new List<GoStoneHypothetical>() };
 
@@ -1308,8 +1308,8 @@ namespace Tests
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
         {
             bool isFoundStoneExists = false;
-            GoStone foundStone = gameController.BoardHistory.Last().boardStones.Find(s => s.Coordinates.x == searchX &&
-                                                                                          s.Coordinates.y == searchY &&
+            GoStone foundStone = gameController.BoardHistory.Last().boardStones.Find(s => s.Coordinates.xCoord == searchX &&
+                                                                                          s.Coordinates.yCoord == searchY &&
                                                                                           s.stoneColor == searchColor);
 
             if (foundStone != null)

@@ -131,17 +131,18 @@ public class GameController : MonoBehaviour
 
     public static class StoneDirectionOffset
     {
-        public static BoardCoordinates left = new BoardCoordinates { x = -1, y = 0 };
-        public static BoardCoordinates right = new BoardCoordinates { x = +1, y = 0 };
-        public static BoardCoordinates up = new BoardCoordinates { x = 0, y = +1 };
-        public static BoardCoordinates down = new BoardCoordinates { x = 0, y = -1 };
+        public static BoardCoordinates left = new BoardCoordinates ( -1, 0 );
+        public static BoardCoordinates right = new BoardCoordinates ( +1, 0 );
+        public static BoardCoordinates up = new BoardCoordinates ( 0, +1 );
+        public static BoardCoordinates down = new BoardCoordinates ( 0, -1 );
     }
 
     private void Awake()
     {
         genericStoneObject = Resources.Load("Stone") as GameObject;
 
-        previousMouseCoordinates = new BoardCoordinates();
+        //0todo here
+        //previousMouseCoordinates = new BoardCoordinates();
     }
 
     // Start is called before the first frame update
@@ -153,7 +154,7 @@ public class GameController : MonoBehaviour
         resetButton.onClick.AddListener(ResetGame);
 
         //0todo put stuff in constructor
-        sensorStone = new GoStone(new BoardCoordinates { x = 8, y = 8 }, sensorStoneObject);
+        sensorStone = new GoStone(new BoardCoordinates ( 8, 8 ), sensorStoneObject);
 
         //sensorStone.gameObject.layer = 0;
         sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
@@ -274,11 +275,11 @@ public class GameController : MonoBehaviour
 
             BoardCoordinates possibleStoneCoordinates =
                 new BoardCoordinates
-                {
-                    x = Convert.ToInt32(mousePos.x / GoBoard.boardCoordinateSeparationX),
-                    y = -Convert.ToInt32(mousePos.y / GoBoard.boardCoordinateSeparationY)
+                (
+                    Convert.ToInt32(mousePos.x / GoBoard.boardCoordinateSeparationX),
+                   -Convert.ToInt32(mousePos.y / GoBoard.boardCoordinateSeparationY)
 
-                };
+                );
 
             if (Convert.ToInt32(mousePos.x / GoBoard.boardCoordinateSeparationX) < 0 ||
                 Convert.ToInt32(mousePos.x / GoBoard.boardCoordinateSeparationX) > 18 ||
@@ -320,8 +321,8 @@ public class GameController : MonoBehaviour
 
                 //0todo don't use GoStone for possibleStoneCoordinates?
                 sensorStone.gameObject.GetComponent<Transform>().position =
-                        new Vector3(possibleStoneCoordinates.x * GoBoard.boardCoordinateSeparationX,
-                                   -possibleStoneCoordinates.y * GoBoard.boardCoordinateSeparationY,
+                        new Vector3(possibleStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX,
+                                   -possibleStoneCoordinates.yCoord * GoBoard.boardCoordinateSeparationY,
                                    -GoStone.ZHeightValue);
                 sensorStone.gameObject.transform.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
@@ -507,12 +508,12 @@ public class GameController : MonoBehaviour
         sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
 
         GameObject newStoneObject = Instantiate(genericStoneObject,
-                                          new Vector3(newStoneCoordinates.x * GoBoard.boardCoordinateSeparationX,
-                                                     -newStoneCoordinates.y * GoBoard.boardCoordinateSeparationY,
+                                          new Vector3(newStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX,
+                                                     -newStoneCoordinates.yCoord * GoBoard.boardCoordinateSeparationY,
                                                      -GoStone.ZHeightValue),
                                           Quaternion.identity);
 
-        newStoneObject.name = $"{newStoneCoordinates.x}x{newStoneCoordinates.y}x{CurrentStateData.currentPlayerColor}Stone";
+        newStoneObject.name = $"{newStoneCoordinates.xCoord}x{newStoneCoordinates.yCoord}x{CurrentStateData.currentPlayerColor}Stone";
         newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
 
 
@@ -612,36 +613,36 @@ public class GameController : MonoBehaviour
         string openSides = "";
 
         //top side
-        if (centerStone.Coordinates.y > 0)
+        if (centerStone.Coordinates.yCoord > 0)
         {
-            if (LibertiesFromSideExists(centerStone, new BoardCoordinates { x = 0, y = -1 }, boardIfStoneIsPlayed, groupStonesToKill))
+            if (LibertiesFromSideExists(centerStone, new BoardCoordinates ( 0, -1 ), boardIfStoneIsPlayed, groupStonesToKill))
             {
                 openSides += "top";
             }
         }
 
         //bottom side
-        if (centerStone.Coordinates.y < 18)
+        if (centerStone.Coordinates.yCoord < 18)
         {
-            if (LibertiesFromSideExists(centerStone, new BoardCoordinates { x = 0, y = 1 }, boardIfStoneIsPlayed, groupStonesToKill))
+            if (LibertiesFromSideExists(centerStone, new BoardCoordinates ( 0, 1 ), boardIfStoneIsPlayed, groupStonesToKill))
             {
                 openSides += "bottom";
             }
         }
 
         //left side
-        if (centerStone.Coordinates.x > 0)
+        if (centerStone.Coordinates.xCoord > 0)
         {
-            if (LibertiesFromSideExists(centerStone, new BoardCoordinates { x = -1, y = 0 }, boardIfStoneIsPlayed, groupStonesToKill))
+            if (LibertiesFromSideExists(centerStone, new BoardCoordinates ( -1, 0 ), boardIfStoneIsPlayed, groupStonesToKill))
             {
                 openSides += "left";
             }
         }
 
         //right side
-        if (centerStone.Coordinates.x < 18)
+        if (centerStone.Coordinates.xCoord < 18)
         {
-            if (LibertiesFromSideExists(centerStone, new BoardCoordinates { x = 1, y = 0 }, boardIfStoneIsPlayed, groupStonesToKill))
+            if (LibertiesFromSideExists(centerStone, new BoardCoordinates ( 1, 0 ), boardIfStoneIsPlayed, groupStonesToKill))
             {
                 openSides += "right";
             }
@@ -750,10 +751,10 @@ public class GameController : MonoBehaviour
             stoneGroup.stones.Add(new GoStoneHypothetical(startStone));
         }
 
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.x > 0), StoneDirectionOffset.left, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.x < 18), StoneDirectionOffset.right, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.y < 18), StoneDirectionOffset.up, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.y > 0), StoneDirectionOffset.down, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.yCoord < 18), StoneDirectionOffset.up, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.yCoord > 0), StoneDirectionOffset.down, ref stoneGroup);
     }
 
     private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
@@ -888,13 +889,13 @@ public class GameController : MonoBehaviour
         stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
         //0todo have construct different?
-        BoardHistory.Last().boardStones.Add(new GoStone(new BoardCoordinates { x = CoordinateX, y = CoordinateY }, stoneToSort.gameObject) { stoneColor = stoneToSortColor });
+        BoardHistory.Last().boardStones.Add(new GoStone(new BoardCoordinates ( CoordinateX, CoordinateY ), stoneToSort.gameObject) { stoneColor = stoneToSortColor });
 
         //changes layer to "Stone"
         stoneToSort.gameObject.layer = 8;
 
         //0todo use this return value
-        return new GoStone(new BoardCoordinates { x = CoordinateX, y = CoordinateY }, stoneToSort.gameObject) { stoneColor = stoneToSortColor };
+        return new GoStone(new BoardCoordinates ( CoordinateX, CoordinateY ), stoneToSort.gameObject) { stoneColor = stoneToSortColor };
     }
 
     public void KillSortedStones()
@@ -1051,29 +1052,26 @@ public class GameController : MonoBehaviour
 
     public class BoardCoordinates
     {
-        public int x;
-        public int y;
+        public int xCoord;
+        public int yCoord;
 
-        //0todo get rid of this?
-        public BoardCoordinates()
-        {
-        }
+        protected BoardCoordinates() { }
 
         public BoardCoordinates(BoardCoordinates newBoardCoordinates)
         {
-            x = newBoardCoordinates.x;
-            y = newBoardCoordinates.y;
+            xCoord = newBoardCoordinates.xCoord;
+            yCoord = newBoardCoordinates.yCoord;
         }
 
         public BoardCoordinates(int newX, int newY)
         {
-            x = newX;
-            y = newY;
+            xCoord = newX;
+            yCoord = newY;
         }
 
         public static BoardCoordinates operator +(BoardCoordinates left, BoardCoordinates right)
         {
-            return new BoardCoordinates(right.x + left.x, right.y + left.y);
+            return new BoardCoordinates(right.xCoord + left.xCoord, right.yCoord + left.yCoord);
         }
 
         //public static bool Equals(BoardCoordinates left, BoardCoordinates right)
@@ -1094,11 +1092,11 @@ public class GameController : MonoBehaviour
         public bool SameCoordinatesAs(BoardCoordinates second)
         {
             string errorString = "";
-            if (this.x != second.x)
+            if (this.xCoord != second.xCoord)
             {
                 errorString += "x values not equal. ";
             }
-            if (this.y != second.y)
+            if (this.yCoord != second.yCoord)
             {
                 errorString += "y values not equal. ";
             }
@@ -1109,8 +1107,8 @@ public class GameController : MonoBehaviour
 
         public void CopyCoordinatesTo(BoardCoordinates destination)
         {
-            destination.x = this.x;
-            destination.y = this.y;
+            destination.xCoord = this.xCoord;
+            destination.yCoord = this.yCoord;
         }
     }
 
@@ -1128,8 +1126,8 @@ public class GameController : MonoBehaviour
 
         public BoardCoordinates Coordinates
         {
-            get { return new BoardCoordinates(x, y); }
-            set { x = value.x; y = value.y; }
+            get { return new BoardCoordinates(xCoord, yCoord); }
+            set { xCoord = value.xCoord; yCoord = value.yCoord; }
         }
 
         //0todo get rid of this?
@@ -1151,7 +1149,7 @@ public class GameController : MonoBehaviour
 
         public GoStoneHypothetical(BoardCoordinates newCoordinates, StoneColor newStoneColor)
         {
-            Coordinates = new BoardCoordinates(newCoordinates.x, newCoordinates.y);
+            Coordinates = new BoardCoordinates(newCoordinates.xCoord, newCoordinates.yCoord);
             stoneColor = newStoneColor;
         }
 
@@ -1207,7 +1205,7 @@ public class GameController : MonoBehaviour
         //0todo don't use this?
         public GoStone()
         {
-            Coordinates = new BoardCoordinates { x = 100, y = 100 };
+            Coordinates = new BoardCoordinates ( 100, 100 );
 
 
             if (genericStoneObject == null)
