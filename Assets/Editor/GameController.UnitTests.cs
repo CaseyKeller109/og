@@ -1250,8 +1250,8 @@ namespace Tests
             gameController.whiteTextObject.AddComponent<Text>();
             gameController.blackTextObject.AddComponent<Text>();
 
-            gameController.BoardHistory = new List<GoBoard>();
-            gameController.BoardHistory.Add(new GoBoard());
+            GameController.BoardHistory = new List<GoBoard>();
+            GameController.BoardHistory.Add(new GoBoard());
         }
 
         public void PlayStoneIfValid(int xCoordinate, int yCoordinate, StoneColor stoneColor)
@@ -1308,7 +1308,7 @@ namespace Tests
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
         {
             bool isFoundStoneExists = false;
-            GoStone foundStone = gameController.BoardHistory.Last().boardStones.Find(s => s.Coordinates.xCoord == searchX &&
+            GoStone foundStone = GameController.BoardHistory.Last().boardStones.Find(s => s.Coordinates.xCoord == searchX &&
                                                                                           s.Coordinates.yCoord == searchY &&
                                                                                           s.stoneColor == searchColor);
 
