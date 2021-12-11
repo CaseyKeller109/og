@@ -1238,7 +1238,7 @@ namespace Tests
             }
 
             //0todo improve this?
-            gameController.sensorStone = new GoStone(new BoardCoordinates ( 20, 20 ), GameObject.Instantiate(Resources.Load("Stone") as GameObject));
+            gameController.sensorStone = new GoStone(new BoardCoordinates ( 20, 20 ), StoneColor.Black, GameObject.Instantiate(Resources.Load("Stone") as GameObject));
             gameController.sensorStone.gameObject.GetComponent<MeshCollider>().enabled = false;
             gameController.sensorStone.gameObject.name = "BlackSensorStone";
             gameController.sensorStone.gameObject.layer = 0;

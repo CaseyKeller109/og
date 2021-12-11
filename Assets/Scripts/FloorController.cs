@@ -20,11 +20,10 @@ public class FloorController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string[] xy = other.gameObject.name.Split('x');
-        //print(other.gameObject.name);
 
         if (xy.Length > 0 && other.gameObject.name.Contains("Stone"))
         {
-            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone(new GameController.BoardCoordinates( Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1]) ), other.gameObject), 0f);
+            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone(new GameController.BoardCoordinates(Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1])), other.gameObject), 0f);
         }
         else
         {

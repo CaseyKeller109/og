@@ -149,8 +149,7 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 60;
         resetButton.onClick.AddListener(ResetGame);
 
-        //0todo put stuff in constructor
-        sensorStone = new GoStone(new BoardCoordinates(8, 8), sensorStoneObject);
+        sensorStone = new GoStone(new BoardCoordinates(8, 8), StoneColor.Black, sensorStoneObject);
 
         //sensorStone.gameObject.layer = 0;
         sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
@@ -165,7 +164,7 @@ public class GameController : MonoBehaviour
         plusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ThrowingData.ogBaseProb, 10, ogBaseProbText, "Base Og Prob: ", true); });
         minusOgBaseProbButton.onClick.AddListener(delegate { ChangeFloatAndText(ref ThrowingData.ogBaseProb, -10, ogBaseProbText, "Base Og Prob: ", true); });
 
-        //0todo set these in editor
+        //0todo set these in editor?
         ogSpeedText.GetComponent<Text>().text = "Throw Speed: " + ThrowingData.ogVelocity;
         ogProbText.GetComponent<Text>().text = "Og prob: " + ThrowingData.ogProb + "%";
         ogBaseProbText.GetComponent<Text>().text = "Base Og prob: " + ThrowingData.ogBaseProb + "%";
@@ -529,10 +528,8 @@ public class GameController : MonoBehaviour
         //0todo format this kind of stuff better
         BoardHistory.Last().boardStones.Add(new GoStone(
             newStoneCoordinates,
-            newStoneObject)
-        {
-            stoneColor = CurrentStateData.currentPlayerColor,
-        });
+            CurrentStateData.currentPlayerColor,
+            newStoneObject));
     }
 
     //2todo make unit tests for ThrowGoStone?
@@ -847,13 +844,13 @@ public class GameController : MonoBehaviour
         StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
         //0todo have construct different?
-        BoardHistory.Last().boardStones.Add(new GoStone(new BoardCoordinates(CoordinateX, CoordinateY), stoneToSort.gameObject) { stoneColor = stoneToSortColor });
+        BoardHistory.Last().boardStones.Add(new GoStone(new BoardCoordinates(CoordinateX, CoordinateY),stoneToSortColor, stoneToSort.gameObject));
 
         //changes layer to "Stone"
         stoneToSort.gameObject.layer = 8;
 
         //0todo use this return value
-        return new GoStone(new BoardCoordinates(CoordinateX, CoordinateY), stoneToSort.gameObject) { stoneColor = stoneToSortColor };
+        return new GoStone(new BoardCoordinates(CoordinateX, CoordinateY), stoneToSortColor, stoneToSort.gameObject);
     }
 
     public void KillSortedStones()
@@ -924,8 +921,6 @@ public class GameController : MonoBehaviour
     {
         foreach (GoStoneHypothetical stone in groupStonesToKill)
         {
-            //0todo just get color data from foreach GoStone
-
             GoStone stoneToDestroy = BoardHistory.Last().boardStones.Find(QStone => (QStone.SameCoordinatesAs(stone)));
 
             if (stoneToDestroy == null) { continue; }
@@ -1200,6 +1195,20 @@ public class GameController : MonoBehaviour
 
             gameObject = newGameObject;
         }
+
+        public GoStone(BoardCoordinates newCoordinates, StoneColor newColor,  GameObject newGameObject)
+        {
+            Coordinates = newCoordinates;
+            stoneColor = newColor;
+
+            if (genericStoneObject == null)
+            {
+                genericStoneObject = new GameObject();
+            }
+
+            gameObject = newGameObject;
+        }
+
     }
 
     public static GoStoneHypothetical ToHypothetical(GoStone stone)
