@@ -1256,8 +1256,8 @@ namespace Tests
 
         public void PlayStoneIfValid(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
-            GameController.CurrentStateData.currentGameState = GameState.CanPlaceStone;
-            GameController.CurrentStateData.currentPlayerColor = stoneColor;
+            GameController.Currents.currentGameState = GameState.CanPlaceStone;
+            GameController.Currents.currentPlayerColor = stoneColor;
             //GoStone newStone = new GoStone
             //{
             //    coordinates = {
@@ -1274,7 +1274,7 @@ namespace Tests
             );
 
             ValidPlayData validPlayData = new ValidPlayData();
-            validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.CurrentStateData.currentPlayerColor);
+            validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.Currents.currentPlayerColor);
             if (validPlayData.isValidPlayLocal)
             {
                 gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
@@ -1283,7 +1283,7 @@ namespace Tests
 
         public void ThrowStone(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
-            GameController.CurrentStateData.currentPlayerColor = stoneColor;
+            GameController.Currents.currentPlayerColor = stoneColor;
             //GoStone newStone = new GoStone
             //{
             //    coordinates = {
@@ -1302,7 +1302,7 @@ namespace Tests
             ValidPlayData validPlayData = new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = new List<GoStoneHypothetical>() };
 
             gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
-            GameController.CurrentStateData.currentGameState = GameState.CanThrowStone;
+            GameController.Currents.currentGameState = GameState.CanThrowStone;
         }
 
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
