@@ -529,7 +529,9 @@ public class GameController : MonoBehaviour
                                                       -GoStone.ZHeightValue),
                                           Quaternion.identity);
 
-        newStoneObject.name = $"{newStoneCoordinates.xCoord}x{newStoneCoordinates.yCoord}x{Currents.currentPlayerColor}Stone";
+        newStoneObject.name = $"{newStoneCoordinates.xCoord}x" +
+                              $"{newStoneCoordinates.yCoord}x" +
+                              $"{Currents.currentPlayerColor}Stone";
         newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
 
 
@@ -561,11 +563,16 @@ public class GameController : MonoBehaviour
     {
         //0todo put this in constructor
         thrownStone = new GoStone();
-        thrownStone.gameObject.GetComponent<Transform>().position = StonePosition;
-        thrownStone.gameObject.GetComponent<Transform>().rotation = StoneRotation;
-        sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
-        thrownStone.gameObject.GetComponent<Rigidbody>().velocity = StoneVelocity;
 
+        Transform thrownTransform = thrownStone.gameObject.GetComponent<Transform>();
+        Rigidbody thrownRigidbody = thrownStone.gameObject.GetComponent<Rigidbody>();
+        Renderer sensorRenderer = sensorStone.gameObject.GetComponent<Renderer>();
+
+        thrownTransform.position = StonePosition;
+        thrownTransform.rotation = StoneRotation;
+        thrownRigidbody.velocity = StoneVelocity;
+        sensorRenderer.enabled = false;
+        
         if (Currents.currentPlayerColor == StoneColor.Black)
         {
             thrownStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterial;
@@ -620,50 +627,6 @@ public class GameController : MonoBehaviour
         else { return new ValidPlayData() { isValidPlayLocal = false }; }
     }
 
-    private string OpenSidesCheck(GoStoneHypothetical centerStone,
-                                  List<GoStoneHypothetical> boardIfStoneIsPlayed,
-                                  List<GoStoneHypothetical> groupStonesToKill)
-    {
-        string openSides = "";
-
-        //top side
-        if (centerStone.Coordinates.yCoord > 0)
-        {
-            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.up, boardIfStoneIsPlayed, groupStonesToKill))
-            {
-                openSides += "top";
-            }
-        }
-
-        //bottom side
-        if (centerStone.Coordinates.yCoord < 18)
-        {
-            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.down, boardIfStoneIsPlayed, groupStonesToKill))
-            {
-                openSides += "bottom";
-            }
-        }
-
-        //left side
-        if (centerStone.Coordinates.xCoord > 0)
-        {
-            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.left, boardIfStoneIsPlayed, groupStonesToKill))
-            {
-                openSides += "left";
-            }
-        }
-
-        //right side
-        if (centerStone.Coordinates.xCoord < 18)
-        {
-            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.right, boardIfStoneIsPlayed, groupStonesToKill))
-            {
-                openSides += "right";
-            }
-        }
-        return openSides;
-    }
-
     public bool IsSameBoardSimpleCheck(List<GoStoneHypothetical> boardIfStoneIsPlayed)
     {
         bool isSameBoard = false;
@@ -683,6 +646,53 @@ public class GameController : MonoBehaviour
         }
         return isSameBoard;
     }
+
+    private string OpenSidesCheck(GoStoneHypothetical centerStone,
+                                  List<GoStoneHypothetical> boardIfStoneIsPlayed,
+                                  List<GoStoneHypothetical> groupStonesToKill)
+    {
+        string openSides = "";
+        int xStoneCoord = (int)centerStone.Coordinates.xCoord;
+        int yStoneCoord = (int)centerStone.Coordinates.yCoord;
+
+        //top side
+        if (yStoneCoord > 0)
+        {
+            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.up, boardIfStoneIsPlayed, groupStonesToKill))
+            {
+                openSides += "top";
+            }
+        }
+
+        //bottom side
+        if (yStoneCoord < 18)
+        {
+            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.down, boardIfStoneIsPlayed, groupStonesToKill))
+            {
+                openSides += "bottom";
+            }
+        }
+
+        //left side
+        if (xStoneCoord > 0)
+        {
+            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.left, boardIfStoneIsPlayed, groupStonesToKill))
+            {
+                openSides += "left";
+            }
+        }
+
+        //right side
+        if (xStoneCoord < 18)
+        {
+            if (LibertiesFromSideExists(centerStone, StoneDirectionOffset.right, boardIfStoneIsPlayed, groupStonesToKill))
+            {
+                openSides += "right";
+            }
+        }
+        return openSides;
+    }
+
 
     //0todo pass global variables as arguments
     //0todo have better names
@@ -742,21 +752,21 @@ public class GameController : MonoBehaviour
     }
 
     //starts searching at centerStoneCoordinates
-    private void FindGroupAndLibertyCoordinates(GoStoneHypothetical startStone,
+    private void FindGroupAndLibertyCoordinates(GoStoneHypothetical sideStone,
                                                 List<GoStoneHypothetical> boardIfStoneIsPlayed,
                                                 ref GoStoneGroup stoneGroup)
     {
-        if (stoneGroup.stones.Find(QStone => (QStone.SameCoordinatesAs(startStone))) == null)
+        if (stoneGroup.stones.Find(QStone => (QStone.SameCoordinatesAs(sideStone))) == null)
         {
 
 
-            stoneGroup.stones.Add(new GoStoneHypothetical(startStone));
+            stoneGroup.stones.Add(new GoStoneHypothetical(sideStone));
         }
 
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(startStone.Coordinates, boardIfStoneIsPlayed, (startStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
     }
 
     private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
