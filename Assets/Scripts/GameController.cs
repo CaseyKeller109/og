@@ -941,12 +941,7 @@ public class GameController : MonoBehaviour
                                    float destroyDelay,
                                    float totalDelay = 0)
     {
-        GoStone historyStone = BoardHistory.Last().boardStones.Find(QStone => (QStone.SameCoordinatesAs(StoneToDestroy)));
-
-        if (historyStone != null)
-        {
-            BoardHistory.Last().boardStones.Remove(BoardHistory.Last().boardStones.Find(QStone => (QStone.SameCoordinatesAs(StoneToDestroy))));
-        }
+        BoardHistory.Last().boardStones.Remove(BoardHistory.Last().boardStones.Find(QStone => (QStone.SameCoordinatesAs(StoneToDestroy))));
 
         if (StoneToDestroy.stoneColor == StoneColor.Black)
         {
@@ -1101,7 +1096,8 @@ public class GameController : MonoBehaviour
                 if (xCoord == null || yCoord == null) { return null; }
                 else { return new BoardCoordinates((int)xCoord, (int)yCoord); }
             }
-            set {
+            set
+            {
                 if (value == null)
                 {
                     xCoord = null;
@@ -1115,7 +1111,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        protected GoStoneHypothetical(){}
+        protected GoStoneHypothetical() { }
 
         public GoStoneHypothetical(GoStone newGoStone)
         {
