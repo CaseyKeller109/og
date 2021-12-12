@@ -707,16 +707,14 @@ public class GameController : MonoBehaviour
         BoardCoordinates offsetCoordinatesToCheck = centerStone.Coordinates + offsetFromCenterStone;
 
         GoStoneHypothetical sideStone = ToHypothetical(
-            LatestBoardStones().Find(stone => stone.SameCoordinatesAs(offsetCoordinatesToCheck))
-            );
-
+            LatestBoardStones().Find(stone => stone.SameCoordinatesAs(offsetCoordinatesToCheck)));
 
         if (boardIfStoneIsPlayed.Find(stone => (stone.SameCoordinatesAs(sideStone))) == null)
         {
             return true;
         }
 
-        FindGroupAndLibertyCoordinates(sideStone, boardIfStoneIsPlayed, ref stoneGroup);
+        stoneGroup = FindGroupAndLibertyCoordinates(sideStone, boardIfStoneIsPlayed, stoneGroup);
 
         if (sideStone == null)
         {
@@ -752,9 +750,11 @@ public class GameController : MonoBehaviour
     }
 
     //starts searching at centerStoneCoordinates
-    private void FindGroupAndLibertyCoordinates(GoStoneHypothetical sideStone,
+
+    private GoStoneGroup FindGroupAndLibertyCoordinates(GoStoneHypothetical sideStone,
                                                 List<GoStoneHypothetical> boardIfStoneIsPlayed,
-                                                ref GoStoneGroup stoneGroup)
+                                                GoStoneGroup stoneGroup)
+
     {
         if (stoneGroup.stones.Find(QStone => (QStone.SameCoordinatesAs(sideStone))) == null)
         {
@@ -767,6 +767,8 @@ public class GameController : MonoBehaviour
         FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroup);
         FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
         FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
+
+        return stoneGroup;
     }
 
     private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
@@ -789,9 +791,9 @@ public class GameController : MonoBehaviour
                 stoneGroup.stones.Find(QStone => (QStone.Coordinates.SameCoordinatesAs(sideStone.Coordinates + offset))) == null
                 )
             {
-                FindGroupAndLibertyCoordinates(new GoStoneHypothetical(sideStone.Coordinates + offset),
-                boardIfStoneIsPlayed,
-                ref stoneGroup);
+                stoneGroup = FindGroupAndLibertyCoordinates(new GoStoneHypothetical(sideStone.Coordinates + offset),
+                             boardIfStoneIsPlayed,
+                             stoneGroup);
             }
             else if ((otherStone == null)
                      &&
@@ -915,7 +917,8 @@ public class GameController : MonoBehaviour
 
                     GoStoneGroup stoneGroup = new GoStoneGroup();
 
-                    //0todo improve this
+                    //0todo make and use HypotheticalBoard, not List<GoStoneHypothetical>
+                    //0todo improve this. rename stonePosHistoryHypothetical
                     List<GoStoneHypothetical> stonePosHistoryHypothetical = new List<GoStoneHypothetical>();
                     foreach (GoStone stone in LatestBoardStones())
                     {
@@ -924,10 +927,10 @@ public class GameController : MonoBehaviour
 
                     //return groupstonestokill?
                     //3todo make sure all FindGroupAndLibertyCoordinates are passing color in?
-                    FindGroupAndLibertyCoordinates(new GoStoneHypothetical
+                    stoneGroup = FindGroupAndLibertyCoordinates(new GoStoneHypothetical
                         (iteratedX, iteratedY, localStone.stoneColor),
                         stonePosHistoryHypothetical,
-                        ref stoneGroup
+                        stoneGroup
                     );
 
                     foreach (GoStoneHypothetical entry in stoneGroup.stones)
