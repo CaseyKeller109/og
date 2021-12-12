@@ -505,7 +505,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void PlaceGoStone(BoardCoordinates newStoneCoordinates, List<GoStoneLite> groupStonesToKill)
+    public void PlaceGoStone(BoardCoordinates newStoneCoordinates, List<BoardCoordinates> groupStonesToKill)
     {
         Currents.isValidPlay = false;
 
@@ -598,7 +598,7 @@ public class GameController : MonoBehaviour
     {
         GoStoneLite newStone = new GoStoneLite(newStoneCoordinates, newStoneColor);
 
-        List<GoStoneLite> groupStonesToKill = new List<GoStoneLite>();
+        List<BoardCoordinates> newGroupStonesToKill = new List<BoardCoordinates>();
 
         if (LatestBoardStones().Find(stone => (stone.SameCoordinatesAs(newStoneCoordinates))) != null)
         {
@@ -621,9 +621,9 @@ public class GameController : MonoBehaviour
         bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
         if (isSameBoard) { return new ValidPlayData() { isValidPlayLocal = false }; }
 
-        string openSides = OpenSidesCheck(newStone, boardIfStoneIsPlayed, groupStonesToKill);
+        string openSides = OpenSidesCheck(newStone, boardIfStoneIsPlayed, newGroupStonesToKill);
         if (openSides.Length > 0)
-        { return new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = groupStonesToKill }; }
+        { return new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = newGroupStonesToKill }; }
         else { return new ValidPlayData() { isValidPlayLocal = false }; }
     }
 
@@ -649,7 +649,7 @@ public class GameController : MonoBehaviour
 
     private string OpenSidesCheck(GoStoneLite centerStone,
                                   List<GoStoneLite> boardIfStoneIsPlayed,
-                                  List<GoStoneLite> groupStonesToKill)
+                                  List<BoardCoordinates> groupStonesToKill)
     {
         string openSides = "";
         int xStoneCoord = (int)centerStone.Coordinates.xCoord;
@@ -700,7 +700,7 @@ public class GameController : MonoBehaviour
     private bool LibertiesFromSideExists(GoStoneLite centerStone,
                                          BoardCoordinates offsetFromCenterStone,
                                          List<GoStoneLite> boardIfStoneIsPlayed,
-                                         List<GoStoneLite> groupStonesToKill)
+                                         List<BoardCoordinates> groupStonesToKill)
     {
         GoStoneGroup stoneGroup = new GoStoneGroup();
 
@@ -734,12 +734,14 @@ public class GameController : MonoBehaviour
         }
         else if (stoneGroup.libertyCoordinates.Count == 0 && sideStone.stoneColor != centerStone.stoneColor)
         {
-            foreach (GoStoneLite stone in stoneGroup.stones)
+            print(groupStonesToKill.Count);
+
+            foreach (BoardCoordinates stone in stoneGroup.stones)
             {
                 groupStonesToKill.Add(stone);
             }
 
-            foreach (GoStoneLite stoneToKill in groupStonesToKill)
+            foreach (BoardCoordinates stoneToKill in groupStonesToKill)
             {
                 boardIfStoneIsPlayed.Remove(boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.SameCoordinatesAs(stoneToKill))));
             }
@@ -758,7 +760,7 @@ public class GameController : MonoBehaviour
     {
         if (stoneGroup.stones.Find(groupStone => (groupStone.SameCoordinatesAs(sideStone))) == null)
         {
-            stoneGroup.stones.Add(new GoStoneLite(sideStone));
+            stoneGroup.stones.Add(new BoardCoordinates(sideStone));
         }
 
         FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroup);
@@ -787,7 +789,7 @@ public class GameController : MonoBehaviour
                 &&
                 otherStone.stoneColor == sideStone.stoneColor
                 &&
-                stoneGroup.stones.Find(groupStone => (groupStone.Coordinates.SameCoordinatesAs(offsetCoordinatesToCheck))) == null
+                stoneGroup.stones.Find(coord => (coord.SameCoordinatesAs(offsetCoordinatesToCheck))) == null
                 )
             {
                 stoneGroup = FindGroupAndLibertyCoordinates(new GoStoneLite(offsetCoordinatesToCheck),
@@ -892,7 +894,7 @@ public class GameController : MonoBehaviour
 
     public void KillSortedStones()
     {
-        List<GoStoneLite> alreadyGroupedStones = new List<GoStoneLite>();
+        List<BoardCoordinates> alreadyGroupedStones = new List<BoardCoordinates>();
 
         List<StoneColor> StoneColors = new List<StoneColor>() {
                                             Currents.currentPlayerColor == StoneColor.White ? StoneColor.Black :StoneColor.White
@@ -915,7 +917,7 @@ public class GameController : MonoBehaviour
                     }
 
                     if (localStone.stoneColor != iteratedColor ||
-                        alreadyGroupedStones.Find(groupedStone => groupedStone.Coordinates.SameCoordinatesAs(new BoardCoordinates(iteratedX, iteratedY))) != null)
+                        alreadyGroupedStones.Find(groupedStone => groupedStone.SameCoordinatesAs(new BoardCoordinates(iteratedX, iteratedY))) != null)
                     {
                         continue;
                     }
@@ -936,9 +938,9 @@ public class GameController : MonoBehaviour
                         stoneGroup
                     );
 
-                    foreach (GoStoneLite newStone in stoneGroup.stones)
+                    foreach (BoardCoordinates newStone in stoneGroup.stones)
                     {
-                        if (!alreadyGroupedStones.Any(groupedStone => groupedStone.SameCoordinatesAndColorAs(newStone)))
+                        if (!alreadyGroupedStones.Any(groupedStone => groupedStone.SameCoordinatesAs(newStone)))
                         {
                             alreadyGroupedStones.Add(newStone);
                         }
@@ -953,18 +955,18 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void KillGroupStones(List<GoStoneLite> groupStonesToKill)
+    public void KillGroupStones(List<BoardCoordinates> groupStonesToKill)
     {
-        foreach (GoStoneLite stoneToKill in groupStonesToKill)
+        foreach (BoardCoordinates killCoord in groupStonesToKill)
         {
-            GoStone stoneToDestroy = LatestBoardStones().Find(latestStone => (latestStone.SameCoordinatesAs(stoneToKill)));
+            GoStone stoneToDestroy = LatestBoardStones().Find(latestStone => (latestStone.SameCoordinatesAs(killCoord)));
 
             if (stoneToDestroy == null) { continue; }
 
             KillStoneWithDelay(
                           stoneToDestroy,
                          0.2f,
-                         0.2f * groupStonesToKill.IndexOf(stoneToKill));
+                         0.2f * groupStonesToKill.IndexOf(killCoord));
         }
     }
 
@@ -1271,7 +1273,9 @@ public class GameController : MonoBehaviour
 
     public class GoStoneGroup
     {
-        public List<GoStoneLite> stones = new List<GoStoneLite>();
+        //0todo rename stones to stoneCoords? here and in instances of GoStoneGroup
+        
+        public List<BoardCoordinates> stones = new List<BoardCoordinates>();
         public List<BoardCoordinates> libertyCoordinates = new List<BoardCoordinates>();
     }
 
@@ -1297,7 +1301,7 @@ public class GameController : MonoBehaviour
     public class ValidPlayData
     {
         public bool isValidPlayLocal;
-        public List<GoStoneLite> groupStonesToKill;
+        public List<BoardCoordinates> groupStonesToKill;
     }
 
     //public class InvalidPlayData : IPlay
