@@ -14,6 +14,72 @@ namespace Tests
     {
         GameController gameController = new GameController();
 
+        //tests placing at same spot
+        [Test]
+        public void PlaceGoStone_0_0B_0_0_B()
+        {
+            InitialSetup();
+
+            PlayStoneIfValid(1, 1, StoneColor.Black);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+
+            PlayStoneIfValid(1, 1, StoneColor.Black);
+            gameController.GetNewBoardLayout();
+            PlayStoneIfValid(1, 1, StoneColor.Black);
+
+            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+
+        }
+
+        [Test]
+        public void PlaceGoStone_18_18B_18_18_B()
+        {
+            InitialSetup();
+
+            PlayStoneIfValid(18, 18, StoneColor.Black);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+
+            PlayStoneIfValid(18, 18, StoneColor.Black);
+            gameController.GetNewBoardLayout();
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+
+            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+
+        }
+
+        [Test]
+        public void PlaceGoStone_0_0W_0_0_W()
+        {
+            InitialSetup();
+
+            PlayStoneIfValid(1, 1, StoneColor.White);
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+
+            PlayStoneIfValid(1, 1, StoneColor.White);
+            gameController.GetNewBoardLayout();
+            Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+
+            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+
+        }
+
+        [Test]
+        public void PlaceGoStone_18_18W_18_18_W()
+        {
+            InitialSetup();
+
+            PlayStoneIfValid(18, 18, StoneColor.White);
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+
+            PlayStoneIfValid(18, 18, StoneColor.White);
+            gameController.GetNewBoardLayout();
+            Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+
+            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+
+        }
+
+
         //tests single capture at 0,0
         [Test]
         public void PlaceGoStone_0_1B_0_0W_1_0B()

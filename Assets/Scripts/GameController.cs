@@ -702,7 +702,7 @@ public class GameController : MonoBehaviour
                                          List<GoStoneLite> boardIfStoneIsPlayed,
                                          List<BoardCoordinates> groupStonesToKill)
     {
-        GoStoneGroup stoneGroup = new GoStoneGroup();
+        GoStoneGroupData stoneGroupData = new GoStoneGroupData();
 
         BoardCoordinates offsetCoordinatesToCheck = centerStone.Coordinates + offsetFromCenterStone;
 
@@ -714,29 +714,29 @@ public class GameController : MonoBehaviour
             return true;
         }
 
-        stoneGroup = FindGroupAndLibertyCoordinates(sideStone, boardIfStoneIsPlayed, stoneGroup);
+        stoneGroupData = FindGroupAndLibertyCoordinates(sideStone, boardIfStoneIsPlayed, stoneGroupData);
 
         if (sideStone == null)
         {
             return true;
         }
-        else if (stoneGroup.libertyCoordinates.Count > 0 && sideStone.stoneColor == centerStone.stoneColor)
+        else if (stoneGroupData.libertyCoordinates.Count > 0 && sideStone.stoneColor == centerStone.stoneColor)
         {
             return true;
         }
-        else if (stoneGroup.libertyCoordinates.Count > 0 && sideStone.stoneColor != centerStone.stoneColor)
+        else if (stoneGroupData.libertyCoordinates.Count > 0 && sideStone.stoneColor != centerStone.stoneColor)
         {
             return false;
         }
-        else if (stoneGroup.libertyCoordinates.Count == 0 && sideStone.stoneColor == centerStone.stoneColor)
+        else if (stoneGroupData.libertyCoordinates.Count == 0 && sideStone.stoneColor == centerStone.stoneColor)
         {
             return false;
         }
-        else if (stoneGroup.libertyCoordinates.Count == 0 && sideStone.stoneColor != centerStone.stoneColor)
+        else if (stoneGroupData.libertyCoordinates.Count == 0 && sideStone.stoneColor != centerStone.stoneColor)
         {
             print(groupStonesToKill.Count);
 
-            foreach (BoardCoordinates stone in stoneGroup.stones)
+            foreach (BoardCoordinates stone in stoneGroupData.stonesCoord)
             {
                 groupStonesToKill.Add(stone);
             }
@@ -753,29 +753,29 @@ public class GameController : MonoBehaviour
 
     //starts searching at centerStoneCoordinates
 
-    private GoStoneGroup FindGroupAndLibertyCoordinates(GoStoneLite sideStone,
+    private GoStoneGroupData FindGroupAndLibertyCoordinates(GoStoneLite sideStone,
                                                 List<GoStoneLite> boardIfStoneIsPlayed,
-                                                GoStoneGroup stoneGroup)
+                                                GoStoneGroupData stoneGroupData)
 
     {
-        if (stoneGroup.stones.Find(groupStone => (groupStone.SameCoordinatesAs(sideStone))) == null)
+        if (stoneGroupData.stonesCoord.Find(groupStone => (groupStone.SameCoordinatesAs(sideStone))) == null)
         {
-            stoneGroup.stones.Add(new BoardCoordinates(sideStone));
+            stoneGroupData.stonesCoord.Add(new BoardCoordinates(sideStone));
         }
 
-        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroupData);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroupData);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroupData);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroupData);
 
-        return stoneGroup;
+        return stoneGroupData;
     }
 
     private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
                                                          List<GoStoneLite> boardIfStoneIsPlayed,
                                                          bool isPositionGood,
                                                          BoardCoordinates offset,
-                                                         ref GoStoneGroup stoneGroup)
+                                                         ref GoStoneGroupData stoneGroupData)
     {
         if (isPositionGood)
         {
@@ -789,19 +789,19 @@ public class GameController : MonoBehaviour
                 &&
                 otherStone.stoneColor == sideStone.stoneColor
                 &&
-                stoneGroup.stones.Find(coord => (coord.SameCoordinatesAs(offsetCoordinatesToCheck))) == null
+                stoneGroupData.stonesCoord.Find(coord => (coord.SameCoordinatesAs(offsetCoordinatesToCheck))) == null
                 )
             {
-                stoneGroup = FindGroupAndLibertyCoordinates(new GoStoneLite(offsetCoordinatesToCheck),
+                stoneGroupData = FindGroupAndLibertyCoordinates(new GoStoneLite(offsetCoordinatesToCheck),
                              boardIfStoneIsPlayed,
-                             stoneGroup);
+                             stoneGroupData);
             }
             else if ((otherStone == null)
                      &&
-                     (stoneGroup.libertyCoordinates.Find(libertyCoord => (libertyCoord.SameCoordinatesAs(offsetCoordinatesToCheck)))) == null)
+                     (stoneGroupData.libertyCoordinates.Find(libertyCoord => (libertyCoord.SameCoordinatesAs(offsetCoordinatesToCheck)))) == null)
 
             {
-                stoneGroup.libertyCoordinates.Add(new BoardCoordinates
+                stoneGroupData.libertyCoordinates.Add(new BoardCoordinates
                 (offsetCoordinatesToCheck));
             }
         }
@@ -922,7 +922,7 @@ public class GameController : MonoBehaviour
                         continue;
                     }
 
-                    GoStoneGroup stoneGroup = new GoStoneGroup();
+                    GoStoneGroupData stoneGroupData = new GoStoneGroupData();
 
                     List<GoStoneLite> LatestBoardStonesLite = new List<GoStoneLite>();
                     foreach (GoStone stone in LatestBoardStones())
@@ -932,13 +932,13 @@ public class GameController : MonoBehaviour
 
                     //return groupstonestokill?
                     //3todo make sure all FindGroupAndLibertyCoordinates are passing color in?
-                    stoneGroup = FindGroupAndLibertyCoordinates(new GoStoneLite
+                    stoneGroupData = FindGroupAndLibertyCoordinates(new GoStoneLite
                         (iteratedX, iteratedY, localStone.stoneColor),
                         LatestBoardStonesLite,
-                        stoneGroup
+                        stoneGroupData
                     );
 
-                    foreach (BoardCoordinates newStone in stoneGroup.stones)
+                    foreach (BoardCoordinates newStone in stoneGroupData.stonesCoord)
                     {
                         if (!alreadyGroupedStones.Any(groupedStone => groupedStone.SameCoordinatesAs(newStone)))
                         {
@@ -946,9 +946,9 @@ public class GameController : MonoBehaviour
                         }
                     }
 
-                    if (stoneGroup.libertyCoordinates.Count == 0)
+                    if (stoneGroupData.libertyCoordinates.Count == 0)
                     {
-                        KillGroupStones(stoneGroup.stones);
+                        KillGroupStones(stoneGroupData.stonesCoord);
                     }
                 }
             }
@@ -1271,11 +1271,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public class GoStoneGroup
+    public class GoStoneGroupData
     {
-        //0todo rename stones to stoneCoords? here and in instances of GoStoneGroup
-        
-        public List<BoardCoordinates> stones = new List<BoardCoordinates>();
+        public List<BoardCoordinates> stonesCoord = new List<BoardCoordinates>();
         public List<BoardCoordinates> libertyCoordinates = new List<BoardCoordinates>();
     }
 
