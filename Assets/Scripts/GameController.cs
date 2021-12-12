@@ -43,7 +43,6 @@ public class GameController : MonoBehaviour
 
     //stone diameter is 0.22
 
-    //0TODO make more things local
     public GameObject title;
     public GameObject title2;
     public float timer;
@@ -562,7 +561,7 @@ public class GameController : MonoBehaviour
                               Vector3 StoneVelocity)
     {
         GameObject thrownStoneObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
-        
+
         Transform thrownTransform = thrownStoneObject.GetComponent<Transform>();
         Rigidbody thrownRigidbody = thrownStoneObject.GetComponent<Rigidbody>();
         Renderer sensorRenderer = sensorStone.gameObject.GetComponent<Renderer>();
@@ -603,7 +602,7 @@ public class GameController : MonoBehaviour
 
         if (LatestBoardStones().Find(stone => (stone.SameCoordinatesAs(newStoneCoordinates))) != null)
         {
-            return new ValidPlayData() { playValidityLocal = PV.Invalid};
+            return new ValidPlayData(PV.Invalid);
         }
 
         List<GoStoneLite> boardIfStoneIsPlayed = new List<GoStoneLite>();
@@ -620,12 +619,12 @@ public class GameController : MonoBehaviour
 
         //Simple Ko rule
         bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
-        if (isSameBoard) { return new ValidPlayData() { playValidityLocal = PV.Invalid}; }
+        if (isSameBoard) { return new ValidPlayData(PV.Invalid); }
 
         string openSides = OpenSidesCheck(newStone, boardIfStoneIsPlayed, newGroupStonesToKill);
         if (openSides.Length > 0)
-        { return new ValidPlayData() { playValidityLocal = PV.Valid, groupStonesToKill = newGroupStonesToKill }; }
-        else { return new ValidPlayData() { playValidityLocal = PV.Invalid }; }
+        { return new ValidPlayData(PV.Valid, newGroupStonesToKill); }
+        else { return new ValidPlayData(PV.Invalid); }
     }
 
     public bool IsSameBoardSimpleCheck(List<GoStoneLite> boardIfStoneIsPlayed)
@@ -1262,6 +1261,19 @@ public class GameController : MonoBehaviour
     {
         public PlayValidity playValidityLocal;
         public List<BoardCoordinates> groupStonesToKill;
+
+        protected ValidPlayData() { }
+
+        public ValidPlayData(PlayValidity newPlayValidity)
+        {
+            playValidityLocal = newPlayValidity;
+        }
+
+        public ValidPlayData(PlayValidity newPlayValidity, List<BoardCoordinates> newGroupStonesToKill)
+        {
+            playValidityLocal = newPlayValidity;
+            groupStonesToKill = newGroupStonesToKill;
+        }
     }
 
     //public class InvalidPlayData : IPlay
