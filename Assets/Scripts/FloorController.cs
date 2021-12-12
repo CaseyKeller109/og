@@ -23,7 +23,22 @@ public class FloorController : MonoBehaviour
 
         if (xy.Length > 0 && other.gameObject.name.Contains("Stone"))
         {
-            gameController.GetComponent<GameController>().KillStoneWithDelay(new GameController.GoStone(new GameController.BoardCoordinates(Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1])), other.gameObject), 0f);
+            GameController.StoneColor stoneColor = GameController.StoneColor.Black;
+            if (other.gameObject.name.Contains("White"))
+            {
+                stoneColor = GameController.StoneColor.White;
+            }
+             else if (other.gameObject.name.Contains("Black"))
+            {
+                stoneColor = GameController.StoneColor.Black;
+            }
+
+            gameController.GetComponent<GameController>().KillStoneWithDelay(
+                    new GameController.GoStone(
+                        new GameController.BoardCoordinates(Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1])), 
+                        stoneColor,
+                        other.gameObject), 
+            0f);
         }
         else
         {

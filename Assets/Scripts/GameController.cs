@@ -382,16 +382,16 @@ public class GameController : MonoBehaviour
             float horizontalSpeed = 0.06f;
             float verticalSpeed = 0.03f;
             float scrollSpeed = 0.15f;
-            Quaternion rotateSpeed = Quaternion.Euler(5,0,0);
+            Quaternion rotateSpeed = Quaternion.Euler(5, 0, 0);
             float shiftSlow = 0.4f;
-            
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 horizontalSpeed *= shiftSlow;
                 verticalSpeed *= shiftSlow;
                 scrollSpeed *= shiftSlow;
             }
-            
+
             if (Input.GetKey("w"))
             {
                 camtran.position += horizontalSpeed * (new Vector3(camtran.forward.x, camtran.forward.y, 0)).normalized;
@@ -414,7 +414,7 @@ public class GameController : MonoBehaviour
             }
             if (Input.GetKey("q"))
             {
-                Currents.curentGoStoneRotation *= Quaternion.Inverse( rotateSpeed );
+                Currents.curentGoStoneRotation *= Quaternion.Inverse(rotateSpeed);
             }
             if (Input.GetKey(KeyCode.LeftControl) && camtran.position.z < GoStone.ZHeightValue)
             {
@@ -561,8 +561,7 @@ public class GameController : MonoBehaviour
                               Quaternion StoneRotation,
                               Vector3 StoneVelocity)
     {
-        //0todo put this in constructor
-        thrownStone = new GoStone();
+        thrownStone = new GoStone(null, Currents.currentPlayerColor);
 
         Transform thrownTransform = thrownStone.gameObject.GetComponent<Transform>();
         Rigidbody thrownRigidbody = thrownStone.gameObject.GetComponent<Rigidbody>();
@@ -572,7 +571,7 @@ public class GameController : MonoBehaviour
         thrownTransform.rotation = StoneRotation;
         thrownRigidbody.velocity = StoneVelocity;
         sensorRenderer.enabled = false;
-        
+
         if (Currents.currentPlayerColor == StoneColor.Black)
         {
             thrownStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterial;
@@ -877,18 +876,18 @@ public class GameController : MonoBehaviour
         StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
         //0todo have construct different?
-        LatestBoardStones().Add(new GoStone(new BoardCoordinates(CoordinateX, 
+        LatestBoardStones().Add(new GoStone(new BoardCoordinates(CoordinateX,
                                                                  CoordinateY),
-                                            stoneToSortColor, 
+                                            stoneToSortColor,
                                             stoneToSort.gameObject));
 
         //changes layer to "Stone"
         stoneToSort.gameObject.layer = 8;
 
         //0todo use this return value
-        return new GoStone(new BoardCoordinates(CoordinateX, 
-                                                CoordinateY), 
-                           stoneToSortColor, 
+        return new GoStone(new BoardCoordinates(CoordinateX,
+                                                CoordinateY),
+                           stoneToSortColor,
                            stoneToSort.gameObject);
     }
 
@@ -1205,41 +1204,20 @@ public class GameController : MonoBehaviour
         public GameObject gameObject;
         public GameObject exploderGameObject;
 
-
-
-        //0todo use this in constructor
-        //public StoneColor stoneColor = StoneColor.None;
-
-        public GoStone()
-        {
-            Coordinates = null;
-            //Coordinates = new BoardCoordinates(-1,-1);
-
-            gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
-
-            //gameObject = Instantiate(genericStoneObjectInstance, new Vector3(0, 0, 0), Quaternion.identity);
-            //gameObject = Instantiate(Resources.Load("Assets/Resources/Stone") as GameObject, new Vector3(0, 0, 0), Quaternion.identity);
-            //gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
-            gameObject.name = "No Name";
-            //gameObject.GetComponent<MeshRenderer>().material = Resources.Load("TransparentBlack") as Material;
-
-            //exploderGameObject.GetComponent<Renderer>().enabled = false
-        }
-
-
-        public GoStone(BoardCoordinates newCoordinates, GameObject newGameObject)
+        public GoStone(BoardCoordinates newCoordinates, StoneColor newColor)
         {
             Coordinates = newCoordinates;
+            stoneColor = newColor;
 
             if (genericStoneObject == null)
             {
                 genericStoneObject = new GameObject();
             }
 
-            gameObject = newGameObject;
+            gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity); ;
         }
 
-        public GoStone(BoardCoordinates newCoordinates, StoneColor newColor,  GameObject newGameObject)
+        public GoStone(BoardCoordinates newCoordinates, StoneColor newColor, GameObject newGameObject)
         {
             Coordinates = newCoordinates;
             stoneColor = newColor;
@@ -1251,7 +1229,6 @@ public class GameController : MonoBehaviour
 
             gameObject = newGameObject;
         }
-
     }
 
     public static GoStoneLite ToLite(GoStone stone)
