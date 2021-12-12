@@ -10,8 +10,6 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     //0todo move methods inside related classes
-    //0todo fix throw bug where it doesn't properly destroy stones
-    //0todo put global variables in classes
     //0todo add constructors to classes. GoStone, etc
 
     //3todo sensor stone shouldn't cast shadow
@@ -561,16 +559,18 @@ public class GameController : MonoBehaviour
                               Quaternion StoneRotation,
                               Vector3 StoneVelocity)
     {
-        thrownStone = new GoStone(null, Currents.currentPlayerColor);
-
-        Transform thrownTransform = thrownStone.gameObject.GetComponent<Transform>();
-        Rigidbody thrownRigidbody = thrownStone.gameObject.GetComponent<Rigidbody>();
+        GameObject thrownStoneObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity);
+        
+        Transform thrownTransform = thrownStoneObject.GetComponent<Transform>();
+        Rigidbody thrownRigidbody = thrownStoneObject.GetComponent<Rigidbody>();
         Renderer sensorRenderer = sensorStone.gameObject.GetComponent<Renderer>();
 
         thrownTransform.position = StonePosition;
         thrownTransform.rotation = StoneRotation;
         thrownRigidbody.velocity = StoneVelocity;
         sensorRenderer.enabled = false;
+
+        thrownStone = new GoStone(null, Currents.currentPlayerColor, thrownStoneObject);
 
         if (Currents.currentPlayerColor == StoneColor.Black)
         {
@@ -606,7 +606,7 @@ public class GameController : MonoBehaviour
 
         List<GoStoneLite> boardIfStoneIsPlayed = new List<GoStoneLite>();
 
-        //0todo look for deep level clone
+        //2todo look for deep level clone
         for (int i = 0; i < LatestBoardStones().Count(); i++)
         {
             boardIfStoneIsPlayed.Add(new GoStoneLite
@@ -791,7 +791,7 @@ public class GameController : MonoBehaviour
                 stoneGroupData.stonesCoord.Find(coord => (coord.SameCoordinatesAs(offsetCoordinatesToCheck))) == null
                 )
             {
-                stoneGroupData = FindGroupAndLibertyCoordinates(new GoStoneLite(offsetCoordinatesToCheck),
+                stoneGroupData = FindGroupAndLibertyCoordinates((otherStone),
                              boardIfStoneIsPlayed,
                              stoneGroupData);
             }
@@ -1157,12 +1157,6 @@ public class GameController : MonoBehaviour
             stoneColor = newGoStoneLite.stoneColor;
         }
 
-        public GoStoneLite(BoardCoordinates newCoordinates)
-        {
-            Coordinates = newCoordinates;
-        }
-
-
         public GoStoneLite(BoardCoordinates newCoordinates, StoneColor newStoneColor)
         {
             Coordinates = new BoardCoordinates((int)newCoordinates.xCoord, (int)newCoordinates.yCoord);
@@ -1204,18 +1198,7 @@ public class GameController : MonoBehaviour
         public GameObject gameObject;
         public GameObject exploderGameObject;
 
-        public GoStone(BoardCoordinates newCoordinates, StoneColor newColor)
-        {
-            Coordinates = newCoordinates;
-            stoneColor = newColor;
-
-            if (genericStoneObject == null)
-            {
-                genericStoneObject = new GameObject();
-            }
-
-            gameObject = Instantiate(genericStoneObject, new Vector3(0, 0, 0), Quaternion.identity); ;
-        }
+        protected GoStone() { }
 
         public GoStone(BoardCoordinates newCoordinates, StoneColor newColor, GameObject newGameObject)
         {
