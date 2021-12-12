@@ -1341,7 +1341,7 @@ namespace Tests
 
             ValidPlayData validPlayData = new ValidPlayData();
             validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.Currents.currentPlayerColor);
-            if (validPlayData.isValidPlayLocal)
+            if (validPlayData.playValidityLocal == PlayValidity.Valid)
             {
                 gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
             }
@@ -1365,7 +1365,7 @@ namespace Tests
                yCoordinate
             );
 
-            ValidPlayData validPlayData = new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = new List<BoardCoordinates>() };
+            ValidPlayData validPlayData = new ValidPlayData() { playValidityLocal = PlayValidity.Valid, groupStonesToKill = new List<BoardCoordinates>() };
 
             gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
             GameController.Currents.currentGameState = GameState.CanThrowStone;

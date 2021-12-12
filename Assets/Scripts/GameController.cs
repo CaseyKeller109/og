@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+using PV = GameController.PlayValidity;
+
 public class GameController : MonoBehaviour
 {
     //0todo move methods inside related classes
@@ -111,7 +113,7 @@ public class GameController : MonoBehaviour
 
         //0todo use better validation
         //0todouse stuff more verbose than bool
-        public static bool? isValidPlay = true;
+        public static PlayValidity playValidity = PV.Valid;
     }
 
     public static class CameraMouseMovementData
@@ -299,12 +301,12 @@ public class GameController : MonoBehaviour
 
                 if (!previousMouseCoordinates.SameCoordinatesAs(possibleStoneCoordinates))
                 {
-                    Currents.isValidPlay = null;
+                    Currents.playValidity = PV.NotYetSet;
                 }
 
-                if (Currents.isValidPlay == null)
+                if (Currents.playValidity == PV.NotYetSet)
                 {
-                    Currents.isValidPlay = validPlayData.isValidPlayLocal;
+                    Currents.playValidity = validPlayData.playValidityLocal;
                 }
 
                 possibleStoneCoordinates.CopyCoordinatesTo(previousMouseCoordinates);
@@ -312,11 +314,11 @@ public class GameController : MonoBehaviour
                 //0todo comment here?
                 //0todo implement this
                 //sensorStone.gameObject.GetComponent<Renderer>().enabled = Currents.isValidPlay;
-                if (Currents.isValidPlay == true)
+                if (Currents.playValidity == PV.Valid)
                 {
                     sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
                 }
-                else if (Currents.isValidPlay == false)
+                else if (Currents.playValidity == PV.Invalid)
                 {
                     sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
                 }
@@ -327,7 +329,7 @@ public class GameController : MonoBehaviour
                                     -GoStone.ZHeightValue);
                 sensorStone.gameObject.transform.rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
 
-                if (Input.GetMouseButtonUp(0) && Currents.isValidPlay == true)
+                if (Input.GetMouseButtonUp(0) && Currents.playValidity == PV.Valid)
                 {
                     PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill);
 
@@ -505,7 +507,7 @@ public class GameController : MonoBehaviour
 
     public void PlaceGoStone(BoardCoordinates newStoneCoordinates, List<BoardCoordinates> groupStonesToKill)
     {
-        Currents.isValidPlay = false;
+        Currents.playValidity = PV.Invalid;
 
         BoardHistory.Add(new GoBoard());
 
@@ -601,7 +603,7 @@ public class GameController : MonoBehaviour
 
         if (LatestBoardStones().Find(stone => (stone.SameCoordinatesAs(newStoneCoordinates))) != null)
         {
-            return new ValidPlayData() { isValidPlayLocal = false };
+            return new ValidPlayData() { playValidityLocal = PV.Invalid};
         }
 
         List<GoStoneLite> boardIfStoneIsPlayed = new List<GoStoneLite>();
@@ -618,12 +620,12 @@ public class GameController : MonoBehaviour
 
         //Simple Ko rule
         bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
-        if (isSameBoard) { return new ValidPlayData() { isValidPlayLocal = false }; }
+        if (isSameBoard) { return new ValidPlayData() { playValidityLocal = PV.Invalid}; }
 
         string openSides = OpenSidesCheck(newStone, boardIfStoneIsPlayed, newGroupStonesToKill);
         if (openSides.Length > 0)
-        { return new ValidPlayData() { isValidPlayLocal = true, groupStonesToKill = newGroupStonesToKill }; }
-        else { return new ValidPlayData() { isValidPlayLocal = false }; }
+        { return new ValidPlayData() { playValidityLocal = PV.Valid, groupStonesToKill = newGroupStonesToKill }; }
+        else { return new ValidPlayData() { playValidityLocal = PV.Invalid }; }
     }
 
     public bool IsSameBoardSimpleCheck(List<GoStoneLite> boardIfStoneIsPlayed)
@@ -1014,7 +1016,7 @@ public class GameController : MonoBehaviour
 
             Destroy(StoneToDestroy.gameObject);
 
-            Currents.isValidPlay = null;
+            Currents.playValidity = PV.NotYetSet;
 
             yield return new WaitForSeconds(7);
             exploder.GetComponent<Renderer>().enabled = false;
@@ -1258,7 +1260,7 @@ public class GameController : MonoBehaviour
 
     public class ValidPlayData
     {
-        public bool isValidPlayLocal;
+        public PlayValidity playValidityLocal;
         public List<BoardCoordinates> groupStonesToKill;
     }
 
@@ -1276,7 +1278,12 @@ public class GameController : MonoBehaviour
         StonesHaveBeenSorted
     }
 
-
+    public enum PlayValidity
+    {
+        Valid,
+        Invalid,
+        NotYetSet
+    }
 
 
     private void OgNow()
