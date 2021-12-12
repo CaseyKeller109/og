@@ -758,20 +758,18 @@ public class GameController : MonoBehaviour
     {
         if (stoneGroup.stones.Find(groupStone => (groupStone.SameCoordinatesAs(sideStone))) == null)
         {
-
-
             stoneGroup.stones.Add(new GoStoneLite(sideStone));
         }
 
-        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
-        FindGroupAndLibertyCoordinatesSideStone(sideStone.Coordinates, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord > 0), StoneDirectionOffset.up, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.yCoord < 18), StoneDirectionOffset.down, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord > 0), StoneDirectionOffset.left, ref stoneGroup);
+        FindGroupAndLibertyCoordinatesSideStone(sideStone, boardIfStoneIsPlayed, (sideStone.Coordinates.xCoord < 18), StoneDirectionOffset.right, ref stoneGroup);
 
         return stoneGroup;
     }
 
-    private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
+    private void FindGroupAndLibertyCoordinatesSideStone(GoStoneLite sideStone,
                                                          List<GoStoneLite> boardIfStoneIsPlayed,
                                                          bool isPositionGood,
                                                          BoardCoordinates offset,
@@ -779,7 +777,7 @@ public class GameController : MonoBehaviour
     {
         if (isPositionGood)
         {
-            GoStoneLite sideStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.Coordinates.SameCoordinatesAs(sideStoneCoordinates)));
+            //GoStoneLite sideStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.Coordinates.SameCoordinatesAs(sideStoneCoordinates)));
             BoardCoordinates offsetCoordinatesToCheck = sideStone.Coordinates + offset;
             GoStoneLite otherStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.SameCoordinatesAs(offsetCoordinatesToCheck)));
 
@@ -877,13 +875,19 @@ public class GameController : MonoBehaviour
         StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
         //0todo have construct different?
-        LatestBoardStones().Add(new GoStone(new BoardCoordinates(CoordinateX, CoordinateY),stoneToSortColor, stoneToSort.gameObject));
+        LatestBoardStones().Add(new GoStone(new BoardCoordinates(CoordinateX, 
+                                                                 CoordinateY),
+                                            stoneToSortColor, 
+                                            stoneToSort.gameObject));
 
         //changes layer to "Stone"
         stoneToSort.gameObject.layer = 8;
 
         //0todo use this return value
-        return new GoStone(new BoardCoordinates(CoordinateX, CoordinateY), stoneToSortColor, stoneToSort.gameObject);
+        return new GoStone(new BoardCoordinates(CoordinateX, 
+                                                CoordinateY), 
+                           stoneToSortColor, 
+                           stoneToSort.gameObject);
     }
 
     public void KillSortedStones()
@@ -1144,6 +1148,12 @@ public class GameController : MonoBehaviour
         {
             Coordinates = newGoStone.Coordinates;
             stoneColor = newGoStone.stoneColor;
+        }
+
+        public GoStoneLite(GoStoneLite newGoStoneLite)
+        {
+            Coordinates = newGoStoneLite.Coordinates;
+            stoneColor = newGoStoneLite.stoneColor;
         }
 
         public GoStoneLite(BoardCoordinates newCoordinates)
