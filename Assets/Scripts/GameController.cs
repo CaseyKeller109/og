@@ -771,7 +771,7 @@ public class GameController : MonoBehaviour
         return stoneGroup;
     }
 
-    private void FindGroupAndLibertyCoordinatesSideStone(GoStoneLite sideStone,
+    private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
                                                          List<GoStoneLite> boardIfStoneIsPlayed,
                                                          bool isPositionGood,
                                                          BoardCoordinates offset,
@@ -779,7 +779,7 @@ public class GameController : MonoBehaviour
     {
         if (isPositionGood)
         {
-            //GoStoneLite sideStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.Coordinates.SameCoordinatesAs(sideStoneCoordinates)));
+            GoStoneLite sideStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.Coordinates.SameCoordinatesAs(sideStoneCoordinates)));
             BoardCoordinates offsetCoordinatesToCheck = sideStone.Coordinates + offset;
             GoStoneLite otherStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.SameCoordinatesAs(offsetCoordinatesToCheck)));
 
