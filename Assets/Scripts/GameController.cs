@@ -11,7 +11,7 @@ using PV = GameController.PlayValidity;
 
 public class GameController : MonoBehaviour
 {
-    //0todo move methods inside related classes
+    //0todo reduce variable scope in parameters
     //3todo sensor stone shouldn't cast shadow
     //0todo more functions should return value
     //2todo reduce number of parameters in functions
@@ -100,6 +100,13 @@ public class GameController : MonoBehaviour
         return BoardHistory[BoardHistory.Count - 2].boardStones;
     }
 
+    public static List<GoStoneLite> PreviousBoardStonesLite()
+    {
+        List<GoStone> previousBoardStones = BoardHistory[BoardHistory.Count - 2].boardStones;
+        return previousBoardStones.Select(stone => ToLite(stone)).ToList();
+    }
+
+
     public static class Currents
     {
         //0todo use sensorstone rotation instead of this?
@@ -108,8 +115,6 @@ public class GameController : MonoBehaviour
         public static StoneColor currentPlayerColor = StoneColor.Black;
         public static GameState currentGameState = GameState.CanPlaceStone;
 
-        //0todo use better validation
-        //0todouse stuff more verbose than bool
         public static PlayValidity playValidity = PV.Valid;
     }
 
@@ -143,7 +148,6 @@ public class GameController : MonoBehaviour
     {
         genericStoneObject = Resources.Load("Stone") as GameObject;
 
-        //0todo here
         previousMouseCoordinates = new BoardCoordinates(-1, -1);
     }
 
@@ -325,7 +329,7 @@ public class GameController : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(0) && Currents.playValidity == PV.Valid)
                 {
-                    PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill);
+                    PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory);
 
                     if (Currents.currentPlayerColor == StoneColor.Black)
                     { Currents.currentPlayerColor = StoneColor.White; }
@@ -454,7 +458,7 @@ public class GameController : MonoBehaviour
 
             if (Time.time - timer > 2 && Currents.currentGameState == GameState.StoneHasBeenThrown)
             {
-                GetNewBoardLayout();
+                GetNewBoardLayout(BoardHistory);
 
                 if (Currents.currentPlayerColor == StoneColor.Black)
                 { Currents.currentPlayerColor = StoneColor.White; }
@@ -499,7 +503,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void PlaceGoStone(BoardCoordinates newStoneCoordinates, List<BoardCoordinates> groupStonesToKill)
+    public void PlaceGoStone(BoardCoordinates newStoneCoordinates, 
+                             List<BoardCoordinates> groupStonesToKill, 
+                             List<GoBoard> BoardHistory)
     {
         Currents.playValidity = PV.Invalid;
 
@@ -611,9 +617,13 @@ public class GameController : MonoBehaviour
         boardIfStoneIsPlayed.Add(new GoStoneLite
             (newStoneCoordinates, Currents.currentPlayerColor));
 
+
         //Simple Ko rule
-        bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed);
-        if (isSameBoard) { return new ValidPlayData(PV.Invalid); }
+        if (BoardHistory.Count > 3)
+        {
+            bool isSameBoard = IsSameBoardSimpleCheck(boardIfStoneIsPlayed, PreviousBoardStonesLite());
+            if (isSameBoard) { return new ValidPlayData(PV.Invalid); } 
+        }
 
         string openSides = OpenSidesCheck(newStone, boardIfStoneIsPlayed, newGroupStonesToKill);
         if (openSides.Length > 0)
@@ -621,17 +631,19 @@ public class GameController : MonoBehaviour
         else { return new ValidPlayData(PV.Invalid); }
     }
 
-    public bool IsSameBoardSimpleCheck(List<GoStoneLite> boardIfStoneIsPlayed)
+    public bool IsSameBoardSimpleCheck(List<GoStoneLite> boardIfStoneIsPlayed,
+                                       List<GoStoneLite> previousBoardStonesLite)
     {
         bool isSameBoard = false;
-        if (BoardHistory.Count > 3
-            && boardIfStoneIsPlayed.Count == PreviousBoardStones().Count
+        //if (BoardHistory.Count > 3
+        //    && boardIfStoneIsPlayed.Count == previousBoardStonesLite.Count
+           if ( boardIfStoneIsPlayed.Count == previousBoardStonesLite.Count
             )
         {
             isSameBoard = true;
-            for (int i = 0; i < PreviousBoardStones().Count; i++)
+            for (int i = 0; i < previousBoardStonesLite.Count; i++)
             {
-                if (boardIfStoneIsPlayed.Find(stone => stone.SameCoordinatesAndColorAs(PreviousBoardStones()[i])) == null)
+                if (boardIfStoneIsPlayed.Find(stone => stone.SameCoordinatesAndColorAs(previousBoardStonesLite[i])) == null)
                 {
                     isSameBoard = false;
                     break;
@@ -688,9 +700,8 @@ public class GameController : MonoBehaviour
     }
 
 
-    //0todo pass global variables as arguments
-    //0todo have better names
-    //0todo rename centerStone
+    //1todo have better names
+    //2todo rename centerStone?
     private bool LibertiesFromSideExists(GoStoneLite centerStone,
                                          BoardCoordinates offsetFromCenterStone,
                                          List<GoStoneLite> boardIfStoneIsPlayed,
@@ -801,7 +812,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void GetNewBoardLayout()
+    public void GetNewBoardLayout(List<GoBoard> BoardHistory)
     {
         BoardHistory.Add(new GoBoard());
 
@@ -1257,7 +1268,7 @@ public class GameController : MonoBehaviour
         public List<GoStone> boardStones = new List<GoStone>();
     }
 
-    //0todo implememt this?
+    //2todo implememt this?
     //public interface IPlay
     //{
 

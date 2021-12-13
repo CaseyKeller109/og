@@ -24,7 +24,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             PlayStoneIfValid(1, 1, StoneColor.Black);
 
             Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
@@ -40,7 +40,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
 
             Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
@@ -56,7 +56,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
 
             Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
@@ -72,7 +72,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
 
             Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
@@ -615,16 +615,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(0, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
@@ -636,16 +636,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(1, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
 
             ThrowStone(0, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
@@ -657,16 +657,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(0, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(1, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
@@ -678,16 +678,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(1, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
 
             ThrowStone(0, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
@@ -703,29 +703,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(0, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(1, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
             ThrowStone(2, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
@@ -739,29 +739,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(2, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(1, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
 
             ThrowStone(0, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
@@ -775,29 +775,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(0, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(1, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(1, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
 
             ThrowStone(2, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
@@ -811,29 +811,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(2, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(1, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(1, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(0, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
 
             ThrowStone(0, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
@@ -850,29 +850,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(1, 1, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(1, 0, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(2, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 1, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(1, 2, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
@@ -880,7 +880,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 2, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
@@ -889,7 +889,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 3, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
@@ -899,7 +899,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
 
             ThrowStone(0, 0, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 2, StoneColor.White));
@@ -920,16 +920,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(18, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
@@ -941,16 +941,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(17, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
 
             ThrowStone(18, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
@@ -962,16 +962,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(18, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(17, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
@@ -983,16 +983,16 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(17, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
 
             ThrowStone(18, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
@@ -1007,29 +1007,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(18, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(17, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
 
             ThrowStone(16, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
@@ -1043,29 +1043,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(16, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(17, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
 
             ThrowStone(18, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
@@ -1079,29 +1079,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(18, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(17, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(17, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
 
             ThrowStone(16, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
@@ -1115,29 +1115,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(16, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(17, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(17, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(18, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
 
             ThrowStone(18, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
@@ -1154,29 +1154,29 @@ namespace Tests
             InitialSetup();
 
             ThrowStone(17, 17, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(17, 18, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(16, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 17, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(17, 16, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
@@ -1184,7 +1184,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 16, StoneColor.White);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
@@ -1193,7 +1193,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 15, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
@@ -1203,7 +1203,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
 
             ThrowStone(18, 18, StoneColor.Black);
-            gameController.GetNewBoardLayout();
+            gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 16, StoneColor.White));
@@ -1343,7 +1343,7 @@ namespace Tests
             ValidPlayData validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.Currents.currentPlayerColor);
             if (validPlayData.playValidityLocal == PlayValidity.Valid)
             {
-                gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
+                gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory);
             }
         }
 
@@ -1367,7 +1367,7 @@ namespace Tests
 
             ValidPlayData validPlayData = new ValidPlayData( PlayValidity.Valid,  new List<BoardCoordinates>() );
 
-            gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill);
+            gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory);
             GameController.Currents.currentGameState = GameState.CanThrowStone;
         }
 
