@@ -12,8 +12,6 @@ using PV = GameController.PlayValidity;
 public class GameController : MonoBehaviour
 {
     //0todo move methods inside related classes
-    //0todo add constructors to classes. GoStone, etc
-
     //3todo sensor stone shouldn't cast shadow
     //0todo more functions should return value
     //2todo reduce number of parameters in functions
@@ -158,7 +156,7 @@ public class GameController : MonoBehaviour
         Application.targetFrameRate = 60;
         resetButton.onClick.AddListener(ResetGame);
 
-        sensorStone = new GoStone(new BoardCoordinates(8, 8), StoneColor.Black, sensorStoneObject);
+        sensorStone = new GoStone(null, StoneColor.Black, sensorStoneObject);
 
         //sensorStone.gameObject.layer = 0;
         sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
@@ -290,7 +288,7 @@ public class GameController : MonoBehaviour
                 Convert.ToInt32(mousePos.y / GoBoard.boardCoordinateSeparationY) < -18
                 )
             {
-                sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
+                RenderSensorStone(false);
             }
 
             else
@@ -310,16 +308,13 @@ public class GameController : MonoBehaviour
 
                 possibleStoneCoordinates.CopyCoordinatesTo(previousMouseCoordinates);
 
-                //0todo comment here?
-                //0todo implement this
-                //sensorStone.gameObject.GetComponent<Renderer>().enabled = Currents.isValidPlay;
                 if (Currents.playValidity == PV.Valid)
                 {
-                    sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
+                    RenderSensorStone(true);
                 }
                 else if (Currents.playValidity == PV.Invalid)
                 {
-                    sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
+                    RenderSensorStone(false);
                 }
 
                 sensorStone.gameObject.GetComponent<Transform>().position =
@@ -361,7 +356,7 @@ public class GameController : MonoBehaviour
         //og play (throwing)
         else if (Currents.currentGameState == GameState.CanThrowStone)
         {
-            sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
+            RenderSensorStone(true);
             sensorStone.gameObject.transform.position = mainCamera.GetComponent<Transform>().position + 1 * mainCamera.GetComponent<Transform>().forward;
             sensorStone.gameObject.transform.rotation = mainCamera.transform.rotation * Currents.curentGoStoneRotation;
 
@@ -483,7 +478,7 @@ public class GameController : MonoBehaviour
                     mainCamera.GetComponent<Transform>().rotation = defaultThrowingCamera.GetComponent<Transform>().rotation;
                     DisableButtons();
 
-                    sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
+                    RenderSensorStone(true);
                     ThrowingData.isOnFirstOgPlay = false;
                 }
 
@@ -520,7 +515,7 @@ public class GameController : MonoBehaviour
             KillGroupStones(groupStonesToKill);
         }
 
-        sensorStone.gameObject.GetComponent<Renderer>().enabled = false;
+        RenderSensorStone(false);
 
         GameObject newStoneObject = Instantiate(genericStoneObject,
                                           new Vector3((float)(newStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX),
@@ -548,7 +543,6 @@ public class GameController : MonoBehaviour
             sensorStone.gameObject.name = "BlackSensorStone";
         }
 
-        //0todo format this kind of stuff better
         LatestBoardStones().Add(new GoStone(
             newStoneCoordinates,
             Currents.currentPlayerColor,
@@ -773,11 +767,11 @@ public class GameController : MonoBehaviour
 
     private void FindGroupAndLibertyCoordinatesSideStone(BoardCoordinates sideStoneCoordinates,
                                                          List<GoStoneLite> boardIfStoneIsPlayed,
-                                                         bool isPositionGood,
+                                                         bool isPositionOnBoard,
                                                          BoardCoordinates offset,
                                                          ref GoStoneGroupData stoneGroupData)
     {
-        if (isPositionGood)
+        if (isPositionOnBoard)
         {
             GoStoneLite sideStone = boardIfStoneIsPlayed.Find(stoneIf => (stoneIf.Coordinates.SameCoordinatesAs(sideStoneCoordinates)));
             BoardCoordinates offsetCoordinatesToCheck = sideStone.Coordinates + offset;
@@ -876,9 +870,8 @@ public class GameController : MonoBehaviour
 
         StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
-        //0todo have construct different?
-        LatestBoardStones().Add(new GoStone(new BoardCoordinates(CoordinateX,
-                                                                 CoordinateY),
+        LatestBoardStones().Add(new GoStone(CoordinateX,
+                                            CoordinateY,
                                             stoneToSortColor,
                                             stoneToSort.gameObject));
 
@@ -886,8 +879,8 @@ public class GameController : MonoBehaviour
         stoneToSort.gameObject.layer = 8;
 
         //0todo use this return value
-        return new GoStone(new BoardCoordinates(CoordinateX,
-                                                CoordinateY),
+        return new GoStone(CoordinateX,
+                           CoordinateY,
                            stoneToSortColor,
                            stoneToSort.gameObject);
     }
@@ -1213,6 +1206,19 @@ public class GameController : MonoBehaviour
 
             gameObject = newGameObject;
         }
+
+        public GoStone(int newXCoord, int newYCoord, StoneColor newColor, GameObject newGameObject)
+        {
+            Coordinates = new BoardCoordinates(newXCoord, newYCoord);
+            stoneColor = newColor;
+
+            if (genericStoneObject == null)
+            {
+                genericStoneObject = new GameObject();
+            }
+
+            gameObject = newGameObject;
+        }
     }
 
     public static GoStoneLite ToLite(GoStone stone)
@@ -1307,8 +1313,13 @@ public class GameController : MonoBehaviour
         ogProbText.GetComponent<Text>().text = "Og prob: " + ThrowingData.ogProb + "%";
         mainCamera.GetComponent<Transform>().position = defaultThrowingCamera.GetComponent<Transform>().position;
         mainCamera.GetComponent<Transform>().rotation = defaultThrowingCamera.GetComponent<Transform>().rotation;
-        sensorStone.gameObject.GetComponent<Renderer>().enabled = true;
+        RenderSensorStone(true);
         DisableButtons();
+    }
+
+    public void RenderSensorStone(bool isRender)
+    {
+        sensorStone.gameObject.GetComponent<Renderer>().enabled = isRender;
     }
 
     private void ResetGame()
