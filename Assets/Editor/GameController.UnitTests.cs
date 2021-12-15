@@ -6,13 +6,17 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static GameController;
+
+
+using static Assets.Scripts.GameController;
+using static Assets.Scripts.GoFunctions;
 
 namespace Tests
 {
     public class GameController_UnitTests
     {
-        GameController gameController = new GameController();
+        Assets.Scripts.GoFunctions goFunctions = new Assets.Scripts.GoFunctions();
+        Assets.Scripts.GameController gameController = new Assets.Scripts.GameController();
 
         //tests placing at same spot
         [Test]
@@ -27,7 +31,7 @@ namespace Tests
             gameController.GetNewBoardLayout(BoardHistory);
             PlayStoneIfValid(1, 1, StoneColor.Black);
 
-            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -43,7 +47,7 @@ namespace Tests
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
 
-            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -59,7 +63,7 @@ namespace Tests
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
 
-            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -75,7 +79,7 @@ namespace Tests
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
 
-            Assert.IsTrue(GameController.LatestBoardStones().Count == 1);
+            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -614,17 +618,26 @@ namespace Tests
         {
             InitialSetup();
 
+            Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
             ThrowStone(0, 1, StoneColor.Black);
+            Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+
+            Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
 
+            //Debug.Log("Second: " + BoardHistory.Last().boardStones.Count);
+
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
+
+            //Debug.Log("Third: " + BoardHistory.Last().boardStones.Count);
+
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
@@ -1303,27 +1316,27 @@ namespace Tests
                 GameObject.DestroyImmediate(fooObj);
             }
 
-            //0todo improve this?
-            gameController.sensorStone = new GoStone(new BoardCoordinates ( 20, 20 ), StoneColor.Black, GameObject.Instantiate(Resources.Load("Stone") as GameObject));
+            //2todo improve this?
+            gameController.sensorStone = new GoStone(new BoardCoordinates(20, 20), StoneColor.Black, GameObject.Instantiate(Resources.Load("Stone") as GameObject));
             gameController.sensorStone.gameObject.GetComponent<MeshCollider>().enabled = false;
             gameController.sensorStone.gameObject.name = "BlackSensorStone";
             gameController.sensorStone.gameObject.layer = 0;
 
-            GameController.genericStoneObject = Resources.Load("Stone") as GameObject;
+            Assets.Scripts.GameController.genericStoneObject = Resources.Load("Stone") as GameObject;
 
             gameController.whiteTextObject = new GameObject();
             gameController.blackTextObject = new GameObject();
             gameController.whiteTextObject.AddComponent<Text>();
             gameController.blackTextObject.AddComponent<Text>();
 
-            GameController.BoardHistory = new List<GoBoard>();
-            GameController.BoardHistory.Add(new GoBoard());
+            Assets.Scripts.GoFunctions.BoardHistory = new List<GoBoard>();
+            Assets.Scripts.GoFunctions.BoardHistory.Add(new GoBoard());
         }
 
         public void PlayStoneIfValid(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
-            GameController.Currents.currentGameState = GameState.CanPlaceStone;
-            GameController.Currents.currentPlayerColor = stoneColor;
+            Assets.Scripts.GoFunctions.Currents.currentGameState = GameState.CanPlaceStone;
+            Assets.Scripts.GoFunctions.Currents.currentPlayerColor = stoneColor;
             //GoStone newStone = new GoStone
             //{
             //    coordinates = {
@@ -1339,17 +1352,26 @@ namespace Tests
                 yCoordinate
             );
 
-             //validPlayData = new ValidPlayData();
-            ValidPlayData validPlayData = gameController.ValidPlayCheck(newStoneCoordinates, GameController.Currents.currentPlayerColor);
+            //validPlayData = new ValidPlayData();
+            ValidPlayData validPlayData = Assets.Scripts.GoFunctions.ValidPlayCheck(newStoneCoordinates, Assets.Scripts.GoFunctions.Currents.currentPlayerColor);
             if (validPlayData.playValidityLocal == PlayValidity.Valid)
             {
-                gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory);
+
+                GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
+                          new Vector3(0,
+                                      0,
+                                      -GoStone.ZHeightValue),
+                          Quaternion.identity);
+
+
+        gameController.PlaceGoStoneUnity( newStoneCoordinates, validPlayData);
+        //Assets.Scripts.GoFunctions.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory, newStoneObject);
             }
         }
 
         public void ThrowStone(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
-            GameController.Currents.currentPlayerColor = stoneColor;
+            Assets.Scripts.GoFunctions.Currents.currentPlayerColor = stoneColor;
             //GoStone newStone = new GoStone
             //{
             //    coordinates = {
@@ -1365,16 +1387,23 @@ namespace Tests
                yCoordinate
             );
 
-            ValidPlayData validPlayData = new ValidPlayData( PlayValidity.Valid,  new List<BoardCoordinates>() );
+            ValidPlayData validPlayData = new ValidPlayData(PlayValidity.Valid, new List<BoardCoordinates>());
 
-            gameController.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory);
-            GameController.Currents.currentGameState = GameState.CanThrowStone;
+
+                //GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
+                //          new Vector3(0,
+                //                      0,
+                //                      -GoStone.ZHeightValue),
+                //          Quaternion.identity);
+
+            gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData);
+            Assets.Scripts.GoFunctions.Currents.currentGameState = GameState.CanThrowStone;
         }
 
         public bool StoneExists(int searchX, int searchY, StoneColor searchColor)
         {
             bool isFoundStoneExists = false;
-            GoStone foundStone = GameController.BoardHistory.Last().boardStones.Find(s => s.Coordinates.xCoord == searchX &&
+            GoStone foundStone = Assets.Scripts.GoFunctions.BoardHistory.Last().boardStones.Find(s => s.Coordinates.xCoord == searchX &&
                                                                                           s.Coordinates.yCoord == searchY &&
                                                                                           s.stoneColor == searchColor);
 

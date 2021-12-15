@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using static Assets.Scripts.GameController;
+using static Assets.Scripts.GoFunctions;
 
 public class FloorController : MonoBehaviour
 {
@@ -10,6 +14,7 @@ public class FloorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -19,23 +24,25 @@ public class FloorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Assets.Scripts.GoFunctions goFunctions = new GoFunctions();
+        GameController gameController = new GameController();
         string[] xy = other.gameObject.name.Split('x');
 
         if (xy.Length > 0 && other.gameObject.name.Contains("Stone"))
         {
-            GameController.StoneColor stoneColor = GameController.StoneColor.Black;
+            Assets.Scripts.GoFunctions.StoneColor stoneColor = Assets.Scripts.GoFunctions.StoneColor.Black;
             if (other.gameObject.name.Contains("White"))
             {
-                stoneColor = GameController.StoneColor.White;
+                stoneColor = Assets.Scripts.GoFunctions.StoneColor.White;
             }
              else if (other.gameObject.name.Contains("Black"))
             {
-                stoneColor = GameController.StoneColor.Black;
+                stoneColor = Assets.Scripts.GoFunctions.StoneColor.Black;
             }
 
-            gameController.GetComponent<GameController>().KillStoneWithDelay(
-                    new GameController.GoStone(
-                        new GameController.BoardCoordinates(Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1])), 
+            gameController.KillStoneWithDelay(
+                    new Assets.Scripts.GoFunctions.GoStone(
+                        new Assets.Scripts.GoFunctions.BoardCoordinates(Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1])), 
                         stoneColor,
                         other.gameObject), 
             0f);
