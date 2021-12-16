@@ -40,7 +40,7 @@ public class FloorController : MonoBehaviour
                 stoneColor = Assets.Scripts.GoFunctions.StoneColor.Black;
             }
 
-            gameController.KillStoneWithDelay(
+            gameController.KillStoneWithDelayUnity(
                     new Assets.Scripts.GoFunctions.GoStone(
                         new Assets.Scripts.GoFunctions.BoardCoordinates(Convert.ToInt32(xy[0]), Convert.ToInt32(xy[1])), 
                         stoneColor,

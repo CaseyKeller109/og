@@ -15,8 +15,8 @@ namespace Tests
 {
     public class GameController_UnitTests
     {
-        Assets.Scripts.GoFunctions goFunctions = new Assets.Scripts.GoFunctions();
-        Assets.Scripts.GameController gameController = new Assets.Scripts.GameController();
+        public Assets.Scripts.GoFunctions goFunctions = new Assets.Scripts.GoFunctions();
+        public Assets.Scripts.GameController gameController = new Assets.Scripts.GameController();
 
         //tests placing at same spot
         [Test]
@@ -26,12 +26,13 @@ namespace Tests
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
-            PlayStoneIfValid(1, 1, StoneColor.Black);
+            Assert.IsTrue(ScoreCheck(0, 0));
 
-            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -42,12 +43,14 @@ namespace Tests
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            ScoreCheck(0, 0);
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
-            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -58,12 +61,14 @@ namespace Tests
 
             PlayStoneIfValid(1, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
-            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -74,12 +79,14 @@ namespace Tests
 
             PlayStoneIfValid(18, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
-            //Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
 
         }
 
@@ -92,15 +99,18 @@ namespace Tests
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -110,15 +120,18 @@ namespace Tests
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -128,15 +141,18 @@ namespace Tests
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
         [Test]
@@ -146,15 +162,18 @@ namespace Tests
 
             PlayStoneIfValid(1, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
 
@@ -166,21 +185,25 @@ namespace Tests
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
@@ -188,6 +211,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -197,21 +221,25 @@ namespace Tests
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
@@ -219,6 +247,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -228,21 +257,25 @@ namespace Tests
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(2, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
@@ -250,6 +283,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
         [Test]
@@ -259,21 +293,25 @@ namespace Tests
 
             PlayStoneIfValid(2, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
@@ -281,6 +319,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
 
@@ -292,21 +331,25 @@ namespace Tests
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 2, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 2, StoneColor.Black));
@@ -314,6 +357,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 2, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 2, StoneColor.White));
@@ -322,6 +366,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 3, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 3, StoneColor.Black));
@@ -331,6 +376,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
@@ -341,6 +387,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(3, 0));
         }
 
 
@@ -354,15 +401,18 @@ namespace Tests
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -372,15 +422,18 @@ namespace Tests
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -390,15 +443,18 @@ namespace Tests
 
             PlayStoneIfValid(18, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
         [Test]
@@ -408,15 +464,18 @@ namespace Tests
 
             PlayStoneIfValid(17, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
 
@@ -428,21 +487,25 @@ namespace Tests
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(16, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
@@ -450,6 +513,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -459,21 +523,25 @@ namespace Tests
 
             PlayStoneIfValid(16, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
@@ -481,6 +549,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -490,21 +559,25 @@ namespace Tests
 
             PlayStoneIfValid(18, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(16, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
@@ -512,6 +585,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
         [Test]
@@ -521,21 +595,25 @@ namespace Tests
 
             PlayStoneIfValid(16, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
@@ -543,6 +621,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
 
@@ -554,21 +633,25 @@ namespace Tests
 
             PlayStoneIfValid(17, 17, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 18, StoneColor.White);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(16, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 17, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(17, 16, StoneColor.Black);
             Assert.IsTrue(StoneExists(17, 16, StoneColor.Black));
@@ -576,6 +659,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 16, StoneColor.White);
             Assert.IsTrue(StoneExists(18, 16, StoneColor.White));
@@ -584,6 +668,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 15, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 15, StoneColor.Black));
@@ -593,6 +678,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(18, 18, StoneColor.Black);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
@@ -603,6 +689,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(3, 0));
         }
 
 
@@ -623,6 +710,7 @@ namespace Tests
             Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
 
@@ -630,6 +718,7 @@ namespace Tests
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             //Debug.Log("Second: " + BoardHistory.Last().boardStones.Count);
 
@@ -641,6 +730,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -651,17 +741,20 @@ namespace Tests
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -672,17 +765,20 @@ namespace Tests
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
         [Test]
@@ -693,17 +789,20 @@ namespace Tests
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
 
         }
 
@@ -718,17 +817,20 @@ namespace Tests
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -736,6 +838,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(2, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -744,6 +847,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -754,17 +858,20 @@ namespace Tests
             ThrowStone(2, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -772,6 +879,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -780,6 +888,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -790,17 +899,20 @@ namespace Tests
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -808,6 +920,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(2, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -816,6 +929,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
         [Test]
@@ -826,17 +940,20 @@ namespace Tests
             ThrowStone(2, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -844,6 +961,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -852,6 +970,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
 
@@ -865,17 +984,20 @@ namespace Tests
             ThrowStone(1, 1, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(2, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 1, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -883,6 +1005,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(1, 2, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -891,6 +1014,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 2, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -900,6 +1024,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 3, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -910,6 +1035,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(0, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -921,6 +1047,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(3, 0));
         }
 
 
@@ -935,17 +1062,20 @@ namespace Tests
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -956,17 +1086,20 @@ namespace Tests
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
         [Test]
@@ -977,17 +1110,20 @@ namespace Tests
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
         [Test]
@@ -998,17 +1134,20 @@ namespace Tests
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
 
@@ -1022,17 +1161,20 @@ namespace Tests
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1040,6 +1182,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(16, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1048,6 +1191,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -1058,17 +1202,20 @@ namespace Tests
             ThrowStone(16, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1076,6 +1223,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1084,6 +1232,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(2, 0));
         }
 
         [Test]
@@ -1094,17 +1243,20 @@ namespace Tests
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1112,6 +1264,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(16, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1120,6 +1273,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
         [Test]
@@ -1130,17 +1284,20 @@ namespace Tests
             ThrowStone(16, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1148,6 +1305,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1156,6 +1314,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(17, 17, StoneColor.White));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 2));
         }
 
 
@@ -1169,17 +1328,20 @@ namespace Tests
             ThrowStone(17, 17, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 18, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(16, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 17, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1187,6 +1349,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(17, 16, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1195,6 +1358,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 16, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1204,6 +1368,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 15, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1214,6 +1379,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             ThrowStone(18, 18, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -1225,6 +1391,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(3, 0));
         }
 
         //todo rename funcitons with more than just positions
@@ -1237,21 +1404,25 @@ namespace Tests
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(2, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
@@ -1259,6 +1430,7 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 1));
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
@@ -1266,6 +1438,7 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
+            Assert.IsTrue(ScoreCheck(0, 1));
         }
 
         [Test]
@@ -1275,21 +1448,25 @@ namespace Tests
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(1, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(2, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(0, 0));
 
             PlayStoneIfValid(0, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
@@ -1297,6 +1474,7 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(1, 0));
 
             PlayStoneIfValid(0, 1, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.Black));
@@ -1304,6 +1482,7 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
+            Assert.IsTrue(ScoreCheck(1, 0));
         }
 
 
@@ -1331,6 +1510,9 @@ namespace Tests
 
             Assets.Scripts.GoFunctions.BoardHistory = new List<GoBoard>();
             Assets.Scripts.GoFunctions.BoardHistory.Add(new GoBoard());
+
+            PlayerScore.blackScore = 0;
+            PlayerScore.whiteScore = 0;
         }
 
         public void PlayStoneIfValid(int xCoordinate, int yCoordinate, StoneColor stoneColor)
@@ -1356,30 +1538,14 @@ namespace Tests
             ValidPlayData validPlayData = Assets.Scripts.GoFunctions.ValidPlayCheck(newStoneCoordinates, Assets.Scripts.GoFunctions.Currents.currentPlayerColor);
             if (validPlayData.playValidityLocal == PlayValidity.Valid)
             {
-
-                GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
-                          new Vector3(0,
-                                      0,
-                                      -GoStone.ZHeightValue),
-                          Quaternion.identity);
-
-
-        gameController.PlaceGoStoneUnity( newStoneCoordinates, validPlayData);
-        //Assets.Scripts.GoFunctions.PlaceGoStone(newStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory, newStoneObject);
+                gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData);
             }
         }
 
         public void ThrowStone(int xCoordinate, int yCoordinate, StoneColor stoneColor)
         {
             Assets.Scripts.GoFunctions.Currents.currentPlayerColor = stoneColor;
-            //GoStone newStone = new GoStone
-            //{
-            //    coordinates = {
-            //    x = xCoordinate,
-            //    y = yCoordinate
-            //    },
-            //    stoneColor = stoneColor
-            //};
+
 
             BoardCoordinates newStoneCoordinates = new BoardCoordinates
             (
@@ -1390,11 +1556,6 @@ namespace Tests
             ValidPlayData validPlayData = new ValidPlayData(PlayValidity.Valid, new List<BoardCoordinates>());
 
 
-                //GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
-                //          new Vector3(0,
-                //                      0,
-                //                      -GoStone.ZHeightValue),
-                //          Quaternion.identity);
 
             gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData);
             Assets.Scripts.GoFunctions.Currents.currentGameState = GameState.CanThrowStone;
@@ -1425,6 +1586,16 @@ namespace Tests
                 }
             }
             return (isFoundStoneExists && isFoundStoneObjectExists);
+        }
+
+        public bool ScoreCheck(int blackScoreToCheck, int whiteScoreToCheck)
+        {
+            if (PlayerScore.blackScore == blackScoreToCheck &&
+                PlayerScore.whiteScore == whiteScoreToCheck)
+            {
+                return true;
+            }
+            else { return false; }
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

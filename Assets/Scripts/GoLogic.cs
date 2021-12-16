@@ -15,6 +15,8 @@ using static Assets.Scripts.GoFunctions;
 
 using PV = Assets.Scripts.GoFunctions.PlayValidity;
 
+
+//1todo use KillGroupStones?
 //1todo use better referencing for gameController.stuff, and GameObject
 namespace Assets.Scripts
 {
@@ -99,9 +101,7 @@ namespace Assets.Scripts
                 newStoneObject));
         }
 
-        
 
-        //0todo put gostone check stuff in separate file
         public static ValidPlayData ValidPlayCheck(BoardCoordinates newStoneCoordinates, StoneColor newStoneColor)
         {
             GoStoneLite newStone = new GoStoneLite(newStoneCoordinates, newStoneColor);
@@ -320,39 +320,43 @@ namespace Assets.Scripts
 
 
 
-        public static void FindAndSortAllStones()
+
+
+        public static void KillGroupStones(List<BoardCoordinates> groupStonesToKill)
         {
-            int searchIncrement = 200;
-            for (float r = 1; r < searchIncrement; r++)
+            foreach (BoardCoordinates killCoord in groupStonesToKill)
             {
-                for (int iteratedY = 0; iteratedY < 19; iteratedY++)
-                {
-                    for (int iteratedX = 0; iteratedX < 19; iteratedX++)
-                    {
-                        float boardDiagonalLength = GoBoard.boardCoordinateSeparationY * 19 * 1.42f;
+                GoStone stoneToDestroy = LatestBoardStones().Find(latestStone => (latestStone.SameCoordinatesAs(killCoord)));
 
-                        Collider[] stonesInRange = Physics.OverlapSphere(new Vector3(GoBoard.boardCoordinateSeparationX * iteratedX,
-                                                                                    -GoBoard.boardCoordinateSeparationY * iteratedY,
-                                                                                     0),
-                                                                         boardDiagonalLength * (r / searchIncrement),
-                                                                         LayerMask.GetMask("SortingStone"));
+                if (stoneToDestroy == null) { continue; }
 
-                        if (stonesInRange.Length == 0)
-                        {
-                            continue;
-                        }
-                        if (stonesInRange[0].name.Contains("Sensor"))
-                        {
-                            continue;
-                        }
+                KillStone(stoneToDestroy);
+            }
+        }
 
-                        string foundStoneColor = stonesInRange[0].name.Contains("Black") ? "Black" : "White";
+        public static void KillStone(GoStone StoneToDestroy)
+        {
+            LatestBoardStones().Remove(LatestBoardStones().Find(latestStone => (latestStone.SameCoordinatesAs(StoneToDestroy))));
 
-                        stonesInRange[0].name = $"{iteratedX}x{iteratedY}x{foundStoneColor}Stone";
+            if (StoneToDestroy.stoneColor == StoneColor.Black)
+            {
+                PlusOneToScore(StoneColor.White);
+            }
+            else if (StoneToDestroy.stoneColor == StoneColor.White)
+            {
+                PlusOneToScore(StoneColor.Black);
+            }
+        }
 
-                        GoStone sortedStone = SortStone(stonesInRange[0], iteratedX, iteratedY);
-                    }
-                }
+        public static void PlusOneToScore(StoneColor stoneColor)
+        {
+            if (stoneColor == StoneColor.Black)
+            {
+                PlayerScore.blackScore += 1;
+            }
+            if (stoneColor == StoneColor.White)
+            {
+                PlayerScore.whiteScore += 1;
             }
         }
 
@@ -372,10 +376,10 @@ namespace Assets.Scripts
 
             StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
-            LatestBoardStones().Add(new GoStone(CoordinateX,
-                                                CoordinateY,
-                                                stoneToSortColor,
-                                                stoneToSort.gameObject));
+            //LatestBoardStones().Add(new GoStone(CoordinateX,
+            //                                    CoordinateY,
+            //                                    stoneToSortColor,
+            //                                    stoneToSort.gameObject));
 
             //changes layer to "Stone"
             stoneToSort.gameObject.layer = 8;
