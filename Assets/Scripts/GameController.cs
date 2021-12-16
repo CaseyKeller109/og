@@ -16,7 +16,6 @@ namespace Assets.Scripts
 {
     public class GameController : MonoBehaviour
     {
-        //0todo reduce variable scope in parameters
         //3todo sensor stone shouldn't cast shadow
         //0todo more functions should return value
         //2todo reduce number of parameters in functions
@@ -309,7 +308,7 @@ namespace Assets.Scripts
 
                     if (Input.GetMouseButtonUp(0) && Currents.playValidity == PV.Valid)
                     {
-                        PlaceGoStoneUnity(possibleStoneCoordinates, validPlayData);
+                        PlaceGoStoneUnity(possibleStoneCoordinates, validPlayData.groupStonesToKill);
 
 
                         //GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
@@ -547,7 +546,7 @@ namespace Assets.Scripts
         }
 
 
-        public void PlaceGoStoneUnity(BoardCoordinates possibleStoneCoordinates, ValidPlayData validPlayData)
+        public void PlaceGoStoneUnity(BoardCoordinates possibleStoneCoordinates, List<BoardCoordinates> groupStonesToKill)
         {
 
             GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
@@ -575,7 +574,7 @@ namespace Assets.Scripts
 
 
 
-            GoFunctions.PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory, newStoneObject);
+            GoFunctions.PlaceGoStone(possibleStoneCoordinates, groupStonesToKill, BoardHistory, newStoneObject);
 
 
             //PlaceGoStone Game
@@ -583,9 +582,9 @@ namespace Assets.Scripts
 
 
 
-            if (validPlayData.groupStonesToKill != null)
+            if (groupStonesToKill != null)
             {
-                KillGroupStonesUnity(validPlayData.groupStonesToKill);
+                KillGroupStonesUnity(groupStonesToKill, LatestBoardStones());
             }
 
 
@@ -661,7 +660,7 @@ namespace Assets.Scripts
             }
 
             FindAndSortAllStones();
-            KillSortedStones();
+            KillSortedStones( LatestBoardStones());
             //print(BoardHistory.Last().boardStones.Count);
         }
 
@@ -697,15 +696,13 @@ namespace Assets.Scripts
 
                         GoStone sortedStone = SortStone(stonesInRange[0], iteratedX, iteratedY);
                         LatestBoardStones().Add(sortedStone);
-
-                        
                     }
                 }
             }
         }
 
 
-        public void KillSortedStones()
+        public void KillSortedStones(List<GoStone> latestBoardStones)
         {
             List<BoardCoordinates> alreadyGroupedStones = new List<BoardCoordinates>();
 
@@ -722,7 +719,7 @@ namespace Assets.Scripts
                 {
                     for (int iteratedX = 0; iteratedX < 19; iteratedX++)
                     {
-                        GoStone localStone = LatestBoardStones().Find(latestStone => (latestStone.Coordinates.SameCoordinatesAs(new BoardCoordinates(iteratedX, iteratedY))));
+                        GoStone localStone = latestBoardStones.Find(latestStone => (latestStone.Coordinates.SameCoordinatesAs(new BoardCoordinates(iteratedX, iteratedY))));
 
                         if (localStone == null)
                         {
@@ -738,7 +735,7 @@ namespace Assets.Scripts
                         GoStoneGroupData stoneGroupData = new GoStoneGroupData();
 
                         List<GoStoneLite> LatestBoardStonesLite = new List<GoStoneLite>();
-                        foreach (GoStone stone in LatestBoardStones())
+                        foreach (GoStone stone in latestBoardStones)
                         {
                             LatestBoardStonesLite.Add(ToLite(stone));
                         }
@@ -761,7 +758,7 @@ namespace Assets.Scripts
 
                         if (stoneGroupData.libertyCoordinates.Count == 0)
                         {
-                            KillGroupStonesUnity(stoneGroupData.stonesCoord);
+                            KillGroupStonesUnity(stoneGroupData.stonesCoord, LatestBoardStones());
                         }
                     }
                 }
@@ -770,7 +767,7 @@ namespace Assets.Scripts
 
 
 
-        public void KillGroupStonesUnity(List<BoardCoordinates> groupStonesToKill)
+        public void KillGroupStonesUnity(List<BoardCoordinates> groupStonesToKill, List<GoStone> latestBoardStones)
         {
             //Assets.Scripts.GoFunctions.KillGroupStones(groupStonesToKill);
 

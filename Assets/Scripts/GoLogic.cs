@@ -73,32 +73,17 @@ namespace Assets.Scripts
                 LatestBoardStones().Add(PreviousBoardStones()[i]);
             }
 
-            //if (groupStonesToKill != null)
-            //{
-            //    gameController.KillGroupStones(groupStonesToKill);
-            //}
-
-            //gameController.RenderSensorStone(false);
-
-            //GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
-            //                                  new Vector3((float)(newStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX),
-            //                                              (float)(-newStoneCoordinates.yCoord * GoBoard.boardCoordinateSeparationY),
-            //                                              -GoStone.ZHeightValue),
-            //                                  Quaternion.identity);
-
-            //newStoneObject.name = $"{newStoneCoordinates.xCoord}x" +
-            //                      $"{newStoneCoordinates.yCoord}x" +
-            //                      $"{Currents.currentPlayerColor}Stone";
-            //newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
-
-
-
-
 
             LatestBoardStones().Add(new GoStone(
                 newStoneCoordinates,
                 Currents.currentPlayerColor,
                 newStoneObject));
+
+            if (groupStonesToKill != null)
+            {
+                KillGroupStones(groupStonesToKill);
+            }
+
         }
 
 
@@ -384,7 +369,6 @@ namespace Assets.Scripts
             //changes layer to "Stone"
             stoneToSort.gameObject.layer = 8;
 
-            //0todo use this return value
             return new GoStone(CoordinateX,
                                CoordinateY,
                                stoneToSortColor,
