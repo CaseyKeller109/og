@@ -1538,7 +1538,7 @@ namespace Tests
             ValidPlayData validPlayData = Assets.Scripts.GoFunctions.ValidPlayCheck(newStoneCoordinates, Assets.Scripts.GoFunctions.Currents.currentPlayerColor);
             if (validPlayData.playValidityLocal == PlayValidity.Valid)
             {
-                gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData);
+                gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData.groupStonesToKill);
             }
         }
 
@@ -1557,7 +1557,7 @@ namespace Tests
 
 
 
-            gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData);
+            gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData.groupStonesToKill);
             Assets.Scripts.GoFunctions.Currents.currentGameState = GameState.CanThrowStone;
         }
 

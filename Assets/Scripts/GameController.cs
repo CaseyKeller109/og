@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
+
 using static Assets.Scripts.GoFunctions;
 using PV = Assets.Scripts.GoFunctions.PlayValidity;
 
@@ -17,7 +18,6 @@ namespace Assets.Scripts
     public class GameController : MonoBehaviour
     {
         //3todo sensor stone shouldn't cast shadow
-        //0todo more functions should return value
         //2todo reduce number of parameters in functions
         //3todo reduce function size
         //1todo get rid of magic numbers everywhere
@@ -659,12 +659,12 @@ namespace Assets.Scripts
                 sortedStone.gameObject.layer = 9;
             }
 
-            FindAndSortAllStones();
+            FindAndSortAllStones(ref BoardHistory.Last().boardStones);
             KillSortedStones( LatestBoardStones());
             //print(BoardHistory.Last().boardStones.Count);
         }
 
-        public static void FindAndSortAllStones()
+        public static void FindAndSortAllStones(ref List<GoStone> latestBoardStones)
         {
             int searchIncrement = 200;
             for (float r = 1; r < searchIncrement; r++)
@@ -695,7 +695,7 @@ namespace Assets.Scripts
                         stonesInRange[0].name = $"{iteratedX}x{iteratedY}x{foundStoneColor}Stone";
 
                         GoStone sortedStone = SortStone(stonesInRange[0], iteratedX, iteratedY);
-                        LatestBoardStones().Add(sortedStone);
+                        latestBoardStones.Add(sortedStone);
                     }
                 }
             }
