@@ -73,17 +73,10 @@ namespace Assets.Scripts
                 LatestBoardStones().Add(PreviousBoardStones()[i]);
             }
 
-
             LatestBoardStones().Add(new GoStone(
                 newStoneCoordinates,
                 Currents.currentPlayerColor,
                 newStoneObject));
-
-            if (groupStonesToKill != null)
-            {
-                KillGroupStones(groupStonesToKill);
-            }
-
         }
 
 

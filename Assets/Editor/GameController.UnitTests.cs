@@ -32,8 +32,7 @@ namespace Tests
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
-
+            CheckIfObjectCountCorrect(1);
         }
 
         [Test]
@@ -50,7 +49,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            CheckIfObjectCountCorrect(1);
 
         }
 
@@ -68,7 +67,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            CheckIfObjectCountCorrect(1);
 
         }
 
@@ -86,7 +85,7 @@ namespace Tests
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            Assert.IsTrue(Assets.Scripts.GoFunctions.LatestBoardStones().Count == 1);
+            CheckIfObjectCountCorrect(1);
 
         }
 
@@ -97,20 +96,31 @@ namespace Tests
         {
             InitialSetup();
 
+
+
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
+
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
 
+
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+
+            CheckIfObjectCountCorrect(2);
+
+
+
+            
         }
 
         [Test]
@@ -132,6 +142,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -153,6 +165,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -174,6 +188,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
 
@@ -212,6 +228,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -248,6 +266,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -284,6 +304,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -320,6 +342,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
 
@@ -388,6 +412,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(3, 0));
+
+            CheckIfObjectCountCorrect(5);
         }
 
 
@@ -413,6 +439,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -434,6 +462,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -455,6 +485,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -476,6 +508,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
 
@@ -514,6 +548,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -550,6 +586,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -586,6 +624,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -622,6 +662,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
 
@@ -690,6 +732,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(3, 0));
+
+            CheckIfObjectCountCorrect(5);
         }
 
 
@@ -705,14 +749,11 @@ namespace Tests
         {
             InitialSetup();
 
-            Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
             ThrowStone(0, 1, StoneColor.Black);
-            Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
             gameController.GetNewBoardLayout(BoardHistory);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            Debug.Log("First: " + BoardHistory.Last().boardStones.Count);
 
             ThrowStone(0, 0, StoneColor.White);
             gameController.GetNewBoardLayout(BoardHistory);
@@ -720,17 +761,17 @@ namespace Tests
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            //Debug.Log("Second: " + BoardHistory.Last().boardStones.Count);
 
             ThrowStone(1, 0, StoneColor.Black);
             gameController.GetNewBoardLayout(BoardHistory);
 
-            //Debug.Log("Third: " + BoardHistory.Last().boardStones.Count);
 
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -755,6 +796,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -779,6 +822,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -803,6 +848,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
 
         }
 
@@ -848,6 +895,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -889,6 +938,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -930,6 +981,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(0, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -971,6 +1024,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.Black));
             Assert.IsTrue(StoneExists(2, 0, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
 
@@ -1048,6 +1103,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(1, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(3, 0));
+
+            CheckIfObjectCountCorrect(5);
         }
 
 
@@ -1076,6 +1133,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -1100,6 +1159,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -1124,6 +1185,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
         [Test]
@@ -1148,6 +1211,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(2);
         }
 
 
@@ -1192,6 +1257,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -1233,6 +1300,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(2, 0));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -1274,6 +1343,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(18, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(18, 17, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
         [Test]
@@ -1315,6 +1386,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(17, 18, StoneColor.Black));
             Assert.IsTrue(StoneExists(16, 18, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 2));
+
+            CheckIfObjectCountCorrect(3);
         }
 
 
@@ -1392,6 +1465,8 @@ namespace Tests
             Assert.IsFalse(StoneExists(17, 18, StoneColor.White));
             Assert.IsTrue(StoneExists(17, 17, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(3, 0));
+
+            CheckIfObjectCountCorrect(5);
         }
 
         //todo rename funcitons with more than just positions
@@ -1439,6 +1514,8 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 1));
+
+            CheckIfObjectCountCorrect(4);
         }
 
         [Test]
@@ -1483,6 +1560,8 @@ namespace Tests
             Assert.IsTrue(StoneExists(1, 1, StoneColor.Black));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.White));
             Assert.IsTrue(ScoreCheck(1, 0));
+
+            CheckIfObjectCountCorrect(4);
         }
 
 
@@ -1596,6 +1675,18 @@ namespace Tests
                 return true;
             }
             else { return false; }
+        }
+
+        static void CheckIfObjectCountCorrect(int stonesLeft)
+        {
+            var coroutineHandler = (new GameObject("_coroutineHandler")).AddComponent<Text>();
+            coroutineHandler.StartCoroutine(WaitForDestroyCoroutine());
+
+            IEnumerator WaitForDestroyCoroutine()
+            {
+                yield return new WaitForSeconds(2);
+                Assert.AreEqual(stonesLeft, GameObject.FindGameObjectsWithTag("Stone").Count());
+            }
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use

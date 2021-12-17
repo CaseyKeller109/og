@@ -789,7 +789,6 @@ namespace Assets.Scripts
                                        float destroyDelay,
                                        float totalDelay = 0)
         {
-
             LatestBoardStones().Remove(LatestBoardStones().Find(latestStone => (latestStone.SameCoordinatesAs(StoneToDestroy))));
 
             if (StoneToDestroy.stoneColor == StoneColor.Black)
