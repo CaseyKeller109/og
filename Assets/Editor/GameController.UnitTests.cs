@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using static Assets.Scripts.GameController;
 using static Assets.Scripts.GoFunctions;
 
+//1todo improve unit tests
 namespace Tests
 {
     public class GameController_UnitTests
@@ -85,8 +86,8 @@ namespace Tests
             Assert.IsTrue(StoneExists(18, 18, StoneColor.White));
             Assert.IsTrue(ScoreCheck(0, 0));
 
-            CheckIfObjectCountCorrect(1);
 
+            CheckIfObjectCountCorrect(1);
         }
 
 
@@ -94,20 +95,24 @@ namespace Tests
         [Test]
         public void PlaceGoStone_0_1B_0_0W_1_0B()
         {
+            Debug.Log("Unit: " + PlayerScore.blackScore + " " + PlayerScore.whiteScore);
+
             InitialSetup();
 
-
+            Debug.Log("Unit: " + PlayerScore.blackScore + " " + PlayerScore.whiteScore);
 
             PlayStoneIfValid(0, 1, StoneColor.Black);
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
 
+            Debug.Log("Unit: " + PlayerScore.blackScore + " " + PlayerScore.whiteScore);
 
             PlayStoneIfValid(0, 0, StoneColor.White);
             Assert.IsTrue(StoneExists(0, 0, StoneColor.White));
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(0, 0));
 
+            Debug.Log("Unit: " + PlayerScore.blackScore + " " + PlayerScore.whiteScore);
 
             PlayStoneIfValid(1, 0, StoneColor.Black);
             Assert.IsTrue(StoneExists(1, 0, StoneColor.Black));
@@ -115,12 +120,10 @@ namespace Tests
             Assert.IsTrue(StoneExists(0, 1, StoneColor.Black));
             Assert.IsTrue(ScoreCheck(1, 0));
 
-
-            CheckIfObjectCountCorrect(2);
-
+            Debug.Log("Unit: " + PlayerScore.blackScore + " " + PlayerScore.whiteScore);
 
 
-            
+            CheckIfObjectCountCorrect(2); 
         }
 
         [Test]
@@ -1598,14 +1601,6 @@ namespace Tests
         {
             Assets.Scripts.GoFunctions.Currents.currentGameState = GameState.CanPlaceStone;
             Assets.Scripts.GoFunctions.Currents.currentPlayerColor = stoneColor;
-            //GoStone newStone = new GoStone
-            //{
-            //    coordinates = {
-            //    x = xCoordinate,
-            //    y = yCoordinate
-            //    },
-            //    stoneColor = stoneColor
-            //};
 
             BoardCoordinates newStoneCoordinates = new BoardCoordinates
             (
@@ -1613,11 +1608,11 @@ namespace Tests
                 yCoordinate
             );
 
-            //validPlayData = new ValidPlayData();
             ValidPlayData validPlayData = Assets.Scripts.GoFunctions.ValidPlayCheck(newStoneCoordinates, Assets.Scripts.GoFunctions.Currents.currentPlayerColor);
             if (validPlayData.playValidityLocal == PlayValidity.Valid)
             {
-                gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData.groupStonesToKill);
+                GameObject newStoneObject = gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData.groupStoneCoordsToKill);
+                Assets.Scripts.GoFunctions.PlaceGoStone(newStoneCoordinates, validPlayData.groupStoneCoordsToKill,Assets.Scripts.GoFunctions.BoardHistory,  newStoneObject);
             }
         }
 
@@ -1636,7 +1631,7 @@ namespace Tests
 
 
 
-            gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData.groupStonesToKill);
+            gameController.PlaceGoStoneUnity(newStoneCoordinates, validPlayData.groupStoneCoordsToKill);
             Assets.Scripts.GoFunctions.Currents.currentGameState = GameState.CanThrowStone;
         }
 

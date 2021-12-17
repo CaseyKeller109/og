@@ -77,6 +77,12 @@ namespace Assets.Scripts
                 newStoneCoordinates,
                 Currents.currentPlayerColor,
                 newStoneObject));
+
+            if (groupStonesToKill != null)
+            {
+                KillGroupStones(groupStonesToKill);
+            }
+            Debug.Log("place" + PlayerScore.blackScore + " " + PlayerScore.whiteScore);
         }
 
 
@@ -121,8 +127,6 @@ namespace Assets.Scripts
                                            List<GoStoneLite> previousBoardStonesLite)
         {
             bool isSameBoard = false;
-            //if (BoardHistory.Count > 3
-            //    && boardIfStoneIsPlayed.Count == previousBoardStonesLite.Count
             if (boardIfStoneIsPlayed.Count == previousBoardStonesLite.Count
              )
             {
@@ -299,7 +303,7 @@ namespace Assets.Scripts
 
 
 
-
+        //2todo put repeated code (also in Unity version) in function?
         public static void KillGroupStones(List<BoardCoordinates> groupStonesToKill)
         {
             foreach (BoardCoordinates killCoord in groupStonesToKill)
@@ -354,11 +358,6 @@ namespace Assets.Scripts
 
             StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
 
-            //LatestBoardStones().Add(new GoStone(CoordinateX,
-            //                                    CoordinateY,
-            //                                    stoneToSortColor,
-            //                                    stoneToSort.gameObject));
-
             //changes layer to "Stone"
             stoneToSort.gameObject.layer = 8;
 
@@ -400,20 +399,6 @@ namespace Assets.Scripts
                 return new BoardCoordinates((int)right.xCoord + (int)left.xCoord, (int)right.yCoord + (int)left.yCoord);
             }
 
-            //public static bool Equals(BoardCoordinates left, BoardCoordinates right)
-            //{
-            //    return (left.x == right.x) && (left.y == right.y);
-            //}
-
-            //public static bool operator ==(BoardCoordinates left, BoardCoordinates right)
-            //{
-            //    return (right.x == left.x && right.y == left.y);
-            //}
-
-            //public static bool operator !=(BoardCoordinates left, BoardCoordinates right)
-            //{
-            //    return (right.x != left.x || right.y != left.y);
-            //}
 
             public bool SameCoordinatesAs(BoardCoordinates secondCoord)
             {
@@ -606,7 +591,7 @@ namespace Assets.Scripts
         public class ValidPlayData
         {
             public PlayValidity playValidityLocal;
-            public List<BoardCoordinates> groupStonesToKill;
+            public List<BoardCoordinates> groupStoneCoordsToKill;
 
             protected ValidPlayData() { }
 
@@ -618,7 +603,7 @@ namespace Assets.Scripts
             public ValidPlayData(PlayValidity newPlayValidity, List<BoardCoordinates> newGroupStonesToKill)
             {
                 playValidityLocal = newPlayValidity;
-                groupStonesToKill = newGroupStonesToKill;
+                groupStoneCoordsToKill = newGroupStonesToKill;
             }
         }
 

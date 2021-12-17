@@ -93,7 +93,6 @@ namespace Assets.Scripts
         public GameObject ogBaseProbText;
 
         //2todo use sensorstone rotation instead of this?
-        //sensorStone.gameObject.GetComponent<Transform>().rotation
         public static Quaternion curentGoStoneRotation;
 
 
@@ -139,9 +138,6 @@ namespace Assets.Scripts
             Application.targetFrameRate = 60;
             resetButton.onClick.AddListener(ResetGame);
 
-            //sensorStone = new GoStone(null, StoneColor.Black, sensorStoneObject);
-
-            //sensorStone.gameObject.layer = 0;
             sensorStone.gameObject.gameObject.GetComponent<MeshCollider>().enabled = false;
             sensorStone.gameObject.name = "BlackSensorStone";
             sensorStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
@@ -308,66 +304,14 @@ namespace Assets.Scripts
 
                     if (Input.GetMouseButtonUp(0) && Currents.playValidity == PV.Valid)
                     {
-                        PlaceGoStoneUnity(possibleStoneCoordinates, validPlayData.groupStonesToKill);
+                        GameObject newStoneObject = PlaceGoStoneUnity(possibleStoneCoordinates, validPlayData.groupStoneCoordsToKill);
+                        GoFunctions.PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStoneCoordsToKill, BoardHistory, newStoneObject);
 
-
-                        //GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
-                        //          new Vector3((float)(possibleStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX),
-                        //                      (float)(-possibleStoneCoordinates.yCoord * GoBoard.boardCoordinateSeparationY),
-                        //                      -GoStone.ZHeightValue),
-                        //          Quaternion.identity);
-                        //if (Currents.currentPlayerColor == StoneColor.Black)
-                        //{
-                        //    newStoneObject.GetComponent<MeshRenderer>().material = blackMaterial;
-                        //    sensorStone.gameObject.GetComponent<MeshRenderer>().material = whiteMaterialTransparent;
-                        //    sensorStone.gameObject.name = "WhiteSensorStone";
-                        //}
-                        //else if (Currents.currentPlayerColor == StoneColor.White)
-                        //{
-                        //    newStoneObject.GetComponent<MeshRenderer>().material = whiteMaterial;
-                        //    sensorStone.gameObject.GetComponent<MeshRenderer>().material = blackMaterialTransparent;
-                        //    sensorStone.gameObject.name = "BlackSensorStone";
-                        //}
-
-                        //newStoneObject.name = $"{possibleStoneCoordinates.xCoord}x" +
-                        //                      $"{possibleStoneCoordinates.yCoord}x" +
-                        //                      $"{Currents.currentPlayerColor}Stone";
-                        //newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
-
-
-
-                        //GoFunctions.PlaceGoStone(possibleStoneCoordinates, validPlayData.groupStonesToKill, BoardHistory, newStoneObject);
-
-
-                        ////PlaceGoStone Game
-
-
-
-
-                        //if (validPlayData.groupStonesToKill != null)
-                        //{
-                        //    KillGroupStones(validPlayData.groupStonesToKill);
-                        //}
-
-
-                        ////GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
-                        ////                                  new Vector3((float)(possibleStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX),
-                        ////                                              (float)(-possibleStoneCoordinates.yCoord * GoBoard.boardCoordinateSeparationY),
-                        ////                                              -GoStone.ZHeightValue),
-                        ////                                  Quaternion.identity);
-
-                        ////newStoneObject.name = $"{possibleStoneCoordinates.xCoord}x" +
-                        ////                      $"{possibleStoneCoordinates.yCoord}x" +
-                        ////                      $"{Currents.currentPlayerColor}Stone";
-                        ////newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
-
-
-
-
-
-
-
-
+                        if (validPlayData.groupStoneCoordsToKill != null)
+                        {
+                            KillGroupStonesUnity(validPlayData.groupStoneCoordsToKill, LatestBoardStones());
+                            KillGroupStones(validPlayData.groupStoneCoordsToKill);
+                        }
 
 
                         RenderSensorStone(false);
@@ -545,8 +489,8 @@ namespace Assets.Scripts
             }
         }
 
-
-        public void PlaceGoStoneUnity(BoardCoordinates possibleStoneCoordinates, List<BoardCoordinates> groupStonesToKill)
+        //0todo rework Unity functions. no redundancy
+        public GameObject PlaceGoStoneUnity(BoardCoordinates possibleStoneCoordinates, List<BoardCoordinates> groupStonesToKill)
         {
 
             GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
@@ -572,39 +516,12 @@ namespace Assets.Scripts
                                   $"{Currents.currentPlayerColor}Stone";
             newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
 
-
-
-            GoFunctions.PlaceGoStone(possibleStoneCoordinates, groupStonesToKill, BoardHistory, newStoneObject);
-
-
-            //PlaceGoStone Game
-
-
-
-
             if (groupStonesToKill != null)
             {
                 KillGroupStonesUnity(groupStonesToKill, LatestBoardStones());
             }
 
-
-            //GameObject newStoneObject = GameObject.Instantiate(genericStoneObject,
-            //                                  new Vector3((float)(possibleStoneCoordinates.xCoord * GoBoard.boardCoordinateSeparationX),
-            //                                              (float)(-possibleStoneCoordinates.yCoord * GoBoard.boardCoordinateSeparationY),
-            //                                              -GoStone.ZHeightValue),
-            //                                  Quaternion.identity);
-
-            //newStoneObject.name = $"{possibleStoneCoordinates.xCoord}x" +
-            //                      $"{possibleStoneCoordinates.yCoord}x" +
-            //                      $"{Currents.currentPlayerColor}Stone";
-            //newStoneObject.GetComponent<Transform>().rotation *= Quaternion.Euler(90, 0, 0);
-
-
-
-
-
-
-
+            return newStoneObject;
         }
 
 
@@ -659,12 +576,13 @@ namespace Assets.Scripts
                 sortedStone.gameObject.layer = 9;
             }
 
-            FindAndSortAllStones(ref BoardHistory.Last().boardStones);
-            KillSortedStones( LatestBoardStones());
-            //print(BoardHistory.Last().boardStones.Count);
+            FindAndSortAllStones();
+            KillSortedStones(LatestBoardStones());
         }
 
-        public static void FindAndSortAllStones(ref List<GoStone> latestBoardStones)
+        //0todo put ref back
+        public static void FindAndSortAllStones()
+        //public static void FindAndSortAllStones(ref List<GoStone> latestBoardStones)
         {
             int searchIncrement = 200;
             for (float r = 1; r < searchIncrement; r++)
@@ -695,7 +613,9 @@ namespace Assets.Scripts
                         stonesInRange[0].name = $"{iteratedX}x{iteratedY}x{foundStoneColor}Stone";
 
                         GoStone sortedStone = SortStone(stonesInRange[0], iteratedX, iteratedY);
-                        latestBoardStones.Add(sortedStone);
+
+                        LatestBoardStones().Add(sortedStone);
+                        //latestBoardStones.Add(sortedStone);
                     }
                 }
             }
@@ -759,6 +679,7 @@ namespace Assets.Scripts
                         if (stoneGroupData.libertyCoordinates.Count == 0)
                         {
                             KillGroupStonesUnity(stoneGroupData.stonesCoord, LatestBoardStones());
+                            KillGroupStones(stoneGroupData.stonesCoord);
                         }
                     }
                 }
@@ -769,8 +690,6 @@ namespace Assets.Scripts
 
         public void KillGroupStonesUnity(List<BoardCoordinates> groupStonesToKill, List<GoStone> latestBoardStones)
         {
-            //Assets.Scripts.GoFunctions.KillGroupStones(groupStonesToKill);
-
             foreach (BoardCoordinates killCoord in groupStonesToKill)
             {
 
@@ -789,8 +708,6 @@ namespace Assets.Scripts
                                        float destroyDelay,
                                        float totalDelay = 0)
         {
-            LatestBoardStones().Remove(LatestBoardStones().Find(latestStone => (latestStone.SameCoordinatesAs(StoneToDestroy))));
-
             if (StoneToDestroy.stoneColor == StoneColor.Black)
             {
                 PlusOneToScoreUnity(StoneColor.White);
@@ -799,8 +716,6 @@ namespace Assets.Scripts
             {
                 PlusOneToScoreUnity(StoneColor.Black);
             }
-
-            //Assets.Scripts.GoFunctions.KillStone(StoneToDestroy);
 
             StoneToDestroy.gameObject.layer = 8;
 
@@ -843,14 +758,10 @@ namespace Assets.Scripts
         {
             if (stoneColor == StoneColor.Black)
             {
-                PlusOneToScore(StoneColor.Black);
-
                 blackTextObject.GetComponent<Text>().text = "Black Captures: " + PlayerScore.blackScore;
             }
             if (stoneColor == StoneColor.White)
             {
-                PlusOneToScore(StoneColor.White);
-
                 whiteTextObject.GetComponent<Text>().text = "White Captures: " + PlayerScore.whiteScore;
             }
         }
