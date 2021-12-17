@@ -342,30 +342,7 @@ namespace Assets.Scripts
             }
         }
 
-        public static GoStone SortStone(Collider stoneToSort,
-                                 int CoordinateX,
-                                 int CoordinateY)
-        {
-            stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            stoneToSort.GetComponent<Transform>().position =
-                new Vector3(CoordinateX * GoBoard.boardCoordinateSeparationX,
-                           -CoordinateY * GoBoard.boardCoordinateSeparationY,
-                           -GoStone.ZHeightValue);
-            stoneToSort.GetComponent<Transform>().rotation = Quaternion.identity * Quaternion.Euler(90, 0, 0);
-            stoneToSort.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 
-
-
-            StoneColor stoneToSortColor = stoneToSort.name.Contains("Black") ? StoneColor.Black : StoneColor.White;
-
-            //changes layer to "Stone"
-            stoneToSort.gameObject.layer = 8;
-
-            return new GoStone(CoordinateX,
-                               CoordinateY,
-                               stoneToSortColor,
-                               stoneToSort.gameObject);
-        }
 
         public static class StoneDirectionOffset
         {
