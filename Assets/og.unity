@@ -2048,7 +2048,7 @@ PrefabInstance:
     - target: {fileID: 1483479108649863721, guid: 606c7267ccf04114d93a4b1ed2f839a3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5257631797080962909, guid: 606c7267ccf04114d93a4b1ed2f839a3,
         type: 3}
@@ -4395,7 +4395,6 @@ MonoBehaviour:
     type: 2}
   blackMaterialTransparent: {fileID: 2100000, guid: d7dafbd011c77d145ac356ff19a3f5cf,
     type: 2}
-  stoneZValue: 0.095
   sensorStoneObject: {fileID: 575301743}
   explosionObjectParent: {fileID: 385541037}
   explosion: {fileID: 3474114883269312668, guid: 9c3d55abfdc1a8f45aea256aae5a1a9e,
@@ -4651,7 +4650,7 @@ PrefabInstance:
     - target: {fileID: 1483479108649863721, guid: 606c7267ccf04114d93a4b1ed2f839a3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5257631797080962909, guid: 606c7267ccf04114d93a4b1ed2f839a3,
         type: 3}

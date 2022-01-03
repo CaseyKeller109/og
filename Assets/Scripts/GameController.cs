@@ -171,10 +171,10 @@ namespace Assets.Scripts
             {
                 yield return new WaitForSeconds(0.0f);
                 mainCamera.GetComponent<Transform>().position = new Vector3(10, 10, 10);
-                yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(0.7f);
                 mainCamera.GetComponent<Transform>().position = defaultCameraPosition;
                 title.SetActive(false);
-                yield return new WaitForSeconds(0.8f);
+                yield return new WaitForSeconds(1.1f);
                 title2.SetActive(false);
             }
         }
