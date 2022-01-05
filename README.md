@@ -1,4 +1,4 @@
-# Og Game
+# Og
  The board game Go, with a twist
 
 Currently only supports keyboard and mouse.  
